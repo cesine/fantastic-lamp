@@ -83,7 +83,7 @@
     "prettier-plugin-tailwindcss": "^0.5.4",
     "prop-types": "^15.8.1",
     "storybook": "^7.6.3",
-    "tailwindcss": "^3.0.12",
+    "tailwindcss": "^3.4.0",
     "webpack": "^5.89.0"
   },
   "lint-staged": {
