@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { StatBar } from './StatBar'
+import { Histogram } from './Histogram'
 
 export default {
-  title: 'StatBar',
-  component: StatBar,
+  title: 'Histogram',
+  component: Histogram,
 }
 
 export const Default = () => (
-  <StatBar
+  <Histogram
     gameStats={{
       totalGames: 10,
       successRate: 50,
@@ -17,5 +17,8 @@ export const Default = () => (
       winDistribution: [10, 20, 30, 40, 50],
       gamesFailed: 5,
     }}
+    isLatestGame={true}
+    isGameWon={true}
+    numberOfGuessesMade={3}
   />
 )
