@@ -87,7 +87,7 @@
     "webpack": "^5.89.0"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx,css,md}": "prettier --write"
+    "src/**/*.{ts,tsx,css,md}": "prettier --write"
   },
   "jest": {
     "moduleNameMapper": {
