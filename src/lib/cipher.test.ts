@@ -9,8 +9,12 @@ describe('cipher', () => {
 
     it('should return a cipher with unique values', () => {
       const cipher = newCipher()
-      const values = cipher.map((item) => item.value)
-      const uniqueValues = [...new Set(values)]
+      const values = cipher.map((item) => {
+        return item.value
+      })
+      const uniqueValues: string[] = values
+        .filter((value) => value !== undefined) // Filter out undefined values
+        .map((value) => value as string) // Cast the values to string
       expect(values.length).toBe(uniqueValues.length)
     })
   })
