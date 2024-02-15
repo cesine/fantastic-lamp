@@ -6,7 +6,7 @@ type Props = {
   className: string
 }
 
-export const CurrentRow = ({ guess, className }: Props) => {
+export const DecryptedLine = ({ guess, className }: Props) => {
   const splitGuess = unicodeSplit(guess)
   const emptyCells = Array.from(Array(solution.length - splitGuess.length))
   const classes = `flex justify-center mb-1 ${className}`

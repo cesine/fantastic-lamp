@@ -1,4 +1,4 @@
-import { Cell } from '../grid/Cell'
+import { Cell } from '../cryptogram/Cell'
 import { BaseModal } from './BaseModal'
 
 type Props = {
