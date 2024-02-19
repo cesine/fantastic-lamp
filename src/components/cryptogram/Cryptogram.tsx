@@ -1,7 +1,7 @@
 import { MAX_CHALLENGES } from '../../constants/settings'
-import { CompletedRow } from './CompletedRow'
-import { CurrentRow } from './CurrentRow'
+import { DecryptedLine } from './DecryptedLine'
 import { EmptyRow } from './EmptyRow'
+import { CompletedRow } from './EncryptedRow'
 
 type Props = {
   solution: string
@@ -11,7 +11,7 @@ type Props = {
   currentRowClassName: string
 }
 
-export const Grid = ({
+export const Cryptogram = ({
   solution,
   guesses,
   currentGuess,
@@ -34,7 +34,7 @@ export const Grid = ({
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
-        <CurrentRow guess={currentGuess} className={currentRowClassName} />
+        <DecryptedLine guess={currentGuess} className={currentRowClassName} />
       )}
       {empties.map((_, i) => (
         <EmptyRow key={i} />
