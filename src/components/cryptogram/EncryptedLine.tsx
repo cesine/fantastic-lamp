@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CompletedRow } from './CompletedRow'
+import { CompletedRow } from './EncryptedRow'
 
 export default {
   title: 'CompletedRow',

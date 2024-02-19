@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
-import { Grid } from './components/grid/Grid'
-import { Keyboard } from './components/keyboard/Keyboard'
+import { Alphabet } from './components/alphabet/Alphabet'
+import { Cryptogram } from './components/cryptogram/Cryptogram'
 import { DatePickerModal } from './components/modals/DatePickerModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
@@ -295,7 +295,7 @@ function App() {
 
         <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-            <Grid
+            <Cryptogram
               solution={solution}
               guesses={guesses}
               currentGuess={currentGuess}
@@ -303,7 +303,7 @@ function App() {
               currentRowClassName={currentRowClass}
             />
           </div>
-          <Keyboard
+          <Alphabet
             onChar={onChar}
             onDelete={onDelete}
             onEnter={onEnter}
