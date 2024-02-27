@@ -35,7 +35,7 @@ import {
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
-import { newCipher } from './lib/cipher'
+import { encodePhrase, newCipher } from './lib/cipher'
 import {
   getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
@@ -56,6 +56,8 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
+
+const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -298,7 +300,7 @@ function App() {
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
             <Cryptogram
               cipher={currentCipher}
-              solution={solution}
+              encryptedQuote={encryptedQuote}
               isRevealing={isRevealing}
               currentRowClassName={currentRowClass}
             />
@@ -308,8 +310,6 @@ function App() {
             onChar={onChar}
             onDelete={onDelete}
             onEnter={onEnter}
-            solution={solution}
-            guesses={guesses}
             isRevealing={isRevealing}
           />
           <InfoModal
