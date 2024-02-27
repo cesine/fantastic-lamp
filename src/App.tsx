@@ -42,21 +42,23 @@ import {
   saveGameStateToLocalStorage,
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
-import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  isWinningWord,
-  isWordInWordList,
+  isQuoteInQuoteList,
+  isWinningQuote,
   setGameDate,
   solution,
   solutionGameDate,
   unicodeLength,
-} from './lib/words'
+} from './lib/quotes'
+import { localeAwareUpperCase } from './lib/quotes'
+import { addStatsForCompletedGame, loadStats } from './lib/stats'
+
+const cipher = newCipher()
 
 function App() {
-  const cipher = newCipher()
   const isLatestGame = getIsLatestGame()
   const gameDate = getGameDate()
   const prefersDarkMode = window.matchMedia(
@@ -65,7 +67,7 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentCipher, setCurrentCipher] = useState(cipher)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -194,19 +196,15 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
-    if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+    if (!isGameWon) {
+      setCurrentCipher(cipher)
     }
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-    )
+    // setCurrentCipher(
+    //   new GraphemeSplitter().splitGraphemes(cipher).slice(0, -1).join('')
+    // )
   }
 
   const onEnter = () => {
@@ -214,67 +212,99 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
-      setCurrentRowClass('jiggle')
-      return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
-        onClose: clearCurrentRowClass,
-      })
-    }
+    // if (!(unicodeLength(currentCipher) === solution.length)) {
+    //   setCurrentRowClass('jiggle')
+    //   return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
+    //     onClose: clearCurrentRowClass,
+    //   })
+    // }
 
-    if (!isWordInWordList(currentGuess)) {
-      setCurrentRowClass('jiggle')
-      return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
-        onClose: clearCurrentRowClass,
-      })
-    }
+    // if (!isQuoteInQuoteList(currentCipher)) {
+    //   setCurrentRowClass('jiggle')
+    //   return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
+    //     onClose: clearCurrentRowClass,
+    //   })
+    // }
 
-    // enforce hard mode - all guesses must contain all previously revealed letters
-    if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
-      if (firstMissingReveal) {
-        setCurrentRowClass('jiggle')
-        return showErrorAlert(firstMissingReveal, {
-          onClose: clearCurrentRowClass,
-        })
-      }
-    }
+    // // enforce hard mode - all guesses must contain all previously revealed letters
+    // if (isHardMode) {
+    //   const firstMissingReveal = findFirstUnusedReveal(currentCipher, guesses)
+    //   if (firstMissingReveal) {
+    //     setCurrentRowClass('jiggle')
+    //     return showErrorAlert(firstMissingReveal, {
+    //       onClose: clearCurrentRowClass,
+    //     })
+    //   }
+    // }
 
-    setIsRevealing(true)
-    // turn this back off after all
-    // chars have been revealed
-    setTimeout(() => {
-      setIsRevealing(false)
-    }, REVEAL_TIME_MS * solution.length)
+    // setIsRevealing(true)
+    // // turn this back off after all
+    // // chars have been revealed
+    // setTimeout(() => {
+    //   setIsRevealing(false)
+    // }, REVEAL_TIME_MS * solution.length)
 
-    const winningWord = isWinningWord(currentGuess)
+    // const winningWord = isWinningQuote(currentCipher)
 
-    if (
-      unicodeLength(currentGuess) === solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
-      setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+    // if (
+    //   unicodeLength(currentCipher) === solution.length &&
+    //   guesses.length < MAX_CHALLENGES &&
+    //   !isGameWon
+    // ) {
+    //   setGuesses([...guesses, currentCipher])
+    //   setCurrentCipher(cipher)
 
-      if (winningWord) {
-        if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length))
-        }
-        return setIsGameWon(true)
-      }
+    //   if (winningWord) {
+    //     if (isLatestGame) {
+    //       setStats(addStatsForCompletedGame(stats, guesses.length))
+    //     }
+    //     return setIsGameWon(true)
+    //   }
 
-      if (guesses.length === MAX_CHALLENGES - 1) {
-        if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-        }
-        setIsGameLost(true)
-        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          persist: true,
-          delayMs: REVEAL_TIME_MS * solution.length + 1,
-        })
-      }
-    }
+    //   if (guesses.length === MAX_CHALLENGES - 1) {
+    //     if (isLatestGame) {
+    //       setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+    //     }
+    //     setIsGameLost(true)
+    //     showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+    //       persist: true,
+    //       delayMs: REVEAL_TIME_MS * solution.length + 1,
+    //     })
+    //   }
+    // }
   }
+
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => {
+      console.log('key pressed', e.key, e)
+      if (e.code === 'Enter') {
+        onEnter()
+      } else if (e.code === 'Backspace') {
+        onDelete()
+      } else {
+        const key = localeAwareUpperCase(e.key)
+        // TODO: check this test if the range works with non-english letters
+        if (key.length === 1 && key >= 'A' && key <= 'Z') {
+          const label = (e?.target as HTMLButtonElement)?.ariaLabel || ''
+          if (label) {
+            const updatedCipher = { ...currentCipher }
+            updatedCipher[label].guesses = [
+              key,
+              ...updatedCipher[label].guesses,
+            ]
+            console.log('updated updatedCipher', updatedCipher)
+            setCurrentCipher(updatedCipher)
+          }
+          onChar(key)
+          // e.preventDefault();
+        }
+      }
+    }
+    window.addEventListener('keyup', listener)
+    return () => {
+      window.removeEventListener('keyup', listener)
+    }
+  }, [onEnter, onDelete, onChar])
 
   return (
     <Div100vh>
@@ -298,13 +328,14 @@ function App() {
         <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
             <Cryptogram
+              cipher={currentCipher}
               solution={solution}
               isRevealing={isRevealing}
               currentRowClassName={currentRowClass}
             />
           </div>
           <Alphabet
-            cipher={cipher}
+            cipher={currentCipher}
             onChar={onChar}
             onDelete={onDelete}
             onEnter={onEnter}

@@ -31,7 +31,7 @@ export const Cell = ({
   const toggleRevealLetter = () => {
     setRevealLetter(!revealLetter)
   }
-  const [guess, setGuess] = useState('')
+  // const [guess, setGuess] = useState('')
 
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -86,25 +86,25 @@ export const Cell = ({
     animationDelay,
     minHeight: '1em',
   }
-  const cellOnClick = () => {
-    console.log('inside the onclick')
-    window.addEventListener('keydown', handleKeyDown)
-  }
+  // const cellOnClick = () => {
+  //   console.log('inside the onclick')
+  //   window.addEventListener('keydown', handleKeyDown)
+  // }
 
-  function handleKeyDown(this: Window, ev: KeyboardEvent) {
-    console.log(ev.key, value)
-    setGuess(ev.key.toLocaleUpperCase())
-    setRevealLetter(true)
-    window.removeEventListener('keydown', handleKeyDown)
-  }
+  // function handleKeyDown(this: Window, ev: KeyboardEvent) {
+  //   console.log(ev.key, value)
+  //   // setGuess(ev.key.toLocaleUpperCase())
+  //   setRevealLetter(true)
+  //   window.removeEventListener('keydown', handleKeyDown)
+  // }
   return (
     <div className="inline-flex flex-col">
       <div
-        onClick={cellOnClick}
+        // onClick={cellOnClick}
         className={shouldDisplayDecrypted ? classesDecrypted : classes}
         style={styles}
       >
-        {guess}
+        {value}
       </div>
 
       <div style={styles} className={classes}>
