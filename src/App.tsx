@@ -35,6 +35,7 @@ import {
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
+import { newCipher } from './lib/cipher'
 import {
   getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
@@ -55,6 +56,7 @@ import {
 } from './lib/words'
 
 function App() {
+  const cipher = newCipher()
   const isLatestGame = getIsLatestGame()
   const gameDate = getGameDate()
   const prefersDarkMode = window.matchMedia(
@@ -297,13 +299,12 @@ function App() {
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
             <Cryptogram
               solution={solution}
-              guesses={guesses}
-              currentGuess={currentGuess}
               isRevealing={isRevealing}
               currentRowClassName={currentRowClass}
             />
           </div>
           <Alphabet
+            cipher={cipher}
             onChar={onChar}
             onDelete={onDelete}
             onEnter={onEnter}
