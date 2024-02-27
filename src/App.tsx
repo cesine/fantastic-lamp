@@ -288,10 +288,11 @@ function App() {
           const label = (e?.target as HTMLButtonElement)?.ariaLabel || ''
           if (label) {
             const updatedCipher = { ...currentCipher }
-            updatedCipher[label].guesses = [
-              key,
-              ...updatedCipher[label].guesses,
-            ]
+            const targetKey =
+              Object.keys(updatedCipher).find(
+                (key) => cipher[key].encrypted === label
+              ) || ''
+            cipher[targetKey].guesses = [key, ...updatedCipher[label].guesses]
             console.log('updated updatedCipher', updatedCipher)
             setCurrentCipher(updatedCipher)
           }

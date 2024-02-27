@@ -12,10 +12,10 @@ const isPunctuation = (value: string) => {
 type Props = {
   children?: ReactNode
   encryptedValue: string | null
-  value: string
+  decryptedValue: string
   width?: number
   status?: CharStatus
-  onClick: (value: string) => void
+  onClick: (decryptedValue: string) => void
   isRevealing?: boolean
 }
 
@@ -24,13 +24,13 @@ export const Letter = ({
   status,
   width = 40,
   encryptedValue = '',
-  value,
+  decryptedValue,
   onClick,
   isRevealing,
 }: Props) => {
   const keyDelayMs = REVEAL_TIME_MS * solution.length
   const isHighContrast = getStoredIsHighContrastMode()
-  const displayButton = !isPunctuation(value)
+  const displayButton = !isPunctuation(decryptedValue)
 
   const classes = classnames(
     'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
@@ -68,7 +68,7 @@ export const Letter = ({
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    onClick(value)
+    onClick(decryptedValue)
     event.currentTarget.blur()
   }
 
@@ -76,11 +76,11 @@ export const Letter = ({
     <div>
       <button
         style={displayButton ? styles : stylesLetter}
-        aria-label={`${value}${status ? ' ' + status : ''}`}
+        aria-label={`${decryptedValue}${status ? ' ' + status : ''}`}
         className={displayButton ? classes : classesLetter}
         onClick={handleClick}
       >
-        {children || value}
+        {children || decryptedValue}
       </button>
 
       <span style={stylesLetter} className={classesLetter}>

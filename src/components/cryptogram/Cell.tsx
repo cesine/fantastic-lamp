@@ -12,7 +12,7 @@ const isPunctuation = (value: string) => {
 
 type Props = {
   encryptedValue: string
-  value?: string
+  decryptedValue?: string
   status?: CharStatus
   isRevealing?: boolean
   isCompleted?: boolean
@@ -21,7 +21,7 @@ type Props = {
 
 export const Cell = ({
   encryptedValue,
-  value,
+  decryptedValue,
   status,
   isRevealing,
   isCompleted,
@@ -33,18 +33,20 @@ export const Cell = ({
   }
   // const [guess, setGuess] = useState('')
 
-  const isFilled = value && !isCompleted
+  const isFilled = decryptedValue && !isCompleted
   const shouldReveal = isRevealing && isCompleted
   const animationDelay = `${position * REVEAL_TIME_MS}ms`
   const isHighContrast = getStoredIsHighContrastMode()
-  const shouldDisplayDecrypted = value ? !isPunctuation(value) : false
+  const shouldDisplayDecrypted = decryptedValue
+    ? !isPunctuation(decryptedValue)
+    : false
 
   const classes = classnames(
     'xxshort:w-11 xxshort:h-11 short:text-2xl short:w-12 short:h-12 w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-bold rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
         !status,
-      'border-white dark:border-black': value && !status,
+      'border-white dark:border-black': decryptedValue && !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
         status === 'absent',
       'correct shadowed bg-orange-500 text-white border-orange-500':
@@ -65,7 +67,7 @@ export const Cell = ({
     {
       'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
         !status,
-      'border-black dark:border-slate-100': value && !status,
+      'border-black dark:border-slate-100': decryptedValue && !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
         status === 'absent',
       'correct shadowed bg-orange-500 text-white border-orange-500':
@@ -92,7 +94,7 @@ export const Cell = ({
   // }
 
   // function handleKeyDown(this: Window, ev: KeyboardEvent) {
-  //   console.log(ev.key, value)
+  //   console.log(ev.key, decryptedValue)
   //   // setGuess(ev.key.toLocaleUpperCase())
   //   setRevealLetter(true)
   //   window.removeEventListener('keydown', handleKeyDown)
@@ -104,7 +106,7 @@ export const Cell = ({
         className={shouldDisplayDecrypted ? classesDecrypted : classes}
         style={styles}
       >
-        {value}
+        {decryptedValue}
       </div>
 
       <div style={styles} className={classes}>

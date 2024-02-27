@@ -20,7 +20,7 @@ export const Cryptogram = ({
   currentRowClassName,
 }: Props) => {
   const words = solution.toLocaleUpperCase().split(/\s/)
-  console.log('words are', words)
+  // console.log('words are', words)
 
   function renderLetter(value: string, i: number) {
     if (/\s/.test(value)) {
@@ -30,14 +30,14 @@ export const Cryptogram = ({
     return (
       //<span test-id="letter"> {value}</span>
       <Cell
-        encryptedValue={cipher[value].encrypted || value}
-        value={cipher[value].guesses[0]}
+        encryptedValue={cipher[value].encrypted}
+        decryptedValue={cipher[value].guesses[0]}
       ></Cell>
     )
   }
 
   function renderWord(word: string) {
-    console.log('renderword', word)
+    // console.log('renderword', word)
     return (
       <div test-id="word" className="mr-4 whitespace-nowrap">
         {word.split('').map(renderLetter)}

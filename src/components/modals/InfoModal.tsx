@@ -19,47 +19,47 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
-          value="W"
+          decryptedValue="W"
           status="correct"
         />
-        <Cell encryptedValue="E" value="E" isCompleted={true} />
-        <Cell encryptedValue="E" value="A" isCompleted={true} />
-        <Cell encryptedValue="E" value="R" isCompleted={true} />
-        <Cell encryptedValue="E" value="Y" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="E" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="A" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="R" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="Y" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter W is in the word and in the correct spot.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
-        <Cell encryptedValue="E" value="P" isCompleted={true} />
-        <Cell encryptedValue="E" value="I" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="P" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="I" isCompleted={true} />
         <Cell
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
-          value="L"
+          decryptedValue="L"
           status="present"
         />
-        <Cell encryptedValue="E" value="O" isCompleted={true} />
-        <Cell encryptedValue="E" value="T" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="O" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="T" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter L is in the word but in the wrong spot.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
-        <Cell encryptedValue="E" value="V" isCompleted={true} />
-        <Cell encryptedValue="E" value="A" isCompleted={true} />
-        <Cell encryptedValue="E" value="G" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="V" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="A" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="G" isCompleted={true} />
         <Cell
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
-          value="U"
+          decryptedValue="U"
           status="absent"
         />
-        <Cell encryptedValue="E" value="E" isCompleted={true} />
+        <Cell encryptedValue="E" decryptedValue="E" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter U is not in the word in any spot.

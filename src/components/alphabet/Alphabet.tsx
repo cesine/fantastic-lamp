@@ -60,6 +60,7 @@ export const Alphabet = ({
           'Q',
           'R',
           'S',
+          'T',
           'U',
           'V',
           'W',
@@ -69,8 +70,10 @@ export const Alphabet = ({
         ].map((key) => (
           <Letter
             aria-label={key}
-            encryptedValue={cipher[key].guesses[0]}
-            value={key}
+            encryptedValue={
+              cipher[key].guesses[0] === key ? cipher[key].encrypted : ''
+            }
+            decryptedValue={key}
             key={key}
             onClick={onClick}
             status={charStatuses[key]}
