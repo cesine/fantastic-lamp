@@ -292,7 +292,11 @@ function App() {
               Object.keys(updatedCipher).find(
                 (key) => cipher[key].encrypted === label
               ) || ''
-            cipher[targetKey].guesses = [key, ...updatedCipher[label].guesses]
+
+            updatedCipher[targetKey].guesses = [
+              key,
+              ...updatedCipher[label].guesses,
+            ]
             console.log('updated updatedCipher', updatedCipher)
             setCurrentCipher(updatedCipher)
           }

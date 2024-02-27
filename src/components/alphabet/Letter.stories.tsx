@@ -8,47 +8,22 @@ export default {
   component: Letter,
 }
 
-export const Default = () => (
-  <Letter
-    encryptedValue="E"
-    decryptedValue="A"
-    onClick={(value) => console.log('onClick', value)}
-  />
-)
+export const Default = () => <Letter alpha="E" randomkey="A" />
 
 export const WithStatusAbsent = () => (
-  <Letter
-    encryptedValue="A"
-    decryptedValue="B"
-    status={'absent'}
-    onClick={(value) => console.log('onClick', value)}
-  />
+  <Letter alpha="A" randomkey="B" status={'absent'} />
 )
 
 export const WithStatusPresent = () => (
-  <Letter
-    encryptedValue="A"
-    decryptedValue="B"
-    status={'present'}
-    onClick={(value) => console.log('onClick', value)}
-  />
+  <Letter alpha="A" randomkey="B" status={'present'} />
 )
 
 export const WithStatusCorrect = () => (
-  <Letter
-    encryptedValue="A"
-    decryptedValue="B"
-    status={'correct'}
-    onClick={(value) => console.log('onClick', value)}
-  />
+  <Letter alpha="A" randomkey="B" status={'correct'} />
 )
 
 export const WithChildren = () => (
-  <Letter
-    encryptedValue="A"
-    decryptedValue="C"
-    onClick={(value) => console.log('onClick', value)}
-  >
+  <Letter alpha="A" randomkey="C">
     <span>Child</span>
   </Letter>
 )

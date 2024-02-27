@@ -27,16 +27,6 @@ export const Alphabet = ({
 }: Props) => {
   const charStatuses = getStatuses(solution, guesses)
 
-  const onClick = (value: string) => {
-    if (value === 'ENTER') {
-      onEnter()
-    } else if (value === 'DELETE') {
-      onDelete()
-    } else {
-      onChar(value)
-    }
-  }
-
   return (
     <div>
       <div className="mb-1 flex justify-center">
@@ -67,19 +57,26 @@ export const Alphabet = ({
           'X',
           'Y',
           'Z',
-        ].map((key) => (
-          <Letter
-            aria-label={key}
-            encryptedValue={
-              cipher[key].guesses[0] === key ? cipher[key].encrypted : ''
-            }
-            decryptedValue={key}
-            key={key}
-            onClick={onClick}
-            status={charStatuses[key]}
-            isRevealing={isRevealing}
-          />
-        ))}
+        ].map((key) => {
+          const toad =
+            Object.keys(cipher).find(
+              (item) => cipher[item].encrypted === key
+            ) || ''
+          console.log('toad', toad)
+          const frog = cipher[toad]
+          console.log('frog', frog)
+
+          return (
+            <Letter
+              aria-label={frog.encrypted}
+              alpha={frog.encrypted}
+              randomkey={frog.guesses[0]}
+              key={frog.encrypted}
+              status={charStatuses[key]}
+              isRevealing={isRevealing}
+            />
+          )
+        })}
       </div>
     </div>
   )
