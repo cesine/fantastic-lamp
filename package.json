@@ -67,7 +67,6 @@
     "@storybook/addon-interactions": "^7.6.3",
     "@storybook/addon-links": "^7.6.3",
     "@storybook/addon-onboarding": "^1.0.11",
-    "@storybook/blocks": "^7.6.17",
     "@storybook/preset-create-react-app": "^7.6.3",
     "@storybook/react": "^7.6.3",
     "@storybook/react-webpack5": "^7.6.3",
