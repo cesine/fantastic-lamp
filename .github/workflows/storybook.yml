@@ -21,11 +21,21 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
 
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-code
+          path: ./storybook-static
   deploy:
     needs: build
     runs-on: ubuntu-latest
     # if: github.ref == 'refs/heads/main'
     steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: compiled-code
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
