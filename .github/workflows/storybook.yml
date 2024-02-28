@@ -25,20 +25,20 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: compiled-code
-          path: .
+          name: storybook-static
+          path: ./storybook-static
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    #if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: compiled-code
+          name: storybook-static
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: ./storybook-static/storybook-static
