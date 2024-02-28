@@ -203,7 +203,6 @@ function App() {
       console.log('input', input, 'ariaLabel', ariaLabel)
       const label = ariaLabel || currentLetter
       if (label && input && currentCipher[label]) {
-        debugger
         const updatedCipher = { ...currentCipher }
 
         updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
