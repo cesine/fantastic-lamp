@@ -1,4 +1,4 @@
-name: Build and Deploy Storybook
+name: Storybook
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
   pull_request:
     paths:
       - '.github/workflows/storybook.yml'
-      - 'src/**/*.tsx'
+      - 'src/**/*.{json|js|jsx|ts|tsx}'
+      - '.storybook/**'
 jobs:
   build:
     runs-on: ubuntu-latest
