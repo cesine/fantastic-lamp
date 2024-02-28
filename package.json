@@ -9,8 +9,11 @@
     "lint": "prettier --check .",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "test:integration": "npx playwright test",
+    "test:integration": "npx playwright test --ui",
+    "test:integration:ci": "npx playwright test",
+    "test:integration:click-create": "npx playwright codegen",
     "test:e2e": "BASE_URL=${BASE_URL:-https://reactle.vercel.app} npm run test:integration",
+    "test:e2e:ci": "BASE_URL=${BASE_URL:-https://reactle.vercel.app} npm run test:integration:ci",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
