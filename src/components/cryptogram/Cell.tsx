@@ -68,10 +68,15 @@ export const Cell = ({
     }
   )
 
-  const styles = {
+  const stylesDecrypted = {
     fontFamily: 'Courier New',
     animationDelay,
     minHeight: '1em',
+  }
+
+  const stylesEncrypted = {
+    ...stylesDecrypted,
+    marginBottom: '40px',
   }
   const cellOnClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
     const label = (event?.target as HTMLDivElement)?.ariaLabel || ''
@@ -92,14 +97,14 @@ export const Cell = ({
         aria-label={encryptedValue}
         onClick={cellOnClick}
         className={classesDecrypted}
-        style={styles}
+        style={stylesDecrypted}
       >
         {decryptedValue}
       </div>
 
       <div
         aria-label={encryptedValue}
-        style={styles}
+        style={stylesEncrypted}
         className={classesEncrypted}
       >
         {encryptedValue}
