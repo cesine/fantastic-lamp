@@ -6,6 +6,10 @@ type Props = {
   handleClose: () => void
 }
 
+const onClick = (input: string, ariaLabel: string) => {
+  alert(`You clicked on ${ariaLabel}`)
+}
+
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
@@ -16,50 +20,113 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
 
       <div className="mb-1 mt-4 flex justify-center">
         <Cell
+          onClick={onClick}
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
           decryptedValue="W"
           status="correct"
         />
-        <Cell encryptedValue="E" decryptedValue="E" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="A" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="R" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="Y" isCompleted={true} />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="E"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="A"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="R"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="Y"
+          isCompleted={true}
+        />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter W is in the word and in the correct spot.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
-        <Cell encryptedValue="E" decryptedValue="P" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="I" isCompleted={true} />
         <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="P"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="I"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
           decryptedValue="L"
           status="present"
         />
-        <Cell encryptedValue="E" decryptedValue="O" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="T" isCompleted={true} />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="O"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="T"
+          isCompleted={true}
+        />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter L is in the word but in the wrong spot.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
-        <Cell encryptedValue="E" decryptedValue="V" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="A" isCompleted={true} />
-        <Cell encryptedValue="E" decryptedValue="G" isCompleted={true} />
         <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="V"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="A"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="G"
+          isCompleted={true}
+        />
+        <Cell
+          onClick={onClick}
           isRevealing={true}
           isCompleted={true}
           encryptedValue="E"
           decryptedValue="U"
           status="absent"
         />
-        <Cell encryptedValue="E" decryptedValue="E" isCompleted={true} />
+        <Cell
+          onClick={onClick}
+          encryptedValue="E"
+          decryptedValue="E"
+          isCompleted={true}
+        />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter U is not in the word in any spot.
