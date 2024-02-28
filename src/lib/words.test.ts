@@ -3,7 +3,7 @@ import {
   getLastGameDate,
   getNextGameDate,
   getWordOfDay,
-} from './words'
+} from './quotes'
 
 describe('solutionIndex', () => {
   test('last game date', () => {
