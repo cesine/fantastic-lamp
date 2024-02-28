@@ -4,8 +4,7 @@ on:
   deployment_status:
 jobs:
   test:
-    # vercel url is no longer accessible without logging in
-    if: false && github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     timeout-minutes: 6
     runs-on: ubuntu-latest
     steps:
