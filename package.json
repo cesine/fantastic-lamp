@@ -63,10 +63,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",
-    "@storybook/addon-essentials": "^7.6.3",
-    "@storybook/addon-interactions": "^7.6.3",
-    "@storybook/addon-links": "^7.6.3",
-    "@storybook/addon-onboarding": "^1.0.11",
     "@storybook/preset-create-react-app": "^7.6.3",
     "@storybook/react": "^7.6.3",
     "@storybook/react-webpack5": "^7.6.3",
