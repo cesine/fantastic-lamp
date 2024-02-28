@@ -25,6 +25,7 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : [['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    actionTimeout: 10000,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: BASE_URL,
 
@@ -61,7 +62,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: BASE_URL.includes('3000')
     ? {
-        command: 'npm run start',
+        command: 'npm start',
         url: BASE_URL,
         reuseExistingServer: !process.env.CI,
       }

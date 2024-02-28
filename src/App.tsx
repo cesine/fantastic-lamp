@@ -228,21 +228,21 @@ function App() {
      if (isGameWon || isGameLost) {
        return
      }
- 
+
      if (!(unicodeLength(currentGuess) === solution.length)) {
        setCurrentRowClass('jiggle')
        return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
          onClose: clearCurrentRowClass,
        })
      }
- 
+
      if (!isWordInWordList(currentGuess)) {
        setCurrentRowClass('jiggle')
        return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
          onClose: clearCurrentRowClass,
        })
      }
- 
+
      // enforce hard mode - all guesses must contain all previously revealed letters
      if (isHardMode) {
        const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
@@ -253,16 +253,16 @@ function App() {
          })
        }
      }
- 
+
      setIsRevealing(true)
      // turn this back off after all
      // chars have been revealed
      setTimeout(() => {
        setIsRevealing(false)
      }, REVEAL_TIME_MS * solution.length)
- 
+
      const winningWord = isWinningWord(currentGuess)
- 
+
      if (
        unicodeLength(currentGuess) === solution.length &&
        guesses.length < MAX_CHALLENGES &&
@@ -270,14 +270,14 @@ function App() {
      ) {
        setGuesses([...guesses, currentGuess])
        setCurrentGuess('')
- 
+
        if (winningWord) {
          if (isLatestGame) {
            setStats(addStatsForCompletedGame(stats, guesses.length))
          }
          return setIsGameWon(true)
        }
- 
+
        if (guesses.length === MAX_CHALLENGES - 1) {
          if (isLatestGame) {
            setStats(addStatsForCompletedGame(stats, guesses.length + 1))
