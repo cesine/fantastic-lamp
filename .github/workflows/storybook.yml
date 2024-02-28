@@ -28,7 +28,7 @@ jobs:
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: storybook-static
+          name: compiled-code
           path: ./storybook-static
   deploy:
     needs: build
@@ -38,11 +38,10 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: storybook-static
-          path: storybook-static
+          name: compiled-code
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ''
+          publish_dir: ./compiled-code/storybook-static
