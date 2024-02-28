@@ -48,6 +48,7 @@ import {
   getIsLatestGame,
   isQuoteInQuoteList,
   isWinningQuote,
+  localeAwareUpperCase,
   setGameDate,
   solution,
   solutionGameDate,
@@ -276,6 +277,38 @@ function App() {
      }
      */
   }
+
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => {
+      if (e.code === 'Enter') {
+        onEnter()
+      } else if (e.code === 'Backspace') {
+        onDelete()
+      } else {
+        const key = localeAwareUpperCase(e.key)
+        // TODO: check this test if the range works with non-english letters
+        if (key.length === 1 && key >= 'A' && key <= 'Z') {
+          const label = (e?.target as HTMLButtonElement)?.ariaLabel || ''
+          if (label) {
+            const updatedCipher = { ...currentCipher }
+
+            updatedCipher[label].guesses = [
+              key,
+              ...updatedCipher[label].guesses,
+            ]
+            console.log('updated updatedCipher', updatedCipher)
+            setCurrentCipher(updatedCipher)
+          }
+
+          onChar(key)
+        }
+      }
+    }
+    window.addEventListener('keyup', listener)
+    return () => {
+      window.removeEventListener('keyup', listener)
+    }
+  }, [onEnter, onDelete, onChar])
 
   return (
     <Div100vh>
