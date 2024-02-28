@@ -39,8 +39,10 @@ jobs:
       #       uses: actions/download-artifact@v2
       #       with:
       #         name: compiled-code
+      # TODO actions-gh-pages doesnt find (any) dir when we use download artifacts
 
       - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
