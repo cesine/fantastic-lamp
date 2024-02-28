@@ -89,6 +89,7 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
+  const [currentLetter, setCurrentLetter] = useState('')
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
     if (loaded?.solution !== solution) {
@@ -197,8 +198,21 @@ function App() {
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
-  const onChar = (value: string) => {
+  const onChar = (input: string, ariaLabel: string) => {
     if (!isGameWon) {
+      console.log('input', input, 'ariaLabel', ariaLabel)
+      const label = ariaLabel || currentLetter
+      if (label && input && currentCipher[label]) {
+        debugger
+        const updatedCipher = { ...currentCipher }
+
+        updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
+        console.log('updated updatedCipher', updatedCipher)
+        setCurrentCipher(updatedCipher)
+      }
+      if (!input && ariaLabel) {
+        setCurrentLetter(ariaLabel)
+      }
       //  setCurrentGuess(`${currentGuess}${value}`)
     }
   }
@@ -289,18 +303,8 @@ function App() {
         // TODO: check this test if the range works with non-english letters
         if (key.length === 1 && key >= 'A' && key <= 'Z') {
           const label = (e?.target as HTMLButtonElement)?.ariaLabel || ''
-          if (label) {
-            const updatedCipher = { ...currentCipher }
 
-            updatedCipher[label].guesses = [
-              key,
-              ...updatedCipher[label].guesses,
-            ]
-            console.log('updated updatedCipher', updatedCipher)
-            setCurrentCipher(updatedCipher)
-          }
-
-          onChar(key)
+          onChar(key, label)
         }
       }
     }
