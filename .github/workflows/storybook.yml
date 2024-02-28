@@ -22,15 +22,15 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
 
-      - name: Archive production artifacts
+      - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
           name: compiled-code
-          path: ./storybook-static
+          path: .
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main'
+    #if: github.ref == 'refs/heads/main'
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
