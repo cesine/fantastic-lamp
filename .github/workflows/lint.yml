@@ -1,12 +1,12 @@
 name: Lint
 on:
   pull_request:
-  push:
-    branches:
-      - main
     paths:
       - '**/*.{json|js|jsx|ts|tsx}'
       - '.prettierrc'
+  push:
+    branches:
+      - main
 
 jobs:
   lint:

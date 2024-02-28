@@ -1,11 +1,13 @@
 name: Test
 on:
   pull_request:
+    paths:
+      - 'src/**'
+      - '*.{json|js|ts}'
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
+
 jobs:
   test:
     runs-on: ubuntu-latest

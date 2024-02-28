@@ -8,7 +8,10 @@ on:
     paths:
       - '.github/workflows/storybook.yml'
       - 'src/**/*.{json|js|jsx|ts|tsx}'
+      - 'src/stories/**'
       - '.storybook/**'
+      - '.github/workflows/storybook.yml'
+
 jobs:
   build:
     runs-on: ubuntu-latest
