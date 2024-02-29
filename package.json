@@ -13,7 +13,7 @@
     "test:e2e": "BASE_URL=${BASE_URL:-https://reactle.vercel.app} npm run test:integration",
     "prepare": "husky install",
     "storybook": "npx storybook@7.6.3 dev -p 6006",
-    "build-storybook": "npx storybook@7.6.3 build"
+    "build-storybook": "npm install storybook@7.6.3 && npm storybook build"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
