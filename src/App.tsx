@@ -249,9 +249,21 @@ function App() {
   }
 
   const onDelete = () => {
-    /*  setCurrentGuess(
-        new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-      ) */
+    if (
+      currentLetter &&
+      currentCipher[currentLetter].guesses &&
+      currentCipher[currentLetter].guesses.length
+    ) {
+      const updatedCipher = { ...currentCipher }
+
+      updatedCipher[currentLetter].guesses = currentCipher[
+        currentLetter
+      ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      // could also remove from game guesses
+      // setGuesses(guesses.slice(1, guesses.length))
+      console.log('updated updatedCipher', updatedCipher)
+      setCurrentCipher(updatedCipher)
+    }
   }
 
   const onEnter = () => {
