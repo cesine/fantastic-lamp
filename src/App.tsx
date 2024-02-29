@@ -235,6 +235,7 @@ function App() {
       }
     })
     if (areAllLettersGuessed) {
+      console.log('All the letters have been guessed', guesses)
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
       }
@@ -242,6 +243,7 @@ function App() {
     }
 
     if (guesses.length > MAX_CHALLENGES - 1) {
+      console.log('Guesses are more than the max', guesses, MAX_CHALLENGES)
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
       }
