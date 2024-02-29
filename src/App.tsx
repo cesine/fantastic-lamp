@@ -113,7 +113,7 @@ function App() {
   const [isHardMode, setIsHardMode] = useState(
     localStorage.getItem('gameMode')
       ? localStorage.getItem('gameMode') === 'hard'
-      : false
+      : true
   )
 
   useEffect(() => {
