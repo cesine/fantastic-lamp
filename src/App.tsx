@@ -306,6 +306,10 @@ function App() {
      */
   }
 
+  const setHint = () => {
+    generateCryptogramHint()
+  }
+
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.code === 'Enter') {
@@ -332,6 +336,7 @@ function App() {
     <Div100vh>
       <div className="flex h-full flex-col">
         <Navbar
+          setHint={setHint}
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsDatePickerModalOpen={setIsDatePickerModalOpen}
@@ -423,3 +428,6 @@ function App() {
 }
 
 export default App
+function generateCryptogramHint() {
+  throw new Error('Function not implemented.')
+}
