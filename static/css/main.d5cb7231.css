@@ -770,6 +770,9 @@ select {
 .grid {
   display: grid;
 }
+.hidden {
+  display: none;
+}
 .h-14 {
   height: 3.5rem;
 }
@@ -912,6 +915,11 @@ select {
 }
 .overflow-y-auto {
   overflow-y: auto;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .whitespace-nowrap {
   white-space: nowrap;
@@ -2165,6 +2173,14 @@ svg.react-datepicker__day:hover {
 
 @media (min-width: 768px) {
 
+  .md\:block {
+    display: block;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
   .md\:max-w-7xl {
     max-width: 80rem;
   }
@@ -2237,4 +2253,4 @@ svg.react-datepicker__day:hover {
 }
 
 
-/*# sourceMappingURL=main.3d2b5574.css.map*/
+/*# sourceMappingURL=main.d5cb7231.css.map*/
