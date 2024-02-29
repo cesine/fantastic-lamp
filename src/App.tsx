@@ -95,7 +95,7 @@ function App() {
     if (loaded?.solution !== solution) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = loaded?.solution === solution
     if (gameWasWon) {
       setIsGameWon(true)
     }
@@ -199,27 +199,71 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (input: string, ariaLabel: string) => {
-    if (!isGameWon) {
-      console.log('input', input, 'ariaLabel', ariaLabel)
-      const label = ariaLabel || currentLetter
-      if (label && input && currentCipher[label]) {
-        const updatedCipher = { ...currentCipher }
+    if (isGameWon || isGameLost) {
+      return
+    }
+    console.log('input', input, 'ariaLabel', ariaLabel)
+    const label = ariaLabel || currentLetter
+    if (label && input && currentCipher[label]) {
+      const updatedCipher = { ...currentCipher }
 
-        updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
-        console.log('updated updatedCipher', updatedCipher)
-        setCurrentCipher(updatedCipher)
+      updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
+      setGuesses([...guesses, input])
+      console.log('updated updatedCipher', updatedCipher)
+      setCurrentCipher(updatedCipher)
+    }
+    if (!input && ariaLabel) {
+      setCurrentLetter(ariaLabel)
+    }
+    //  setCurrentGuess(`${currentGuess}${value}`)
+
+    let areAllLettersGuessed = true
+    let encryptedLetters: string[] = []
+    encryptedQuote.split('').map((letter) => {
+      if (!encryptedLetters.includes(letter)) {
+        encryptedLetters.push(letter)
       }
-      if (!input && ariaLabel) {
-        setCurrentLetter(ariaLabel)
+    })
+    encryptedLetters.map((key) => {
+      if (cipher[key] && cipher[key].decrypted !== cipher[key].guesses[0]) {
+        areAllLettersGuessed = false
       }
-      //  setCurrentGuess(`${currentGuess}${value}`)
+    })
+    if (areAllLettersGuessed) {
+      if (isLatestGame) {
+        setStats(addStatsForCompletedGame(stats, guesses.length))
+      }
+      setIsGameWon(true)
+    }
+
+    if (guesses.length > MAX_CHALLENGES - 1) {
+      if (isLatestGame) {
+        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+      }
+      setIsGameLost(true)
+      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+        persist: true,
+        delayMs: REVEAL_TIME_MS * solution.length + 1,
+      })
     }
   }
 
   const onDelete = () => {
-    /*  setCurrentGuess(
-        new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-      ) */
+    if (
+      currentLetter &&
+      currentCipher[currentLetter].guesses &&
+      currentCipher[currentLetter].guesses.length
+    ) {
+      const updatedCipher = { ...currentCipher }
+
+      updatedCipher[currentLetter].guesses = currentCipher[
+        currentLetter
+      ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      // could also remove from game guesses
+      // setGuesses(guesses.slice(1, guesses.length))
+      console.log('updated updatedCipher', updatedCipher)
+      setCurrentCipher(updatedCipher)
+    }
   }
 
   const onEnter = () => {
@@ -259,35 +303,6 @@ function App() {
      setTimeout(() => {
        setIsRevealing(false)
      }, REVEAL_TIME_MS * solution.length)
-
-     const winningWord = isWinningWord(currentGuess)
-
-     if (
-       unicodeLength(currentGuess) === solution.length &&
-       guesses.length < MAX_CHALLENGES &&
-       !isGameWon
-     ) {
-       setGuesses([...guesses, currentGuess])
-       setCurrentGuess('')
-
-       if (winningWord) {
-         if (isLatestGame) {
-           setStats(addStatsForCompletedGame(stats, guesses.length))
-         }
-         return setIsGameWon(true)
-       }
-
-       if (guesses.length === MAX_CHALLENGES - 1) {
-         if (isLatestGame) {
-           setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-         }
-         setIsGameLost(true)
-         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-           persist: true,
-           delayMs: REVEAL_TIME_MS * solution.length + 1,
-         })
-       }
-     }
      */
   }
 
