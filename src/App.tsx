@@ -208,7 +208,12 @@ function App() {
     }
     console.log('input', input, 'ariaLabel', ariaLabel)
     const label = ariaLabel || currentLetter
-    if (label && input && currentCipher[label]) {
+    if (
+      label &&
+      input &&
+      currentCipher[label] &&
+      input !== currentCipher[label].guesses[0]
+    ) {
       const updatedCipher = { ...currentCipher }
 
       updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
@@ -216,7 +221,7 @@ function App() {
       console.log('updated updatedCipher', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
-    if (!input && ariaLabel) {
+    if (ariaLabel) {
       setCurrentLetter(ariaLabel)
     }
     //  setCurrentGuess(`${currentGuess}${value}`)
@@ -234,6 +239,7 @@ function App() {
       }
     })
     if (areAllLettersGuessed) {
+      console.log('All the letters have been guessed', guesses)
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
       }
@@ -241,31 +247,35 @@ function App() {
     }
 
     if (guesses.length > MAX_CHALLENGES - 1) {
+      console.log('Guesses are more than the max', guesses, MAX_CHALLENGES)
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
       }
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
-        delayMs: REVEAL_TIME_MS * solution.length + 1,
+        delayMs: REVEAL_TIME_MS,
       })
     }
   }
 
   const onDelete = () => {
+    console.log('onDelete', currentLetter, currentCipher[currentLetter].guesses)
     if (
       currentLetter &&
       currentCipher[currentLetter].guesses &&
       currentCipher[currentLetter].guesses.length
     ) {
       const updatedCipher = { ...currentCipher }
+      const removedGuess = currentCipher[currentLetter].guesses[0]
+      console.log('removedGuess', removedGuess)
 
       updatedCipher[currentLetter].guesses = currentCipher[
         currentLetter
       ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
-      console.log('updated updatedCipher', updatedCipher)
+      console.log('updated updatedCipher after undo', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
   }
@@ -320,6 +330,7 @@ function App() {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
+      console.log('got an event', e.code)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
