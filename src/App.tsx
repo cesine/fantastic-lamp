@@ -255,13 +255,15 @@ function App() {
       currentCipher[currentLetter].guesses.length
     ) {
       const updatedCipher = { ...currentCipher }
+      const removedGuess = currentCipher[currentLetter].guesses[0]
+      console.log('removedGuess', removedGuess)
 
       updatedCipher[currentLetter].guesses = currentCipher[
         currentLetter
       ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
-      console.log('updated updatedCipher', updatedCipher)
+      console.log('updated updatedCipher after undo', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
   }
