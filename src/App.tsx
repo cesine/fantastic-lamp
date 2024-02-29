@@ -204,7 +204,12 @@ function App() {
     }
     console.log('input', input, 'ariaLabel', ariaLabel)
     const label = ariaLabel || currentLetter
-    if (label && input && currentCipher[label]) {
+    if (
+      label &&
+      input &&
+      currentCipher[label] &&
+      input !== currentCipher[label].guesses[0]
+    ) {
       const updatedCipher = { ...currentCipher }
 
       updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
@@ -212,7 +217,7 @@ function App() {
       console.log('updated updatedCipher', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
-    if (!input && ariaLabel) {
+    if (ariaLabel) {
       setCurrentLetter(ariaLabel)
     }
     //  setCurrentGuess(`${currentGuess}${value}`)
@@ -249,6 +254,7 @@ function App() {
   }
 
   const onDelete = () => {
+    console.log('onDelete', currentLetter, currentCipher[currentLetter].guesses)
     if (
       currentLetter &&
       currentCipher[currentLetter].guesses &&
@@ -310,6 +316,7 @@ function App() {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
+      console.log('got an event', e.code)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
