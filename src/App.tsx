@@ -35,7 +35,7 @@ import {
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
-import { encodePhrase, newCipher } from './lib/cipher'
+import { encodePhrase, generateCryptogramHint, newCipher } from './lib/cipher'
 import {
   getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
@@ -95,7 +95,7 @@ function App() {
     if (loaded?.solution !== solution) {
       return []
     }
-    const gameWasWon = loaded?.solution === solution
+    const gameWasWon = loaded?.gameWasWon
     if (gameWasWon) {
       setIsGameWon(true)
     }
@@ -173,7 +173,11 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
+    saveGameStateToLocalStorage(getIsLatestGame(), {
+      guesses,
+      gameWasWon: isGameWon,
+      solution,
+    })
   }, [guesses])
 
   useEffect(() => {
@@ -306,6 +310,14 @@ function App() {
      */
   }
 
+  const setHint = () => {
+    const hint = generateCryptogramHint(cipher, solution, 2)
+    console.log('hint is ', hint)
+    if (hint && hint.keyLetter && hint.originalLetter) {
+      onChar(hint?.originalLetter, hint?.keyLetter)
+    }
+  }
+
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.code === 'Enter') {
@@ -332,6 +344,7 @@ function App() {
     <Div100vh>
       <div className="flex h-full flex-col">
         <Navbar
+          setHint={setHint}
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsDatePickerModalOpen={setIsDatePickerModalOpen}
