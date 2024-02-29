@@ -35,7 +35,7 @@ test.describe.skip('reactle tests', () => {
     let shareClipboardText = await page.evaluate(
       'navigator.clipboard.readText()'
     )
-    expect(shareClipboardText).toContain('Clueright's Cryptogram')
+    expect(shareClipboardText).toContain('Clueright\'s Cryptogram')
     expect(shareClipboardText).toContain('⬜')
     expect(shareClipboardText).toContain('🟨')
     expect(shareClipboardText).toContain('🟩')
