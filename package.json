@@ -74,7 +74,7 @@
     "@types/react-datepicker": "^4.4.2",
     "autoprefixer": "^10.4.17",
     "eslint-plugin-storybook": "^0.6.15",
-    "husky": "^7.0.4",
+    "husky": "^9.0.11",
     "lint-staged": "^13.2.2",
     "postcss": "^8.4.5",
     "prettier": "^3.0.3",
