@@ -250,7 +250,7 @@ function App() {
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
-        delayMs: REVEAL_TIME_MS * solution.length + 1,
+        delayMs: REVEAL_TIME_MS,
       })
     }
   }
