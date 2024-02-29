@@ -8,10 +8,7 @@ const config: StorybookConfig = {
     disableTelemetry: true, // 👈 Disables telemetry
   },
   framework: {
-    name: path.resolve(
-      require.resolve('@storybook/react-webpack5/preset'),
-      '..'
-    ) as any,
+    name: '@storybook/react-webpack5',
     options: {
       builder: {
         useSWC: true,
