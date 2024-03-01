@@ -57,7 +57,7 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+const isMobile = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
   if (isMobile) {
