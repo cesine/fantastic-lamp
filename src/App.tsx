@@ -57,10 +57,10 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
-const isMobile = /Android/i.test(navigator.userAgent)
+const isAndroid = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
-  if (isMobile) {
+  if (isAndroid) {
     alert(args.join(' '))
   } else {
     console.log(args)
@@ -348,13 +348,18 @@ function App() {
   }
 
   useEffect(() => {
+    // if the user is on an Android device, we cant use keyboard events
+    if (isAndroid) {
+      return
+    }
+
     const listener = (e: KeyboardEvent) => {
       debug('got an event code', e.code)
       debug('got an event key', e.key)
-      debug('got an event charCode', e.charCode)
-      debug('got an event altKey', e.altKey)
-      debug('got an event keyCode', e.keyCode)
-      debug('got an event which', e.which)
+      // debug('got an event charCode', e.charCode)
+      // debug('got an event altKey', e.altKey)
+      // debug('got an event keyCode', e.keyCode)
+      // debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
