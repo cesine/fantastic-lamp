@@ -57,13 +57,13 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
-const isMobile = /Android/i.test(navigator.userAgent)
+const isAndroid = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
-  if (isMobile) {
+  if (isAndroid) {
     alert(args.join(' '))
   } else {
-    console.log(args)
+    console.log([...args])
   }
 }
 
@@ -370,21 +370,39 @@ function App() {
       }
     }
 
-    const input = document.getElementById('the-android-workaround')
-    if (input) {
-      // function updateValue(e: KeyboardEvent) {
-      //   const value = e?.target?.value;
-      //   console.log('value', value)
-      // }
-      input.addEventListener('input', listener as EventListener)
+    if (true || isAndroid) {
+      // On android workaround for key events missing key
+      const inputListener = (e: InputEvent) => {
+        debug('got an event data', e.data)
+        if (e.inputType === 'Enter') {
+          onEnter()
+        } else if (e.inputType === 'deleteContentBackward') {
+          onDelete()
+        } else if (e.data) {
+          const key = localeAwareUpperCase(e.data)
+          // TODO: check this test if the range works with non-english letters
+          if (key.length === 1 && key >= 'A' && key <= 'Z') {
+            const label = (e?.target as HTMLButtonElement)?.ariaLabel || ''
 
-      // window.addEventListener('keyup', listener)
-      return () => {
-        input.removeEventListener('input', listener as EventListener)
-        // window.removeEventListener('keyup', listener)
+            onChar(key, label)
+          }
+        }
+      }
+
+      const input = document.getElementById('the-android-workaround')
+      if (input) {
+        input.addEventListener('input', inputListener as EventListener)
+        return () => {
+          input.removeEventListener('input', inputListener as EventListener)
+        }
+      } else {
+        debug('the the-android-workaround input was not found')
       }
     } else {
-      debug('the the-android-workaround input was not found')
+      window.addEventListener('keyup', listener)
+      return () => {
+        window.removeEventListener('keyup', listener)
+      }
     }
   }, [onEnter, onDelete, onChar])
 
