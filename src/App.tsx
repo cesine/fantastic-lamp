@@ -57,6 +57,15 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+const debug = (...args: any[]) => {
+  if (isMobile) {
+    alert(args.join(' '))
+  } else {
+    console.log(args)
+  }
+}
 
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 
@@ -107,6 +116,7 @@ function App() {
     }
     return loaded.guesses
   })
+  const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([])
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -176,9 +186,10 @@ function App() {
     saveGameStateToLocalStorage(getIsLatestGame(), {
       guesses,
       gameWasWon: isGameWon,
+      incorrectGuesses,
       solution,
     })
-  }, [guesses])
+  }, [guesses, incorrectGuesses])
 
   useEffect(() => {
     if (isGameWon) {
@@ -218,6 +229,10 @@ function App() {
 
       updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
       setGuesses([...guesses, input])
+      if (input !== updatedCipher[label].decrypted) {
+        console.log('This was an incorrect guess', input)
+        setIncorrectGuesses([...incorrectGuesses, input])
+      }
       console.log('updated updatedCipher', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
@@ -246,10 +261,14 @@ function App() {
       setIsGameWon(true)
     }
 
-    if (guesses.length > MAX_CHALLENGES - 1) {
-      console.log('Guesses are more than the max', guesses, MAX_CHALLENGES)
+    if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
+      console.log(
+        'Incorrect guesses are more than the max',
+        incorrectGuesses,
+        MAX_CHALLENGES
+      )
       if (isLatestGame) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+        setStats(addStatsForCompletedGame(stats, incorrectGuesses.length + 1))
       }
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
