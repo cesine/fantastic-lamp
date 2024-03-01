@@ -20,6 +20,16 @@ type Props = {
   onClick: (input: string, ariaLabel: string) => void
 }
 
+const isMobile = /Android/i.test(navigator.userAgent)
+
+const debug = (...args: any[]) => {
+  if (isMobile) {
+    alert(args.join(' '))
+  } else {
+    console.log(args)
+  }
+}
+
 export const Cell = ({
   encryptedValue,
   decryptedValue,
@@ -93,6 +103,16 @@ export const Cell = ({
     setRevealLetter(true)
     window.removeEventListener('keydown', handleKeyDown)
   }
+
+  function onInput(event: React.FormEvent<HTMLInputElement>) {
+    const target = event.target as HTMLInputElement
+    const value = target.value
+    debug('onInput', value, encryptedValue)
+    onClick(value.toLocaleUpperCase(), encryptedValue)
+    // clear the hidden input for the next letter
+    target.value = ''
+  }
+
   return (
     <div className="inline-flex flex-col">
       <div
@@ -106,6 +126,7 @@ export const Cell = ({
           ref={hiddenInputRef}
           style={{ position: 'absolute', top: '-9999px' }}
           type="text"
+          onInput={onInput}
         />
       </div>
 
