@@ -349,7 +349,7 @@ function App() {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      debug('got an event', e.code)
+      debug('got an event', e.code, e.key)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
