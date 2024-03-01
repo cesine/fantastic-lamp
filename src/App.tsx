@@ -57,6 +57,15 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
 const cipher = newCipher()
+const isMobile = /Android/i.test(navigator.userAgent)
+
+const debug = (...args: any[]) => {
+  if (isMobile) {
+    alert(args.join(' '))
+  } else {
+    console.log(args)
+  }
+}
 
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 
@@ -107,6 +116,7 @@ function App() {
     }
     return loaded.guesses
   })
+  const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([])
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -176,9 +186,10 @@ function App() {
     saveGameStateToLocalStorage(getIsLatestGame(), {
       guesses,
       gameWasWon: isGameWon,
+      incorrectGuesses,
       solution,
     })
-  }, [guesses])
+  }, [guesses, incorrectGuesses])
 
   useEffect(() => {
     if (isGameWon) {
@@ -206,7 +217,7 @@ function App() {
     if (isGameWon || isGameLost) {
       return
     }
-    console.log('input', input, 'ariaLabel', ariaLabel)
+    debug('input', input, 'ariaLabel', ariaLabel)
     const label = ariaLabel || currentLetter
     if (
       label &&
@@ -218,7 +229,11 @@ function App() {
 
       updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
       setGuesses([...guesses, input])
-      console.log('updated updatedCipher', updatedCipher)
+      if (input !== updatedCipher[label].decrypted) {
+        debug('This was an incorrect guess', input)
+        setIncorrectGuesses([...incorrectGuesses, input])
+      }
+      debug('updated updatedCipher', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
     if (ariaLabel) {
@@ -239,17 +254,21 @@ function App() {
       }
     })
     if (areAllLettersGuessed) {
-      console.log('All the letters have been guessed', guesses)
+      debug('All the letters have been guessed', guesses)
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
       }
       setIsGameWon(true)
     }
 
-    if (guesses.length > MAX_CHALLENGES - 1) {
-      console.log('Guesses are more than the max', guesses, MAX_CHALLENGES)
+    if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
+      debug(
+        'Incorrect guesses are more than the max',
+        incorrectGuesses,
+        MAX_CHALLENGES
+      )
       if (isLatestGame) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+        setStats(addStatsForCompletedGame(stats, incorrectGuesses.length + 1))
       }
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
@@ -260,7 +279,7 @@ function App() {
   }
 
   const onDelete = () => {
-    console.log('onDelete', currentLetter, currentCipher[currentLetter].guesses)
+    debug('onDelete', currentLetter, currentCipher[currentLetter].guesses)
     if (
       currentLetter &&
       currentCipher[currentLetter].guesses &&
@@ -268,14 +287,14 @@ function App() {
     ) {
       const updatedCipher = { ...currentCipher }
       const removedGuess = currentCipher[currentLetter].guesses[0]
-      console.log('removedGuess', removedGuess)
+      debug('removedGuess', removedGuess)
 
       updatedCipher[currentLetter].guesses = currentCipher[
         currentLetter
       ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
-      console.log('updated updatedCipher after undo', updatedCipher)
+      debug('updated updatedCipher after undo', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
   }
@@ -322,7 +341,7 @@ function App() {
 
   const setHint = () => {
     const hint = generateCryptogramHint(cipher, solution, 2)
-    console.log('hint is ', hint)
+    debug('hint is ', hint)
     if (hint && hint.keyLetter && hint.originalLetter) {
       onChar(hint?.originalLetter, hint?.keyLetter)
     }
@@ -330,7 +349,12 @@ function App() {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      console.log('got an event', e.code)
+      debug('got an event code', e.code)
+      debug('got an event key', e.key)
+      debug('got an event charCode', e.charCode)
+      debug('got an event altKey', e.altKey)
+      debug('got an event keyCode', e.keyCode)
+      debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
