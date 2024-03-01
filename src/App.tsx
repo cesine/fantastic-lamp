@@ -369,9 +369,22 @@ function App() {
         }
       }
     }
-    window.addEventListener('keyup', listener)
-    return () => {
-      window.removeEventListener('keyup', listener)
+
+    const input = document.getElementById('the-android-workaround')
+    if (input) {
+      // function updateValue(e: KeyboardEvent) {
+      //   const value = e?.target?.value;
+      //   console.log('value', value)
+      // }
+      input.addEventListener('input', listener as EventListener)
+
+      // window.addEventListener('keyup', listener)
+      return () => {
+        input.removeEventListener('input', listener as EventListener)
+        // window.removeEventListener('keyup', listener)
+      }
+    } else {
+      debug('the the-android-workaround input was not found')
     }
   }, [onEnter, onDelete, onChar])
 
