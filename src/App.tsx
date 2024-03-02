@@ -116,6 +116,14 @@ function App() {
         persist: true,
       })
     }
+    setTimeout(() => {
+      // render all the guesses
+      Object.keys(cipher).forEach((key) => {
+        if (guesses.includes(cipher[key].decrypted)) {
+          onChar(key, cipher[key].decrypted)
+        }
+      })
+    }, 100)
     return loaded.guesses
   })
   const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([])
@@ -197,7 +205,7 @@ function App() {
     if (isGameWon) {
       const winMessage =
         WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
-      const delayMs = REVEAL_TIME_MS * solution.length
+      const delayMs = REVEAL_TIME_MS * 5
 
       showSuccessAlert(winMessage, {
         delayMs,
@@ -210,7 +218,7 @@ function App() {
         () => {
           setIsStatsModalOpen(true)
         },
-        (solution.length + 1) * REVEAL_TIME_MS
+        (5 + 1) * REVEAL_TIME_MS
       )
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
