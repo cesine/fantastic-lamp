@@ -13,6 +13,7 @@ import { DatePickerModal } from './components/modals/DatePickerModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
+import { ShareMessageModal } from './components/modals/ShareMessageModal'
 import { StatsModal } from './components/modals/StatsModal'
 import { Navbar } from './components/navbar/Navbar'
 import {
@@ -83,7 +84,9 @@ function App() {
   const [currentCipher, setCurrentCipher] = useState(cipher)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [isSendMessageModalOpen, setIsSendMessageModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
+
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
@@ -391,6 +394,7 @@ function App() {
         <Navbar
           setHint={setHint}
           setIsInfoModalOpen={setIsInfoModalOpen}
+          setIsSendMessageModalOpen={setIsSendMessageModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsDatePickerModalOpen={setIsDatePickerModalOpen}
           setIsSettingsModalOpen={setIsSettingsModalOpen}
@@ -458,6 +462,10 @@ function App() {
               setGameDate(d)
             }}
             handleClose={() => setIsDatePickerModalOpen(false)}
+          />
+          <ShareMessageModal
+            isOpen={isSendMessageModalOpen}
+            handleClose={() => setIsSendMessageModalOpen(false)}
           />
           <MigrateStatsModal
             isOpen={isMigrateStatsModalOpen}
