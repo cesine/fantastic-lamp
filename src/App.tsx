@@ -52,11 +52,12 @@ import {
   setGameDate,
   solution,
   solutionGameDate,
+  solutionIndex,
   unicodeLength,
 } from './lib/quotes'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
-const cipher = newCipher()
+const cipher = newCipher(solutionIndex)
 const isMobile = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
@@ -70,6 +71,7 @@ const debug = (...args: any[]) => {
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 
 function App() {
+  const queryParams = new URLSearchParams(window.location.search)
   const isLatestGame = getIsLatestGame()
   const gameDate = getGameDate()
   const prefersDarkMode = window.matchMedia(
