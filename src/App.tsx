@@ -63,6 +63,12 @@ const debug = (...args: any[]) => {
 }
 
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
+const encryptedLetters: string[] = []
+encryptedQuote.split('').forEach((letter) => {
+  if (!encryptedLetters.includes(letter)) {
+    encryptedLetters.push(letter)
+  }
+})
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -114,7 +120,7 @@ function App() {
       // render all the guesses
       Object.keys(cipher).forEach((key) => {
         if (guesses.includes(cipher[key].decrypted)) {
-          onChar(key, cipher[key].decrypted)
+          onChar(cipher[key].decrypted, key)
         }
       })
     }, 100)
@@ -244,12 +250,6 @@ function App() {
       //  setCurrentGuess(`${currentGuess}${value}`)
 
       let areAllLettersGuessed = true
-      let encryptedLetters: string[] = []
-      encryptedQuote.split('').forEach((letter) => {
-        if (!encryptedLetters.includes(letter)) {
-          encryptedLetters.push(letter)
-        }
-      })
       encryptedLetters.forEach((key) => {
         if (cipher[key] && cipher[key].decrypted !== cipher[key].guesses[0]) {
           areAllLettersGuessed = false
@@ -258,7 +258,8 @@ function App() {
       if (areAllLettersGuessed) {
         debug('All the letters have been guessed', guesses)
         if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length))
+          // TODO this is causing the stats to be multiples of page reloads
+          setStats(addStatsForCompletedGame(stats, incorrectGuesses.length))
         }
         setIsGameWon(true)
       }
@@ -354,7 +355,7 @@ function App() {
   }, [])
 
   const setHint = () => {
-    const hint = generateCryptogramHint(cipher, solution, 2)
+    const hint = generateCryptogramHint(cipher, solution, solutionIndex)
     debug('hint is ', hint)
     if (hint && hint.keyLetter && hint.originalLetter) {
       onChar(hint?.originalLetter, hint?.keyLetter)
@@ -452,7 +453,7 @@ function App() {
             isHardMode={isHardMode}
             isDarkMode={isDarkMode}
             isHighContrastMode={isHighContrastMode}
-            numberOfGuessesMade={guesses.length}
+            numberOfGuessesMade={incorrectGuesses.length}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
