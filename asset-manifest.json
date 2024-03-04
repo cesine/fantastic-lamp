@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.2c8f0387.css",
-    "main.js": "/static/js/main.ac48fc07.js",
-    "static/js/496.e99ae76d.chunk.js": "/static/js/496.e99ae76d.chunk.js",
-    "index.html": "/index.html",
-    "main.2c8f0387.css.map": "/static/css/main.2c8f0387.css.map",
-    "main.ac48fc07.js.map": "/static/js/main.ac48fc07.js.map",
-    "496.e99ae76d.chunk.js.map": "/static/js/496.e99ae76d.chunk.js.map"
+    "main.css": "/crytpogram/static/css/main.2c8f0387.css",
+    "main.js": "/crytpogram/static/js/main.6b50e664.js",
+    "static/js/496.e99ae76d.chunk.js": "/crytpogram/static/js/496.e99ae76d.chunk.js",
+    "index.html": "/crytpogram/index.html",
+    "main.2c8f0387.css.map": "/crytpogram/static/css/main.2c8f0387.css.map",
+    "main.6b50e664.js.map": "/crytpogram/static/js/main.6b50e664.js.map",
+    "496.e99ae76d.chunk.js.map": "/crytpogram/static/js/496.e99ae76d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2c8f0387.css",
-    "static/js/main.ac48fc07.js"
+    "static/js/main.6b50e664.js"
   ]
 }
