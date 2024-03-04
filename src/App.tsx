@@ -2,8 +2,7 @@ import './App.css'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
 import { format } from 'date-fns'
-import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -29,10 +28,8 @@ import {
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
-  NOT_ENOUGH_LETTERS_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
-  WORD_NOT_FOUND_MESSAGE,
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
@@ -44,17 +41,13 @@ import {
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
 import {
-  findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  isQuoteInQuoteList,
-  isWinningQuote,
   localeAwareUpperCase,
   setGameDate,
   solution,
   solutionGameDate,
   solutionIndex,
-  unicodeLength,
 } from './lib/quotes'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 
@@ -72,7 +65,6 @@ const debug = (...args: any[]) => {
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 
 function App() {
-  const queryParams = new URLSearchParams(window.location.search)
   const isLatestGame = getIsLatestGame()
   const gameDate = getGameDate()
   const prefersDarkMode = window.matchMedia(
@@ -90,7 +82,6 @@ function App() {
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
-  const [currentRowClass, setCurrentRowClass] = useState('')
   const [isGameLost, setIsGameLost] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme')
@@ -191,10 +182,6 @@ function App() {
     setStoredIsHighContrastMode(isHighContrast)
   }
 
-  const clearCurrentRowClass = () => {
-    setCurrentRowClass('')
-  }
-
   useEffect(() => {
     saveGameStateToLocalStorage(getIsLatestGame(), {
       guesses,
@@ -202,7 +189,7 @@ function App() {
       incorrectGuesses,
       solution,
     })
-  }, [guesses, incorrectGuesses])
+  }, [guesses, incorrectGuesses, isGameWon])
 
   useEffect(() => {
     if (isGameWon) {
@@ -226,72 +213,86 @@ function App() {
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
-  const onChar = (input: string, ariaLabel: string) => {
-    if (isGameWon || isGameLost) {
-      return
-    }
-    debug('input', input, 'ariaLabel', ariaLabel)
-    const label = ariaLabel || currentLetter
-    if (
-      label &&
-      input &&
-      currentCipher[label] &&
-      input !== currentCipher[label].guesses[0]
-    ) {
-      const updatedCipher = { ...currentCipher }
+  const onChar = useCallback(
+    (input: string, ariaLabel: string) => {
+      if (isGameWon || isGameLost) {
+        return
+      }
+      debug('input', input, 'ariaLabel', ariaLabel)
+      const label = ariaLabel || currentLetter
+      if (
+        label &&
+        input &&
+        currentCipher[label] &&
+        input !== currentCipher[label].guesses[0]
+      ) {
+        const updatedCipher = { ...currentCipher }
 
-      updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
-      setGuesses([...guesses, input])
-      if (input !== updatedCipher[label].decrypted) {
-        debug('This was an incorrect guess', input)
-        setIncorrectGuesses([...incorrectGuesses, input])
+        updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
+        setGuesses([...guesses, input])
+        if (input !== updatedCipher[label].decrypted) {
+          debug('This was an incorrect guess', input)
+          setIncorrectGuesses([...incorrectGuesses, input])
+          setIsRevealing(true)
+        }
+        debug('updated updatedCipher', updatedCipher)
+        setCurrentCipher(updatedCipher)
       }
-      debug('updated updatedCipher', updatedCipher)
-      setCurrentCipher(updatedCipher)
-    }
-    if (ariaLabel) {
-      setCurrentLetter(ariaLabel)
-    }
-    //  setCurrentGuess(`${currentGuess}${value}`)
+      if (ariaLabel) {
+        setCurrentLetter(ariaLabel)
+      }
+      //  setCurrentGuess(`${currentGuess}${value}`)
 
-    let areAllLettersGuessed = true
-    let encryptedLetters: string[] = []
-    encryptedQuote.split('').map((letter) => {
-      if (!encryptedLetters.includes(letter)) {
-        encryptedLetters.push(letter)
-      }
-    })
-    encryptedLetters.map((key) => {
-      if (cipher[key] && cipher[key].decrypted !== cipher[key].guesses[0]) {
-        areAllLettersGuessed = false
-      }
-    })
-    if (areAllLettersGuessed) {
-      debug('All the letters have been guessed', guesses)
-      if (isLatestGame) {
-        setStats(addStatsForCompletedGame(stats, guesses.length))
-      }
-      setIsGameWon(true)
-    }
-
-    if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
-      debug(
-        'Incorrect guesses are more than the max',
-        incorrectGuesses,
-        MAX_CHALLENGES
-      )
-      if (isLatestGame) {
-        setStats(addStatsForCompletedGame(stats, incorrectGuesses.length + 1))
-      }
-      setIsGameLost(true)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        persist: true,
-        delayMs: REVEAL_TIME_MS,
+      let areAllLettersGuessed = true
+      let encryptedLetters: string[] = []
+      encryptedQuote.split('').forEach((letter) => {
+        if (!encryptedLetters.includes(letter)) {
+          encryptedLetters.push(letter)
+        }
       })
-    }
-  }
+      encryptedLetters.forEach((key) => {
+        if (cipher[key] && cipher[key].decrypted !== cipher[key].guesses[0]) {
+          areAllLettersGuessed = false
+        }
+      })
+      if (areAllLettersGuessed) {
+        debug('All the letters have been guessed', guesses)
+        if (isLatestGame) {
+          setStats(addStatsForCompletedGame(stats, guesses.length))
+        }
+        setIsGameWon(true)
+      }
 
-  const onDelete = () => {
+      if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
+        debug(
+          'Incorrect guesses are more than the max',
+          incorrectGuesses,
+          MAX_CHALLENGES
+        )
+        if (isLatestGame) {
+          setStats(addStatsForCompletedGame(stats, incorrectGuesses.length + 1))
+        }
+        setIsGameLost(true)
+        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+          persist: true,
+          delayMs: REVEAL_TIME_MS,
+        })
+      }
+    },
+    [
+      currentLetter,
+      currentCipher,
+      guesses,
+      incorrectGuesses,
+      isGameWon,
+      isGameLost,
+      isLatestGame,
+      showErrorAlert,
+      stats,
+    ]
+  )
+
+  const onDelete = useCallback(() => {
     debug('onDelete', currentLetter, currentCipher[currentLetter].guesses)
     if (
       currentLetter &&
@@ -310,9 +311,9 @@ function App() {
       debug('updated updatedCipher after undo', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
-  }
+  }, [currentLetter, currentCipher])
 
-  const onEnter = () => {
+  const onEnter = useCallback(() => {
     /*
      if (isGameWon || isGameLost) {
        return
@@ -350,7 +351,7 @@ function App() {
        setIsRevealing(false)
      }, REVEAL_TIME_MS * solution.length)
      */
-  }
+  }, [])
 
   const setHint = () => {
     const hint = generateCryptogramHint(cipher, solution, 2)
@@ -416,7 +417,6 @@ function App() {
               cipher={currentCipher}
               encryptedQuote={encryptedQuote}
               isRevealing={isRevealing}
-              currentRowClassName={currentRowClass}
             />
           </div>
           <Alphabet
