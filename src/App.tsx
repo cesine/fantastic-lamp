@@ -406,10 +406,26 @@ function App() {
   }, [])
 
   const setHint = () => {
-    const hint = generateCryptogramHint(cipher, solution, solutionIndex)
-    debug('hint is ', hint)
+    let hintCount = 0
+    let hint = generateCryptogramHint(cipher, solution, solutionIndex)
+    while (
+      hintCount < 10 &&
+      hint &&
+      hint.keyLetter &&
+      hint.originalLetter &&
+      currentCipher[hint.keyLetter].guesses[0] === hint.originalLetter
+    ) {
+      debug('hint is ', hint)
+      hintCount++
+      hint = generateCryptogramHint(cipher, solution, solutionIndex + hintCount)
+    }
     if (hint && hint.keyLetter && hint.originalLetter) {
       onChar(hint?.originalLetter, hint?.keyLetter)
+    }
+    if (hintCount >= 10) {
+      showErrorAlert('No more hints available.', {
+        persist: false,
+      })
     }
   }
 
