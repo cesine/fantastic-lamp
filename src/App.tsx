@@ -33,7 +33,12 @@ import {
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
-import { encodePhrase, generateCryptogramHint, newCipher } from './lib/cipher'
+import {
+  ALPHABET,
+  encodePhrase,
+  generateCryptogramHint,
+  newCipher,
+} from './lib/cipher'
 import {
   getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
@@ -64,11 +69,20 @@ const debug = (...args: any[]) => {
 
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 const encryptedLetters: string[] = []
+const solutionLetters: string[] = []
 encryptedQuote.split('').forEach((letter) => {
-  if (!encryptedLetters.includes(letter)) {
+  if (cipher[letter] && !encryptedLetters.includes(letter)) {
     encryptedLetters.push(letter)
   }
 })
+solution
+  .toLocaleUpperCase()
+  .split('')
+  .forEach((letter) => {
+    if (ALPHABET.includes(letter) && !solutionLetters.includes(letter)) {
+      solutionLetters.push(letter)
+    }
+  })
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -235,6 +249,15 @@ function App() {
         const updatedCipher = { ...currentCipher }
 
         updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
+        if (!isHardMode) {
+          if (input === updatedCipher[label].decrypted) {
+            updatedCipher[label].status = 'correct'
+          } else if (solutionLetters.includes(input)) {
+            updatedCipher[label].status = 'present'
+          } else {
+            updatedCipher[label].status = 'absent'
+          }
+        }
         setGuesses([...guesses, input])
         if (input !== updatedCipher[label].decrypted) {
           debug('This was an incorrect guess', input)
