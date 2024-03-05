@@ -117,6 +117,7 @@ function App() {
   )
   const [isRevealing, setIsRevealing] = useState(false)
   const [currentLetter, setCurrentLetter] = useState('')
+  const [incorrectGuesses, setIncorrectGuesses] = useState<Guess[]>([])
   const [guesses, setGuesses] = useState<Guess[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
     if (loaded?.solution !== solution) {
@@ -133,6 +134,10 @@ function App() {
       })
     }
     setTimeout(() => {
+      // restore incorrect guesses
+      loaded.incorrectGuesses.forEach(({ input, label }) => {
+        onChar(input, label as string)
+      })
       // render all the (correct) guesses
       guesses.forEach(({ input }) => {
         Object.keys(cipher).forEach((key) => {
@@ -146,11 +151,10 @@ function App() {
           }
         })
       })
-      // TODO also restore incorrect guesses
+      setIncorrectGuesses(loaded.incorrectGuesses)
     }, 100)
     return loaded.guesses
   })
-  const [incorrectGuesses, setIncorrectGuesses] = useState<Guess[]>([])
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -342,6 +346,7 @@ function App() {
       updatedCipher[currentLetter].guesses = currentCipher[
         currentLetter
       ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      updatedCipher[currentLetter].status = undefined
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
       debug('updated updatedCipher after undo', updatedCipher)
