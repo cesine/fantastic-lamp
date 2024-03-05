@@ -30,6 +30,7 @@ import {
   HARD_MODE_ALERT_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
+  YOU_HAVE_ALREADY_GUESSED_MESSAGE,
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
@@ -261,6 +262,16 @@ function App() {
         input !== currentCipher[label].guesses[0]
       ) {
         const updatedCipher = { ...currentCipher }
+
+        // let alreadyGuessed = false
+        Object.keys(updatedCipher).forEach((key) => {
+          if (label !== key && updatedCipher[key].guesses[0] === input) {
+            // alreadyGuessed = true
+            showErrorAlert(YOU_HAVE_ALREADY_GUESSED_MESSAGE(input, key), {
+              persist: false,
+            })
+          }
+        })
 
         updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
         let status: CharStatus | undefined = undefined
