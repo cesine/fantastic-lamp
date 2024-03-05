@@ -33,8 +33,14 @@ import {
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
-import { encodePhrase, generateCryptogramHint, newCipher } from './lib/cipher'
 import {
+  ALPHABET,
+  encodePhrase,
+  generateCryptogramHint,
+  newCipher,
+} from './lib/cipher'
+import {
+  Guess,
   getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
@@ -50,6 +56,7 @@ import {
   solutionIndex,
 } from './lib/quotes'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
+import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
 const isMobile = /Android/i.test(navigator.userAgent)
@@ -64,11 +71,20 @@ const debug = (...args: any[]) => {
 
 const encryptedQuote = encodePhrase({ cipher, phrase: solution })
 const encryptedLetters: string[] = []
+const solutionLetters: string[] = []
 encryptedQuote.split('').forEach((letter) => {
-  if (!encryptedLetters.includes(letter)) {
+  if (cipher[letter] && !encryptedLetters.includes(letter)) {
     encryptedLetters.push(letter)
   }
 })
+solution
+  .toLocaleUpperCase()
+  .split('')
+  .forEach((letter) => {
+    if (ALPHABET.includes(letter) && !solutionLetters.includes(letter)) {
+      solutionLetters.push(letter)
+    }
+  })
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -101,7 +117,8 @@ function App() {
   )
   const [isRevealing, setIsRevealing] = useState(false)
   const [currentLetter, setCurrentLetter] = useState('')
-  const [guesses, setGuesses] = useState<string[]>(() => {
+  const [incorrectGuesses, setIncorrectGuesses] = useState<Guess[]>([])
+  const [guesses, setGuesses] = useState<Guess[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
     if (loaded?.solution !== solution) {
       return []
@@ -117,16 +134,27 @@ function App() {
       })
     }
     setTimeout(() => {
-      // render all the guesses
-      Object.keys(cipher).forEach((key) => {
-        if (guesses.includes(cipher[key].decrypted)) {
-          onChar(cipher[key].decrypted, key)
-        }
+      // restore incorrect guesses
+      loaded.incorrectGuesses.forEach(({ input, label }) => {
+        onChar(input, label as string)
       })
+      // render all the (correct) guesses
+      guesses.forEach(({ input }) => {
+        Object.keys(cipher).forEach((key) => {
+          if (input === cipher[key].decrypted) {
+            onChar(cipher[key].decrypted, key)
+          } else {
+            debug(
+              'this was an incorrect guess, we arent sure where to put it ',
+              input
+            )
+          }
+        })
+      })
+      setIncorrectGuesses(loaded.incorrectGuesses)
     }, 100)
     return loaded.guesses
   })
-  const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([])
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -235,10 +263,21 @@ function App() {
         const updatedCipher = { ...currentCipher }
 
         updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
-        setGuesses([...guesses, input])
+        let status: CharStatus | undefined = undefined
+        if (input === updatedCipher[label].decrypted) {
+          status = 'correct'
+          updatedCipher[label].status = status
+        } else if (solutionLetters.includes(input)) {
+          status = 'present'
+          updatedCipher[label].status = status
+        } else {
+          status = 'absent'
+          updatedCipher[label].status = status
+        }
+        setGuesses([...guesses, { input, status }])
         if (input !== updatedCipher[label].decrypted) {
           debug('This was an incorrect guess', input)
-          setIncorrectGuesses([...incorrectGuesses, input])
+          setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
           setIsRevealing(true)
         }
         debug('updated updatedCipher', updatedCipher)
@@ -307,6 +346,7 @@ function App() {
       updatedCipher[currentLetter].guesses = currentCipher[
         currentLetter
       ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      updatedCipher[currentLetter].status = undefined
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
       debug('updated updatedCipher after undo', updatedCipher)
@@ -418,6 +458,7 @@ function App() {
               cipher={currentCipher}
               encryptedQuote={encryptedQuote}
               isRevealing={isRevealing}
+              isHardMode={isHardMode}
             />
           </div>
           <Alphabet
