@@ -20,6 +20,7 @@ import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   MAX_CHALLENGES,
+  MAX_HINTS,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -409,7 +410,7 @@ function App() {
     let hintCount = 0
     let hint = generateCryptogramHint(cipher, solution, solutionIndex)
     while (
-      hintCount < 10 &&
+      hintCount <= (isHardMode ? MAX_HINTS : 10) &&
       hint &&
       hint.keyLetter &&
       hint.originalLetter &&
