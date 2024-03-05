@@ -235,10 +235,10 @@ function App() {
       ) {
         const updatedCipher = { ...currentCipher }
 
-        let alreadyGuessed = false
+        // let alreadyGuessed = false
         Object.keys(updatedCipher).forEach((key) => {
           if (label !== key && updatedCipher[key].guesses[0] === input) {
-            alreadyGuessed = true
+            // alreadyGuessed = true
             showErrorAlert(YOU_HAVE_ALREADY_GUESSED_MESSAGE(input, key), {
               persist: false,
             })
