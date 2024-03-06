@@ -20,6 +20,7 @@ import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   MAX_CHALLENGES,
+  MAX_HINTS,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -406,10 +407,26 @@ function App() {
   }, [])
 
   const setHint = () => {
-    const hint = generateCryptogramHint(cipher, solution, solutionIndex)
-    debug('hint is ', hint)
+    let hintCount = 0
+    let hint = generateCryptogramHint(cipher, solution, solutionIndex)
+    while (
+      hintCount <= (isHardMode ? MAX_HINTS : 10) &&
+      hint &&
+      hint.keyLetter &&
+      hint.originalLetter &&
+      currentCipher[hint.keyLetter].guesses[0] === hint.originalLetter
+    ) {
+      debug('hint is ', hint)
+      hintCount++
+      hint = generateCryptogramHint(cipher, solution, solutionIndex + hintCount)
+    }
     if (hint && hint.keyLetter && hint.originalLetter) {
       onChar(hint?.originalLetter, hint?.keyLetter)
+    }
+    if (hintCount >= 10) {
+      showErrorAlert('No more hints available.', {
+        persist: false,
+      })
     }
   }
 
