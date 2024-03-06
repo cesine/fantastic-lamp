@@ -295,6 +295,7 @@ function App() {
           status = 'correct'
           updatedCipher[label].status = status
           if (!userHasGuessedALetter) {
+            userHasGuessedALetter = true
             window.gtag('event', 'unlock_achievement', {
               achievement_id: 'make_correct_guess',
             })
@@ -309,6 +310,7 @@ function App() {
         setGuesses([...guesses, { input, status }])
         if (input !== updatedCipher[label].decrypted) {
           if (!userHasIncorrectlyGuessedALetter) {
+            userHasIncorrectlyGuessedALetter = true
             window.gtag('event', 'unlock_achievement', {
               achievement_id: 'make_incorrect_guess',
             })
