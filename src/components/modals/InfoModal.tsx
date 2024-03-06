@@ -9,10 +9,21 @@ type Props = {
 const onClick = (input: string, ariaLabel: string) => {
   alert(`You clicked on ${ariaLabel}`)
 }
+let firstTutorial = true
 
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
+  if (isOpen && firstTutorial) {
+    firstTutorial = false
+    window.gtag('event', 'tutorial_begin')
+  }
+
+  function onCloseClick() {
+    window.gtag('event', 'tutorial_complete')
+    return handleClose()
+  }
+
   return (
-    <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal title="How to play" isOpen={isOpen} handleClose={onCloseClick}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         Guess the letter. After each guess, the color of the tile will change to
         show how close your guess was to the word.

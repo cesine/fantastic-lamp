@@ -56,6 +56,7 @@ import {
   solution,
   solutionGameDate,
   solutionIndex,
+  solutionName,
 } from './lib/quotes'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
@@ -87,6 +88,8 @@ solution
       solutionLetters.push(letter)
     }
   })
+let userHasGuessedALetter = false
+let userHasIncorrectlyGuessedALetter = false
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -201,21 +204,33 @@ function App() {
 
   const handleDarkMode = (isDark: boolean) => {
     setIsDarkMode(isDark)
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    const colorMode = isDark ? 'dark' : 'light'
+    localStorage.setItem('theme', colorMode)
+    window.gtag('event', 'unlock_achievement', {
+      achievement_id: `choose_${colorMode}_mode`,
+    })
   }
 
   const handleHardMode = (isHard: boolean) => {
     if (guesses.length === 0 || localStorage.getItem('gameMode') === 'hard') {
       setIsHardMode(isHard)
-      localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+      const gameMode = isHard ? 'hard' : 'normal'
+      localStorage.setItem('gameMode', gameMode)
+      window.gtag('event', 'unlock_achievement', {
+        achievement_id: `choose_${gameMode}_mode`,
+      })
     } else {
       showErrorAlert(HARD_MODE_ALERT_MESSAGE)
     }
   }
 
   const handleHighContrastMode = (isHighContrast: boolean) => {
+    const colorMode = isHighContrast ? 'high_contrast' : 'normal_contrast'
     setIsHighContrastMode(isHighContrast)
     setStoredIsHighContrastMode(isHighContrast)
+    window.gtag('event', 'unlock_achievement', {
+      achievement_id: `choose_${colorMode}`,
+    })
   }
 
   useEffect(() => {
@@ -279,6 +294,12 @@ function App() {
         if (input === updatedCipher[label].decrypted) {
           status = 'correct'
           updatedCipher[label].status = status
+          if (!userHasGuessedALetter) {
+            userHasGuessedALetter = true
+            window.gtag('event', 'unlock_achievement', {
+              achievement_id: 'make_correct_guess',
+            })
+          }
         } else if (solutionLetters.includes(input)) {
           status = 'present'
           updatedCipher[label].status = status
@@ -288,6 +309,12 @@ function App() {
         }
         setGuesses([...guesses, { input, status }])
         if (input !== updatedCipher[label].decrypted) {
+          if (!userHasIncorrectlyGuessedALetter) {
+            userHasIncorrectlyGuessedALetter = true
+            window.gtag('event', 'unlock_achievement', {
+              achievement_id: 'make_incorrect_guess',
+            })
+          }
           debug('This was an incorrect guess', input)
           setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
           setIsRevealing(true)
@@ -310,7 +337,13 @@ function App() {
         debug('All the letters have been guessed', guesses)
         if (isLatestGame) {
           // TODO this is causing the stats to be multiples of page reloads
-          setStats(addStatsForCompletedGame(stats, incorrectGuesses.length))
+          setStats(
+            addStatsForCompletedGame(
+              solutionName,
+              stats,
+              incorrectGuesses.length
+            )
+          )
         }
         setIsGameWon(true)
       }
@@ -322,7 +355,13 @@ function App() {
           MAX_CHALLENGES
         )
         if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, incorrectGuesses.length + 1))
+          setStats(
+            addStatsForCompletedGame(
+              solutionName,
+              stats,
+              incorrectGuesses.length + 1
+            )
+          )
         }
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
@@ -420,10 +459,21 @@ function App() {
       hintCount++
       hint = generateCryptogramHint(cipher, solution, solutionIndex + hintCount)
     }
-    if (hint && hint.keyLetter && hint.originalLetter) {
+    if (
+      hint &&
+      hint.keyLetter &&
+      hint.originalLetter &&
+      currentCipher[hint.keyLetter].guesses[0] !== hint.originalLetter
+    ) {
       onChar(hint?.originalLetter, hint?.keyLetter)
+      window.gtag('event', 'unlock_achievement', {
+        achievement_id: 'use_hint',
+      })
     }
     if (hintCount >= 10) {
+      window.gtag('event', 'unlock_achievement', {
+        achievement_id: 'exhausted_hints',
+      })
       showErrorAlert('No more hints available.', {
         persist: false,
       })
@@ -516,6 +566,9 @@ function App() {
               })
             }
             handleMigrateStatsButton={() => {
+              window.gtag('event', 'unlock_achievement', {
+                achievement_id: 'click_transfer_stats',
+              })
               setIsStatsModalOpen(false)
               setIsMigrateStatsModalOpen(true)
             }}
