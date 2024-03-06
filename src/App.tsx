@@ -88,6 +88,8 @@ solution
       solutionLetters.push(letter)
     }
   })
+let userHasGuessedALetter = false
+let userHasIncorrectlyGuessedALetter = false
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -292,6 +294,11 @@ function App() {
         if (input === updatedCipher[label].decrypted) {
           status = 'correct'
           updatedCipher[label].status = status
+          if (!userHasGuessedALetter) {
+            window.gtag('event', 'unlock_achievement', {
+              achievement_id: 'make_correct_guess',
+            })
+          }
         } else if (solutionLetters.includes(input)) {
           status = 'present'
           updatedCipher[label].status = status
@@ -301,6 +308,11 @@ function App() {
         }
         setGuesses([...guesses, { input, status }])
         if (input !== updatedCipher[label].decrypted) {
+          if (!userHasIncorrectlyGuessedALetter) {
+            window.gtag('event', 'unlock_achievement', {
+              achievement_id: 'make_incorrect_guess',
+            })
+          }
           debug('This was an incorrect guess', input)
           setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
           setIsRevealing(true)
