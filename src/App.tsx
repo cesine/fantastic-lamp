@@ -486,9 +486,9 @@ function App() {
           <StatsModal
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
-            solution={solution}
             guesses={guesses}
             gameStats={stats}
+            incorrectGuesses={incorrectGuesses}
             isLatestGame={isLatestGame}
             isGameLost={isGameLost}
             isGameWon={isGameWon}
