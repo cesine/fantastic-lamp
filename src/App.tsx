@@ -62,10 +62,10 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isMobile = /Android/i.test(navigator.userAgent)
+const isAndroid = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
-  if (isMobile) {
+  if (isAndroid) {
     alert(args.join(' '))
   } else {
     console.log(args)
@@ -173,7 +173,7 @@ function App() {
   const [isHardMode, setIsHardMode] = useState(
     localStorage.getItem('gameMode')
       ? localStorage.getItem('gameMode') === 'hard'
-      : true
+      : false
   )
 
   useEffect(() => {
@@ -515,6 +515,32 @@ function App() {
       window.removeEventListener('keyup', listener)
     }
   }, [onEnter, onDelete, onChar])
+
+  // If there is no beta in the URL, prevent Android users from opening the game
+  if (isAndroid && !window.location.href.includes('beta')) {
+    window.gtag('event', 'unlock_achievement', {
+      achievement_id: 'view_unavailable_on_android',
+    })
+    return (
+      <Div100vh>
+        <div className="flex h-full flex-col">
+          <Navbar
+            setHint={setHint}
+            setIsInfoModalOpen={setIsInfoModalOpen}
+            setIsSendMessageModalOpen={setIsSendMessageModalOpen}
+            setIsStatsModalOpen={setIsStatsModalOpen}
+            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
+            setIsSettingsModalOpen={setIsSettingsModalOpen}
+          />
+          <div className="flex h-screen items-center justify-center">
+            <p className="text-center text-2xl text-gray-600">
+              This game is not yet available on Android.
+            </p>
+          </div>
+        </div>
+      </Div100vh>
+    )
+  }
 
   return (
     <Div100vh>

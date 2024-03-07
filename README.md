@@ -31,7 +31,7 @@ $> docker build -t reactle:dev -f docker/Dockerfile .
 $> docker run -d -p 3000:3000 --name reactle-dev reactle:dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in browser. Please follow [this tutorial](https://shipyard.build/blog/react-wordle-with-docker-compose/) for a complete discussion on building a Docker image for Clueright's Cryptogram.
+Open [http://localhost:3000](http://localhost:3000) in browser. Please follow [this tutorial](https://shipyard.build/blog/react-wordle-with-docker-compose/) for a complete discussion on building a Docker image
 
 #### Production
 
