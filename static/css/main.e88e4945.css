@@ -791,6 +791,9 @@ select {
 .h-full {
   height: 100%;
 }
+.h-screen {
+  height: 100vh;
+}
 .min-h-full {
   min-height: 100%;
 }
@@ -1138,6 +1141,10 @@ select {
 }
 .align-bottom {
   vertical-align: bottom;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 .text-3xl {
   font-size: 1.875rem;
@@ -2241,4 +2248,4 @@ svg.react-datepicker__day:hover {
 }
 
 
-/*# sourceMappingURL=main.1394b1ac.css.map*/
+/*# sourceMappingURL=main.e88e4945.css.map*/
