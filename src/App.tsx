@@ -132,7 +132,7 @@ function App() {
   const [incorrectGuesses, setIncorrectGuesses] = useState<Guess[]>([])
   const [guesses, setGuesses] = useState<Guess[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
-    if (loaded?.solution !== solution) {
+    if (loaded?.solution.quote !== solution.quote) {
       return []
     }
     const gameWasWon = loaded?.gameWasWon
