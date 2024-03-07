@@ -72,15 +72,22 @@ const debug = (...args: any[]) => {
   }
 }
 
-const encryptedQuote = encodePhrase({ cipher, phrase: solution })
+const encryptedQuote = {
+  author: encodePhrase({ cipher, phrase: solution.author || '' }),
+  quote: encodePhrase({ cipher, phrase: solution.quote }),
+}
 const encryptedLetters: string[] = []
 const solutionLetters: string[] = []
-encryptedQuote.split('').forEach((letter) => {
+const encryptedString: string = `${encryptedQuote.quote}${
+  encryptedQuote.author ? encryptedQuote.author : ''
+}`
+encryptedString.split('').forEach((letter) => {
   if (cipher[letter] && !encryptedLetters.includes(letter)) {
     encryptedLetters.push(letter)
   }
 })
-solution
+const solutionString = `${solution.quote}${solution.author}`
+solutionString
   .toLocaleUpperCase()
   .split('')
   .forEach((letter) => {
@@ -444,7 +451,7 @@ function App() {
 
   const setHint = () => {
     let hintCount = 0
-    let hint = generateCryptogramHint(cipher, solution, solutionIndex)
+    let hint = generateCryptogramHint(cipher, encryptedLetters, solutionIndex)
     while (
       hintCount <= (isHardMode ? MAX_HINTS : 10) &&
       hint &&
@@ -454,7 +461,11 @@ function App() {
     ) {
       debug('hint is ', hint)
       hintCount++
-      hint = generateCryptogramHint(cipher, solution, solutionIndex + hintCount)
+      hint = generateCryptogramHint(
+        cipher,
+        encryptedLetters,
+        solutionIndex + hintCount
+      )
     }
     if (
       hint &&
