@@ -331,6 +331,10 @@ function App() {
         }
       })
       if (areAllLettersGuessed) {
+        window.gtag('event', 'level_end', {
+          level_name: `Cryptogram ${solutionName}`,
+          success: true,
+        })
         debug('All the letters have been guessed', guesses)
         if (isLatestGame) {
           // TODO this is causing the stats to be multiples of page reloads
@@ -351,6 +355,10 @@ function App() {
           incorrectGuesses,
           MAX_CHALLENGES
         )
+        window.gtag('event', 'level_end', {
+          level_name: `Cryptogram ${solutionName}`,
+          success: false,
+        })
         if (isLatestGame) {
           setStats(
             addStatsForCompletedGame(
