@@ -522,7 +522,7 @@ function App() {
             setIsSettingsModalOpen={setIsSettingsModalOpen}
           />
           <div className="flex h-screen items-center justify-center">
-            <p className="text-center text-2xl text-white">
+            <p className="text-center text-2xl text-gray-600">
               This game is not yet available on Android.
             </p>
           </div>
