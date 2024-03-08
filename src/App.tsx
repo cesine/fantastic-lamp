@@ -525,7 +525,7 @@ function App() {
   }, [onEnter, onDelete, onChar])
 
   // If there is no beta in the URL, prevent Android users from opening the game
-  if (isAndroid && !window.location.href.includes('beta')) {
+  if (isAndroid && !window.location.href.includes('vercel')) {
     window.gtag('event', 'unlock_achievement', {
       achievement_id: 'view_unavailable_on_android',
     })
