@@ -119,10 +119,11 @@ export const ShareMessageModal = ({ isOpen, handleClose }: Props) => {
               Link to view your encrypted message:
             </label>
             <a
+              aria-label="Share this link to preview the encrypted message on another device"
+              className="mt-2 block cursor-pointer truncate text-left hover:bg-indigo-700 dark:stroke-white"
               href={shareLink}
               target="_blank"
-              className="mt-2 block cursor-pointer truncate text-left hover:bg-indigo-700 dark:stroke-white"
-              aria-label="Share this link to preview the encrypted message on another device"
+              rel="noopener noreferrer"
             >
               {shareLink}
             </a>
