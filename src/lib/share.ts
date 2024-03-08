@@ -25,7 +25,7 @@ export const shareStatus = (
       lost ? 'X' : incorrectGuesses.length
     }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
     generateEmojiGrid(guesses, getEmojiTiles(isDarkMode, isHighContrastMode)) +
-    `\n${window.location.href}`
+    '\nhttps://www.isabelleclueright.com/cryptogram/?utm_source=beta_app&utm_medium=share_button&utm_campaign=share'
 
   const shareData = { text: textToShare }
 
