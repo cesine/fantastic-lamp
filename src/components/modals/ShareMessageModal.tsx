@@ -87,11 +87,11 @@ export const ShareMessageModal = ({ isOpen, handleClose }: Props) => {
     }?${queryParams.toString()}`
     setShareLink(link)
 
-    setTimeout(() => {
-      if (window.confirm('Preview the encrypted message on this device?')) {
-        window.location.replace(link)
-      }
-    }, 2000)
+    // setTimeout(() => {
+    //   if (window.confirm('Preview the encrypted message on this device?')) {
+    //     window.location.replace(link)
+    //   }
+    // }, 2000)
   }
 
   return (
@@ -116,7 +116,7 @@ export const ShareMessageModal = ({ isOpen, handleClose }: Props) => {
         {shareLink ? (
           <div>
             <label htmlFor="message" className="mt-2 block text-left">
-              Link to view the encrypted message on another device:
+              Link to view your encrypted message:
             </label>
             <a
               href={shareLink}
