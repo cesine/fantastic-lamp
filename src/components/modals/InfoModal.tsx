@@ -25,8 +25,9 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={onCloseClick}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Guess the letter. After each guess, the color of the tile will change to
-        show how close your guess was to the word.
+        Uncover the hidden quote by deciphering the code. Each letter is
+        substituted with another. Guess the letter. After each guess, the color
+        of the tile will change to show how close your guess was to the word.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
@@ -67,15 +68,15 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter P is in the word and in the correct spot.
+        The letter P is in correct spot.
       </p>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter L is in the word but in the wrong spot.
+        The letter L is in the message but in the wrong spot.
       </p>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter U is not in the word in any spot.
+        The letter U is not in the message in any spot.
       </p>
 
       <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-300">
