@@ -81,7 +81,7 @@ export const ShareMessageModal = ({ isOpen, handleClose }: Props) => {
     const queryParams = new URLSearchParams(
       '?utm_source=beta_app&utm_medium=share_button&utm_campaign=encrypted_message'
     )
-    queryParams.set('code', code)
+    queryParams.set('code', encodeURIComponent(code))
     const link = `${window.location.origin}${
       window.location.pathname
     }?${queryParams.toString()}`
