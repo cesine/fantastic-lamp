@@ -104,5 +104,8 @@ test.describe('cryptogram tests', () => {
       'unlock_achievement: choose_dark_mode',
       'unlock_achievement: choose_high_contrast',
     ])
+
+    const configEvents = dataLayer.filter((e) => e[0] === 'config')
+    expect(configEvents[0][2]).toEqual({ debug_mode: true })
   })
 })
