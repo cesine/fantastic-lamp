@@ -9,6 +9,7 @@ import { AlertContainer } from './components/alerts/AlertContainer'
 import { Alphabet } from './components/alphabet/Alphabet'
 import { Cryptogram } from './components/cryptogram/Cryptogram'
 import { DatePickerModal } from './components/modals/DatePickerModal'
+import { HeartModal } from './components/modals/HeartModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
@@ -113,6 +114,7 @@ function App() {
     useAlert()
   const [currentCipher, setCurrentCipher] = useState(cipher)
   const [isGameWon, setIsGameWon] = useState(false)
+  const [isHeartModalOpen, setIsHeartModalOpen] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isSendMessageModalOpen, setIsSendMessageModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -540,6 +542,7 @@ function App() {
         <div className="flex h-full flex-col">
           <Navbar
             setHint={setHint}
+            setIsHeartModalOpen={setIsHeartModalOpen}
             setIsInfoModalOpen={setIsInfoModalOpen}
             setIsSendMessageModalOpen={setIsSendMessageModalOpen}
             setIsStatsModalOpen={setIsStatsModalOpen}
@@ -561,6 +564,7 @@ function App() {
       <div className="flex h-full flex-col">
         <Navbar
           setHint={setHint}
+          setIsHeartModalOpen={setIsHeartModalOpen}
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsSendMessageModalOpen={setIsSendMessageModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
@@ -597,6 +601,10 @@ function App() {
           <InfoModal
             isOpen={isInfoModalOpen}
             handleClose={() => setIsInfoModalOpen(false)}
+          />
+          <HeartModal
+            isOpen={isHeartModalOpen}
+            handleClose={() => setIsHeartModalOpen(false)}
           />
           <StatsModal
             isOpen={isStatsModalOpen}
