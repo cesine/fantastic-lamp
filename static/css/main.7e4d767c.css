@@ -829,6 +829,9 @@ select {
 .min-h-screen {
   min-height: 100vh;
 }
+.w-1\/2 {
+  width: 50%;
+}
 .w-1\/4 {
   width: 25%;
 }
@@ -2282,4 +2285,4 @@ svg.react-datepicker__day:hover {
 }
 
 
-/*# sourceMappingURL=main.290791e3.css.map*/
+/*# sourceMappingURL=main.7e4d767c.css.map*/
