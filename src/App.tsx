@@ -63,10 +63,13 @@ import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
 const isAndroid = /Android/i.test(navigator.userAgent)
-const debugMode = window.location.href.includes('vercel')
+const debugMode =
+  window.location.hostname === 'localhost' ||
+  window.location.hostname.includes('127.0.0.1') ||
+  window.location.hostname.includes('vercel.app')
 
 const debug = (...args: any[]) => {
-  if (isAndroid && debugMode) {
+  if (isAndroid && false) {
     alert(args.join(' '))
   } else {
     console.log(args)
