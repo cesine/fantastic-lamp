@@ -63,9 +63,10 @@ import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
 const isAndroid = /Android/i.test(navigator.userAgent)
+const debugMode = window.location.href.includes('vercel')
 
 const debug = (...args: any[]) => {
-  if (isAndroid) {
+  if (isAndroid && debugMode) {
     alert(args.join(' '))
   } else {
     console.log(args)
@@ -151,18 +152,20 @@ function App() {
         onChar(input, label as string)
       })
       // render all the (correct) guesses
-      guesses.forEach(({ input }) => {
-        Object.keys(cipher).forEach((key) => {
-          if (input === cipher[key].decrypted) {
-            onChar(cipher[key].decrypted, key)
-          } else {
-            debug(
-              'this was an incorrect guess, we arent sure where to put it ',
-              input
-            )
-          }
+      guesses
+        .filter(({ status }) => status === 'correct')
+        .forEach(({ input }) => {
+          Object.keys(cipher).forEach((key) => {
+            if (input === cipher[key].decrypted) {
+              onChar(cipher[key].decrypted, key)
+            } else {
+              debug(
+                'this was an incorrect guess, we arent sure where to put it ',
+                input
+              )
+            }
+          })
         })
-      })
       setIncorrectGuesses(loaded.incorrectGuesses)
     }, 100)
     return loaded.guesses
@@ -525,7 +528,7 @@ function App() {
   }, [onEnter, onDelete, onChar])
 
   // If there is no beta in the URL, prevent Android users from opening the game
-  if (isAndroid && !window.location.href.includes('vercel')) {
+  if (isAndroid && !debugMode) {
     window.gtag('event', 'unlock_achievement', {
       achievement_id: 'view_unavailable_on_android',
     })
