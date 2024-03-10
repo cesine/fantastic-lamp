@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import { RefObject, createRef } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
