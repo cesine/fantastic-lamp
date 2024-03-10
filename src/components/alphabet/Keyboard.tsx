@@ -10,7 +10,7 @@ export const Keyboard = ({ cipher, isRevealing }: Props) => {
   const remainingLetters = getRemainingLetters(cipher)
 
   return (
-    <div className="flex w-1/5 flex-col">
+    <div className="fixed left-0 top-12 flex h-screen flex-col flex-wrap">
       {remainingLetters.map((key) => (
         <DragAndDropLetter
           alphabetLine={key}

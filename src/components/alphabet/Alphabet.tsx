@@ -28,7 +28,7 @@ export const Alphabet = ({
 
   return (
     <div>
-      <div className="mb-1 flex flex-wrap justify-center">
+      <div className="mb-1 flex flex-wrap justify-center pl-20">
         {[
           'A',
           'B',
