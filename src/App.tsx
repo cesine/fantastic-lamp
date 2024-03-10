@@ -546,10 +546,10 @@ function App() {
           </div>
         )}
 
-        <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div>
+        <div className="mx-auto flex w-full grow flex-col">
+          <div className="flex flex-col" style={{ flexDirection: 'row' }}>
             <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
-            <div className="flex grow flex-col justify-center pb-6 short:pb-2">
+            <div className="flex w-3/4 flex-col justify-center">
               <Cryptogram
                 onChar={onChar}
                 cipher={currentCipher}
