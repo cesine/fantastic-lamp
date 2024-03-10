@@ -7,6 +7,7 @@ import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { Alphabet } from './components/alphabet/Alphabet'
+import { Keyboard } from './components/alphabet/Keyboard'
 import { Cryptogram } from './components/cryptogram/Cryptogram'
 import { DatePickerModal } from './components/modals/DatePickerModal'
 import { HeartModal } from './components/modals/HeartModal'
@@ -591,6 +592,13 @@ function App() {
               isHardMode={isHardMode}
             />
           </div>
+          <Keyboard
+            cipher={currentCipher}
+            onChar={onChar}
+            onDelete={onDelete}
+            onEnter={onEnter}
+            isRevealing={isRevealing}
+          />
           <Alphabet
             cipher={currentCipher}
             onChar={onChar}
