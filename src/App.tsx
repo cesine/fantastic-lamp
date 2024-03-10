@@ -64,18 +64,9 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
-const debugMode =
-  window.location.hostname === 'localhost' ||
-  window.location.hostname.includes('127.0.0.1') ||
-  window.location.hostname.includes('vercel.app')
 
 const debug = (...args: any[]) => {
-  if (isAndroid && false) {
-    alert(args.join(' '))
-  } else {
-    console.log(args)
-  }
+  console.log(args)
 }
 
 const encryptedQuote = {
@@ -533,33 +524,6 @@ function App() {
     }
   }, [onEnter, onDelete, onChar])
 
-  // If there is no beta in the URL, prevent Android users from opening the game
-  if (isAndroid && !debugMode) {
-    window.gtag('event', 'unlock_achievement', {
-      achievement_id: 'view_unavailable_on_android',
-    })
-    return (
-      <Div100vh>
-        <div className="flex h-full flex-col">
-          <Navbar
-            setHint={setHint}
-            setIsHeartModalOpen={setIsHeartModalOpen}
-            setIsInfoModalOpen={setIsInfoModalOpen}
-            setIsSendMessageModalOpen={setIsSendMessageModalOpen}
-            setIsStatsModalOpen={setIsStatsModalOpen}
-            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
-            setIsSettingsModalOpen={setIsSettingsModalOpen}
-          />
-          <div className="flex h-screen items-center justify-center">
-            <p className="text-center text-2xl text-gray-600">
-              This game is not yet available on Android.
-            </p>
-          </div>
-        </div>
-      </Div100vh>
-    )
-  }
-
   return (
     <Div100vh>
       <div className="flex h-full flex-col">
@@ -583,22 +547,18 @@ function App() {
         )}
 
         <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-            <Cryptogram
-              onChar={onChar}
-              cipher={currentCipher}
-              encryptedQuote={encryptedQuote}
-              isRevealing={isRevealing}
-              isHardMode={isHardMode}
-            />
+          <div>
+            <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
+            <div className="flex grow flex-col justify-center pb-6 short:pb-2">
+              <Cryptogram
+                onChar={onChar}
+                cipher={currentCipher}
+                encryptedQuote={encryptedQuote}
+                isRevealing={isRevealing}
+                isHardMode={isHardMode}
+              />
+            </div>
           </div>
-          <Keyboard
-            cipher={currentCipher}
-            onChar={onChar}
-            onDelete={onDelete}
-            onEnter={onEnter}
-            isRevealing={isRevealing}
-          />
           <Alphabet
             cipher={currentCipher}
             onChar={onChar}

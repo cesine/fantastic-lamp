@@ -20,7 +20,7 @@ type Props = {
 }
 
 let userHasInteractedWithCell = false
-const isIphone = /iPhone/i.test(navigator.userAgent)
+let userHasDroppedALetter = false
 
 export const Cell = ({
   encryptedValue,
@@ -78,7 +78,22 @@ export const Cell = ({
     ...stylesDecrypted,
     marginBottom: '40px',
   }
-  const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
+
+  const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault()
+  }
+
+  const onDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault()
+    var input = event.dataTransfer.getData('text')
+    onClick(input, encryptedValue)
+    if (!userHasDroppedALetter) {
+      userHasDroppedALetter = true
+      window.gtag('event', 'unlock_achievement', {
+        achievement_id: 'drag_alphabet_letter',
+      })
+    }
+  }
 
   const cellOnClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!userHasInteractedWithCell) {
@@ -90,10 +105,6 @@ export const Cell = ({
     const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
 
     onClick('', label)
-    if (isIphone) {
-      event.currentTarget.blur()
-      hiddenInputRef?.current?.focus()
-    }
   }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
@@ -103,17 +114,13 @@ export const Cell = ({
       <button
         aria-label={encryptedValue}
         onClick={cellOnClick}
+        onDragOver={allowDrop}
+        onDrop={onDrop}
         className={shouldDisplayDecrypted ? classesDecrypted : classesEncrypted}
         style={stylesDecrypted}
         {...notTabbable}
       >
         {shouldDisplayDecrypted ? decryptedValue : null}
-        <input
-          ref={hiddenInputRef}
-          style={{ position: 'absolute', top: '-9999px' }}
-          tabIndex={-1}
-          type="text"
-        />
       </button>
 
       <div

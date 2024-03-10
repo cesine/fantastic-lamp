@@ -7,19 +7,13 @@ let userHasInteractedWithLetter = false
 
 type Props = {
   alphabetLine: string | null
-  randomKey: string
-  width?: number
   status?: CharStatus
-  onClick: (input: string, ariaLabel: string) => void
   isRevealing?: boolean
 }
 
 export const DragAndDropLetter = ({
   status,
-  width = 20,
   alphabetLine = '',
-  randomKey,
-  onClick,
   isRevealing,
 }: Props) => {
   const keyDelayMs = REVEAL_TIME_MS
@@ -37,17 +31,15 @@ export const DragAndDropLetter = ({
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
   }
 
-  const handleDrop: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleDragStart: React.DragEventHandler<HTMLSpanElement> = (event) => {
     if (!userHasInteractedWithLetter) {
       userHasInteractedWithLetter = true
       window.gtag('event', 'unlock_achievement', {
         achievement_id: 'drag_alphabet_letter',
       })
     }
-    const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
-
-    onClick(randomKey, label)
-    event.currentTarget.blur()
+    const input = (event?.target as HTMLSpanElement)?.ariaLabel || ''
+    event.dataTransfer.setData('text', input)
   }
 
   return (
@@ -55,6 +47,7 @@ export const DragAndDropLetter = ({
       <span
         aria-label={alphabetLine || ''}
         draggable={true}
+        onDragStart={handleDragStart}
         style={stylesLetter}
         className={classesLetter}
       >
