@@ -60,25 +60,23 @@ export const Navbar = ({
               }}
             />
           )}
-          {!isMobile ? (
-            <HeartIcon
-              aria-label="Open Heart Modal"
-              className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
-              onClick={() => {
-                window.gtag('event', 'unlock_achievement', {
-                  achievement_id: 'open_heart_modal',
-                })
-                setIsHeartModalOpen(true)
-              }}
-              title="Learn more how to give love to this game"
-            />
-          ) : null}
+          <HeartIcon
+            aria-label="Open Heart Modal"
+            className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            onClick={() => {
+              window.gtag('event', 'unlock_achievement', {
+                achievement_id: 'open_heart_modal',
+              })
+              setIsHeartModalOpen(true)
+            }}
+            title="Learn more how to give love to this game"
+          />
         </div>
         <h1
           aria-label={GAME_TITLE}
           className="block truncate text-xl font-bold dark:text-white md:hidden"
         >
-          Cryptogram
+          {' '}
         </h1>
         <h1
           aria-label={GAME_TITLE}
