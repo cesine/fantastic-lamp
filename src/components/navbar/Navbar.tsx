@@ -12,8 +12,6 @@ import {
 import { ENABLE_ARCHIVED_GAMES } from '../../constants/settings'
 import { GAME_TITLE } from '../../constants/strings'
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-
 type Props = {
   setHint: (value: boolean) => void
   setIsHeartModalOpen: (value: boolean) => void
