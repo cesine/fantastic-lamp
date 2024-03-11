@@ -42,7 +42,7 @@ export const Cell = ({
   const shouldDisplayDecrypted = isaLetter(encryptedValue)
 
   const classesEncrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-2 xxshort:h-2 short:text-2xl short:w-4 short:h-4 w-6 h-6 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900': !status,
     }
@@ -75,7 +75,7 @@ export const Cell = ({
 
   const stylesEncrypted = {
     ...stylesDecrypted,
-    marginBottom: '40px',
+    marginBottom: '1em',
   }
 
   const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
