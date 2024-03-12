@@ -42,7 +42,13 @@ export const Cell = ({
   const shouldDisplayDecrypted = isaLetter(encryptedValue)
 
   const classesEncrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 mb-3 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 mb-4 text-4xl font-thin rounded dark:text-white',
+    {
+      'bg-white dark:bg-slate-900': !status,
+    }
+  )
+  const classesPunctuation = classnames(
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900': !status,
     }
@@ -71,6 +77,7 @@ export const Cell = ({
     fontFamily: 'Courier New',
     animationDelay,
     minHeight: '1em',
+    minWidth: '1em',
   }
 
   const stylesEncrypted = {
@@ -114,7 +121,9 @@ export const Cell = ({
         onClick={cellOnClick}
         onDragOver={allowDrop}
         onDrop={onDrop}
-        className={shouldDisplayDecrypted ? classesDecrypted : classesEncrypted}
+        className={
+          shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
+        }
         style={stylesDecrypted}
         {...notTabbable}
       >
