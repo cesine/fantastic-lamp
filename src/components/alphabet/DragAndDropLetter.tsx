@@ -19,9 +19,9 @@ export const DragAndDropLetter = ({
   const keyDelayMs = REVEAL_TIME_MS
 
   const classesLetter = classnames(
-    'xxshort:h-4 xxshort:w-4 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-8 short:w-8 h-10 w-10 items-center justify-center rounded-full mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    'xxshort:h-6 xxshort:w-6 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-8 short:w-8 h-10 w-10 items-center justify-center rounded-full m-0.5 text-xl font-thin cursor-pointer select-none dark:text-white',
     {
-      'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400 border-2 border-slate-200 dark:border-white':
+      'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400 border-2 border-slate-600 dark:border-white':
         !status,
       'transition ease-in-out': isRevealing,
     }
@@ -50,6 +50,7 @@ export const DragAndDropLetter = ({
         onDragStart={handleDragStart}
         style={stylesLetter}
         className={classesLetter}
+        title="Drag and drop me to where you want me to go!"
       >
         {alphabetLine}
       </span>

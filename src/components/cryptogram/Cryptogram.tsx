@@ -49,7 +49,7 @@ export const Cryptogram = ({
       <div
         key={`${word}-${i}`}
         test-id="word"
-        className="mr-8 flex whitespace-nowrap"
+        className="mr-4 flex whitespace-nowrap"
       >
         {word.split('').map(renderLetter)}
       </div>

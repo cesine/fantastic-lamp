@@ -42,14 +42,14 @@ export const Cell = ({
   const shouldDisplayDecrypted = isaLetter(encryptedValue)
 
   const classesEncrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 mb-3 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900': !status,
     }
   )
 
   const classesDecrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'hover:bg-slate-300 active:bg-slate-400 dark:border-slate-700': !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
@@ -75,7 +75,6 @@ export const Cell = ({
 
   const stylesEncrypted = {
     ...stylesDecrypted,
-    marginBottom: '1em',
   }
 
   const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
@@ -89,7 +88,7 @@ export const Cell = ({
     if (!userHasDroppedALetter) {
       userHasDroppedALetter = true
       window.gtag('event', 'unlock_achievement', {
-        achievement_id: 'drag_alphabet_letter',
+        achievement_id: 'drop_on_cryptogam_cell',
       })
     }
   }
