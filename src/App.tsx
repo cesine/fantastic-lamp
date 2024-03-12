@@ -1,6 +1,7 @@
 import './App.css'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
+import classnames from 'classnames'
 import { format } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
@@ -64,6 +65,7 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
+const isAndroid = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
   console.log(args)
@@ -500,10 +502,6 @@ function App() {
     const listener = (e: KeyboardEvent) => {
       debug('got an event code', e.code)
       debug('got an event key', e.key)
-      debug('got an event charCode', e.charCode)
-      debug('got an event altKey', e.altKey)
-      debug('got an event keyCode', e.keyCode)
-      debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
@@ -523,6 +521,13 @@ function App() {
       window.removeEventListener('keyup', listener)
     }
   }, [onEnter, onDelete, onChar])
+
+  const cryptogramClassnames = classnames(
+    'flex grow flex-col justify-center pb-6 short:pb-2',
+    {
+      'pr-12': isAndroid,
+    }
+  )
 
   return (
     <Div100vh>
@@ -548,8 +553,10 @@ function App() {
 
         <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div>
-            <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
-            <div className="flex grow flex-col justify-center pb-6 pr-12 short:pb-2">
+            {isAndroid ? (
+              <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
+            ) : null}
+            <div className={cryptogramClassnames}>
               <Cryptogram
                 onChar={onChar}
                 cipher={currentCipher}
