@@ -525,7 +525,7 @@ function App() {
   const cryptogramClassnames = classnames(
     'flex grow flex-col justify-center pb-6 short:pb-2',
     {
-      'pr-12': isAndroid,
+      'pl-2 pr-14': isAndroid,
     }
   )
 

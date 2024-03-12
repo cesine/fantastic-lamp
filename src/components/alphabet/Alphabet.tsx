@@ -1,5 +1,9 @@
+import classnames from 'classnames'
+
 import { Cipher } from '../../lib/cipher'
 import { Letter } from './Letter'
+
+const isAndroid = /Android/i.test(navigator.userAgent)
 
 type Props = {
   cipher: Cipher
@@ -26,9 +30,13 @@ export const Alphabet = ({
     }
   }
 
+  const cryptogramClassnames = classnames('flex flex-wrap justify-center', {
+    'ml-1 pr-14': isAndroid,
+  })
+
   return (
     <div>
-      <div className="mb-1 flex flex-wrap justify-center pr-12">
+      <div className={cryptogramClassnames}>
         {[
           'A',
           'B',
