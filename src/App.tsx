@@ -65,7 +65,8 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
+const isAndroid = true
+;/Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
   console.log(args)
