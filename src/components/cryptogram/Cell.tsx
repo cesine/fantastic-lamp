@@ -1,12 +1,11 @@
 import classnames from 'classnames'
-import { set } from 'date-fns'
 import { RefObject, createRef, useState } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { newCipher } from '../../lib/cipher'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
 import { CharStatus } from '../../lib/statuses'
-import { Alphabet } from '../alphabet/Alphabet'
+import { Keyboard } from '../alphabet/Keyboard'
 
 const isaLetter = (decryptedValue: string) => {
   return /[a-zA-Z]+/.test(decryptedValue)
@@ -39,7 +38,7 @@ export const Cell = ({
   //   setRevealLetter(!revealLetter)
   // }
   const isAndroid = /Android/i.test(navigator.userAgent)
-  const [isAlphabetShowing, setIsAlphabetShowing] = useState(false)
+  const [isKeyboardShowing, setIsKeyboardShowing] = useState(false)
 
   const isFilled = decryptedValue && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -92,7 +91,7 @@ export const Cell = ({
   const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
 
   const cellOnClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    setIsAlphabetShowing(isAndroid)
+    setIsKeyboardShowing(isAndroid)
     if (!userHasInteractedWithCell) {
       userHasInteractedWithCell = true
       window.gtag('event', 'unlock_achievement', {
@@ -108,8 +107,9 @@ export const Cell = ({
     }
   }
 
-  const onChar = () => {
-    setIsAlphabetShowing(false)
+  const onChar = (input: string) => {
+    onClick(input, encryptedValue)
+    setIsKeyboardShowing(false)
   }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
@@ -118,7 +118,6 @@ export const Cell = ({
     <div className="relative inline-flex flex-col">
       <button
         aria-label={encryptedValue}
-        onBlur={() => setIsAlphabetShowing(false)}
         onClick={cellOnClick}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
@@ -134,16 +133,15 @@ export const Cell = ({
           type="text"
         />
       </button>
-      <span className="absolute left-0 top-0 ml-8 mt-8 w-full w-screen rounded bg-black bg-white px-2 py-1 dark:bg-slate-900">
-        <Alphabet
-          cipher={cipher}
-          onChar={onChar}
-          onDelete={onChar}
-          onEnter={onChar}
-          isRevealing={isRevealing}
-          isShowing={isAlphabetShowing}
-        />
-      </span>
+      {isKeyboardShowing ? (
+        <span className="absolute left-0 top-0 z-10 ml-8 mt-8 w-full w-screen rounded bg-black bg-white px-2 py-1 dark:bg-slate-900">
+          <Keyboard
+            cipher={cipher}
+            isRevealing={isRevealing}
+            onClick={onChar}
+          />
+        </span>
+      ) : null}
 
       <div
         aria-label={encryptedValue}
