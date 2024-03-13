@@ -11,6 +11,9 @@ const isaLetter = (decryptedValue: string) => {
   return /[a-zA-Z]+/.test(decryptedValue)
 }
 const cipher = newCipher(4)
+const isAndroid = /Android/i.test(navigator.userAgent)
+const isIphone = /iPhone/i.test(navigator.userAgent)
+let userHasInteractedWithCell = false
 
 type Props = {
   encryptedValue: string
@@ -21,8 +24,6 @@ type Props = {
   position?: number
   onClick: (input: string, ariaLabel: string) => void
 }
-const isIphone = /iPhone/i.test(navigator.userAgent)
-let userHasInteractedWithCell = false
 
 export const Cell = ({
   encryptedValue,
@@ -37,7 +38,6 @@ export const Cell = ({
   // const toggleRevealLetter = () => {
   //   setRevealLetter(!revealLetter)
   // }
-  const isAndroid = /Android/i.test(navigator.userAgent)
   const [isKeyboardShowing, setIsKeyboardShowing] = useState(false)
 
   const isFilled = decryptedValue && !isCompleted
@@ -91,7 +91,6 @@ export const Cell = ({
   const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
 
   const cellOnClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    setIsKeyboardShowing(isAndroid)
     if (!userHasInteractedWithCell) {
       userHasInteractedWithCell = true
       window.gtag('event', 'unlock_achievement', {
@@ -99,8 +98,11 @@ export const Cell = ({
       })
     }
     const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
-
     onClick('', label)
+
+    if (isAndroid) {
+      setIsKeyboardShowing(true)
+    }
     if (isIphone) {
       event.currentTarget.blur()
       hiddenInputRef?.current?.focus()
@@ -109,10 +111,15 @@ export const Cell = ({
 
   const onChar = (input: string) => {
     onClick(input, encryptedValue)
-    setIsKeyboardShowing(false)
+    if (isAndroid) {
+      setIsKeyboardShowing(false)
+    }
   }
 
   const onBlur: FocusEventHandler<HTMLButtonElement> = () => {
+    if (!isAndroid) {
+      return
+    }
     setTimeout(() => {
       setIsKeyboardShowing(false)
     }, REVEAL_TIME_MS / 2)

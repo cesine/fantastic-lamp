@@ -63,7 +63,6 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
 
 const debug = (...args: any[]) => {
   console.log(args)
@@ -105,7 +104,6 @@ function App() {
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
   const [currentCipher, setCurrentCipher] = useState(cipher)
-  const [isAlphabetShowing, setIsAlphabetShowing] = useState(!isAndroid)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isHeartModalOpen, setIsHeartModalOpen] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -272,7 +270,6 @@ function App() {
   const onChar = useCallback(
     (input: string, ariaLabel: string) => {
       if (isGameWon || isGameLost) {
-        setIsAlphabetShowing(false)
         return
       }
       debug('input', input, 'ariaLabel', ariaLabel)
@@ -329,7 +326,6 @@ function App() {
         setCurrentCipher(updatedCipher)
       }
       if (ariaLabel) {
-        setIsAlphabetShowing(true)
         setCurrentLetter(ariaLabel)
       }
       //  setCurrentGuess(`${currentGuess}${value}`)
@@ -561,7 +557,6 @@ function App() {
             onDelete={onDelete}
             onEnter={onEnter}
             isRevealing={isRevealing}
-            isShowing={isAlphabetShowing}
           />
           <InfoModal
             isOpen={isInfoModalOpen}

@@ -3,8 +3,6 @@ import classnames from 'classnames'
 import { Cipher } from '../../lib/cipher'
 import { Letter } from './Letter'
 
-const isAndroid = /Android/i.test(navigator.userAgent)
-
 type Props = {
   cipher: Cipher
   onChar: (input: string, ariaLabel: string) => void
@@ -32,15 +30,10 @@ export const Alphabet = ({
     }
   }
 
-  const cryptogramClassnames = classnames('flex flex-wrap justify-center', {
-    'bg-white dark:bg-slate-900': isAndroid,
-    // 'fixed bottom-6 right-0 top-12 flex flex-col flex-wrap bg-white dark:bg-slate-900': isAndroid,
-    // 'fixed bottom-0 flex flex-row flex-wrap bg-white dark:bg-slate-900 lg:flex-row lg:justify-around':
-    // isAndroid,
-  })
+  const cryptogramClassnames = classnames('flex flex-wrap justify-center', {})
 
   return (
-    <div hidden={isAndroid && !isShowing}>
+    <div>
       <div className={cryptogramClassnames}>
         {[
           'A',
