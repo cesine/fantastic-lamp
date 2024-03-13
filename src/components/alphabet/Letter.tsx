@@ -10,7 +10,6 @@ const isPunctuation = (randomKey: string) => {
 }
 
 let userHasInteractedWithLetter = false
-let userHasDroppedALetter = false
 
 type Props = {
   children?: ReactNode
@@ -62,12 +61,14 @@ export const Letter = ({
 
   const styles = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-    width: `${width}px`,
+    minHeight: '1em',
+    minWidth: '1em',
   }
 
   const stylesLetter = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-    width: `${width}px`,
+    minHeight: '1em',
+    minWidth: '1em',
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -83,22 +84,6 @@ export const Letter = ({
     event.currentTarget.blur()
   }
 
-  const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault()
-  }
-
-  const onDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault()
-    var input = event.dataTransfer.getData('text')
-    onClick(input, alphabetLine)
-    if (!userHasDroppedALetter) {
-      userHasDroppedALetter = true
-      window.gtag('event', 'unlock_achievement', {
-        achievement_id: 'drop_on_alphabet_letter',
-      })
-    }
-  }
-
   return (
     <div>
       <button
@@ -106,8 +91,6 @@ export const Letter = ({
         aria-label={alphabetLine}
         className={displayButton ? classes : classesLetter}
         onClick={handleClick}
-        onDragOver={allowDrop}
-        onDrop={onDrop}
       >
         {children || randomKey}
       </button>

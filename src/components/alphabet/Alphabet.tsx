@@ -11,6 +11,7 @@ type Props = {
   onDelete: () => void
   onEnter: () => void
   isRevealing?: boolean
+  isShowing?: boolean
 }
 
 export const Alphabet = ({
@@ -19,6 +20,7 @@ export const Alphabet = ({
   onDelete,
   onEnter,
   isRevealing,
+  isShowing = true,
 }: Props) => {
   const onClick = (input: string, ariaLabel: string) => {
     if (input === 'ENTER') {
@@ -31,11 +33,13 @@ export const Alphabet = ({
   }
 
   const cryptogramClassnames = classnames('flex flex-wrap justify-center', {
-    'ml-1 pr-14': isAndroid,
+    // 'fixed bottom-6 right-0 top-12 flex flex-col flex-wrap bg-white dark:bg-slate-900': isAndroid,
+    'fixed bottom-0 flex flex-row flex-wrap bg-white dark:bg-slate-900 lg:flex-row lg:justify-around':
+      isAndroid,
   })
 
   return (
-    <div>
+    <div hidden={isAndroid && !isShowing}>
       <div className={cryptogramClassnames}>
         {[
           'A',

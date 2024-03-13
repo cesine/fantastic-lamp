@@ -1,4 +1,5 @@
 import classnames from 'classnames'
+import { RefObject, createRef } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
@@ -17,9 +18,8 @@ type Props = {
   position?: number
   onClick: (input: string, ariaLabel: string) => void
 }
-
+const isIphone = /iPhone/i.test(navigator.userAgent)
 let userHasInteractedWithCell = false
-let userHasDroppedALetter = false
 
 export const Cell = ({
   encryptedValue,
@@ -83,22 +83,7 @@ export const Cell = ({
   const stylesEncrypted = {
     ...stylesDecrypted,
   }
-
-  const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault()
-  }
-
-  const onDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
-    event.preventDefault()
-    var input = event.dataTransfer.getData('text')
-    onClick(input, encryptedValue)
-    if (!userHasDroppedALetter) {
-      userHasDroppedALetter = true
-      window.gtag('event', 'unlock_achievement', {
-        achievement_id: 'drop_on_cryptogam_cell',
-      })
-    }
-  }
+  const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
 
   const cellOnClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!userHasInteractedWithCell) {
@@ -110,6 +95,10 @@ export const Cell = ({
     const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
 
     onClick('', label)
+    if (isIphone) {
+      event.currentTarget.blur()
+      hiddenInputRef?.current?.focus()
+    }
   }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
@@ -119,8 +108,6 @@ export const Cell = ({
       <button
         aria-label={encryptedValue}
         onClick={cellOnClick}
-        onDragOver={allowDrop}
-        onDrop={onDrop}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
         }
@@ -128,7 +115,16 @@ export const Cell = ({
         {...notTabbable}
       >
         {shouldDisplayDecrypted ? decryptedValue : null}
+        <input
+          ref={hiddenInputRef}
+          style={{ position: 'absolute', top: '-9999px' }}
+          tabIndex={-1}
+          type="text"
+        />
       </button>
+      <span className="absolute left-0 top-0 ml-8 mt-8 rounded bg-black px-2 py-1 text-xs text-white shadow-lg">
+        Tooltip text
+      </span>
 
       <div
         aria-label={encryptedValue}
