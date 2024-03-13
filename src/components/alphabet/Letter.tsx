@@ -35,7 +35,7 @@ export const Letter = ({
   const displayButton = !isPunctuation(randomKey)
 
   const classes = classnames(
-    'xxshort:h-4 xxshort:w-4 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-6 w-8 h-8 items-center justify-center rounded mx-0.5 text-xs font-thin cursor-pointer select-none dark:text-white',
+    'xxshort:h-4 xxshort:w-48 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-6 w-8 h-8 items-center justify-center rounded mx-0.5 text-xs font-thin cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
       'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':

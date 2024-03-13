@@ -111,6 +111,10 @@ export const Cell = ({
     onClick(input, encryptedValue)
     setIsKeyboardShowing(false)
   }
+  const onBlur = (e: Event) => {
+    setIsKeyboardShowing(false)
+    return e
+  }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
 
@@ -118,6 +122,7 @@ export const Cell = ({
     <div className="relative inline-flex flex-col">
       <button
         aria-label={encryptedValue}
+        // onBlur={onBlur}
         onClick={cellOnClick}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
@@ -134,7 +139,15 @@ export const Cell = ({
         />
       </button>
       {isKeyboardShowing ? (
-        <span className="absolute left-0 top-0 z-10 ml-8 mt-8 w-full w-screen rounded bg-black bg-white px-2 py-1 dark:bg-slate-900">
+        <span
+          style={{
+            position: 'fixed',
+            left: '10px',
+            maxWidth: '800px',
+            width: '80%',
+          }}
+          className="z-10 mt-20 dark:bg-slate-900"
+        >
           <Keyboard
             cipher={cipher}
             isRevealing={isRevealing}
