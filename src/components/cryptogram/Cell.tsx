@@ -1,13 +1,17 @@
 import classnames from 'classnames'
-import { RefObject, createRef } from 'react'
+import { set } from 'date-fns'
+import { RefObject, createRef, useState } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
+import { newCipher } from '../../lib/cipher'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
 import { CharStatus } from '../../lib/statuses'
+import { Alphabet } from '../alphabet/Alphabet'
 
 const isaLetter = (decryptedValue: string) => {
   return /[a-zA-Z]+/.test(decryptedValue)
 }
+const cipher = newCipher(4)
 
 type Props = {
   encryptedValue: string
@@ -34,6 +38,8 @@ export const Cell = ({
   // const toggleRevealLetter = () => {
   //   setRevealLetter(!revealLetter)
   // }
+  const isAndroid = /Android/i.test(navigator.userAgent)
+  const [isAlphabetShowing, setIsAlphabetShowing] = useState(false)
 
   const isFilled = decryptedValue && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -86,6 +92,7 @@ export const Cell = ({
   const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
 
   const cellOnClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    setIsAlphabetShowing(isAndroid)
     if (!userHasInteractedWithCell) {
       userHasInteractedWithCell = true
       window.gtag('event', 'unlock_achievement', {
@@ -101,12 +108,17 @@ export const Cell = ({
     }
   }
 
+  const onChar = () => {
+    setIsAlphabetShowing(false)
+  }
+
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
 
   return (
-    <div className="inline-flex flex-col">
+    <div className="relative inline-flex flex-col">
       <button
         aria-label={encryptedValue}
+        onBlur={() => setIsAlphabetShowing(false)}
         onClick={cellOnClick}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
@@ -122,8 +134,15 @@ export const Cell = ({
           type="text"
         />
       </button>
-      <span className="absolute left-0 top-0 ml-8 mt-8 rounded bg-black px-2 py-1 text-xs text-white shadow-lg">
-        Tooltip text
+      <span className="absolute left-0 top-0 ml-8 mt-8 w-full w-screen rounded bg-black bg-white px-2 py-1 dark:bg-slate-900">
+        <Alphabet
+          cipher={cipher}
+          onChar={onChar}
+          onDelete={onChar}
+          onEnter={onChar}
+          isRevealing={isRevealing}
+          isShowing={isAlphabetShowing}
+        />
       </span>
 
       <div

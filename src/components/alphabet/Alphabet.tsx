@@ -33,9 +33,10 @@ export const Alphabet = ({
   }
 
   const cryptogramClassnames = classnames('flex flex-wrap justify-center', {
+    'bg-white dark:bg-slate-900': isAndroid,
     // 'fixed bottom-6 right-0 top-12 flex flex-col flex-wrap bg-white dark:bg-slate-900': isAndroid,
-    'fixed bottom-0 flex flex-row flex-wrap bg-white dark:bg-slate-900 lg:flex-row lg:justify-around':
-      isAndroid,
+    // 'fixed bottom-0 flex flex-row flex-wrap bg-white dark:bg-slate-900 lg:flex-row lg:justify-around':
+    // isAndroid,
   })
 
   return (
