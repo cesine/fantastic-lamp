@@ -64,6 +64,7 @@ import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
 const isAndroid = /Android/i.test(navigator.userAgent)
+const betaMode = window.location.search.includes('beta')
 const debugMode =
   window.location.hostname === 'localhost' ||
   window.location.hostname.includes('127.0.0.1') ||
@@ -532,6 +533,40 @@ function App() {
     }
   }, [onEnter, onDelete, onChar])
 
+  // If there is no beta in the URL, prevent potential users from opening the game
+  if (!betaMode) {
+    window.gtag('event', 'unlock_achievement', {
+      achievement_id: 'view_closed_beta',
+    })
+    return (
+      <Div100vh>
+        <div className="flex h-full flex-col">
+          <Navbar
+            setHint={setHint}
+            setIsHeartModalOpen={setIsHeartModalOpen}
+            setIsInfoModalOpen={setIsInfoModalOpen}
+            setIsSendMessageModalOpen={setIsSendMessageModalOpen}
+            setIsStatsModalOpen={setIsStatsModalOpen}
+            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
+            setIsSettingsModalOpen={setIsSettingsModalOpen}
+          />
+          <div className="mx-auto flex h-screen w-3/5 items-center justify-center text-2xl">
+            <p className="text-center text-gray-600">
+              Please use the link provided to you, or click the link below to
+              get beta access.
+              <br />
+              <a
+                className="mt-12 inline-block rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                href="https://forms.gle/FRjSYoG2Js6Pv8QD9"
+              >
+                Get my link!
+              </a>
+            </p>
+          </div>
+        </div>
+      </Div100vh>
+    )
+  }
   // If there is no beta in the URL, prevent Android users from opening the game
   if (isAndroid && !debugMode) {
     window.gtag('event', 'unlock_achievement', {
