@@ -34,6 +34,12 @@ export const SelectLetter = ({
   }
 
   const handleOnClick = () => {
+    if (!userHasInteractedWithLetter) {
+      userHasInteractedWithLetter = true
+      window.gtag('event', 'unlock_achievement', {
+        achievement_id: 'click_select_letter',
+      })
+    }
     onClick(letter, '')
   }
 

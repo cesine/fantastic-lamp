@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { RefObject, createRef, useState } from 'react'
+import { FocusEventHandler, RefObject, createRef, useState } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { newCipher } from '../../lib/cipher'
@@ -111,9 +111,11 @@ export const Cell = ({
     onClick(input, encryptedValue)
     setIsKeyboardShowing(false)
   }
-  const onBlur = (e: Event) => {
-    setIsKeyboardShowing(false)
-    return e
+
+  const onBlur: FocusEventHandler<HTMLButtonElement> = () => {
+    setTimeout(() => {
+      setIsKeyboardShowing(false)
+    }, REVEAL_TIME_MS / 2)
   }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
@@ -122,7 +124,7 @@ export const Cell = ({
     <div className="relative inline-flex flex-col">
       <button
         aria-label={encryptedValue}
-        // onBlur={onBlur}
+        onBlur={onBlur}
         onClick={cellOnClick}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
