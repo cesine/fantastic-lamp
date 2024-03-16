@@ -778,9 +778,6 @@ select {
 .mt-5 {
   margin-top: 1.25rem;
 }
-.mt-6 {
-  margin-top: 1.5rem;
-}
 .block {
   display: block;
 }
@@ -1221,9 +1218,6 @@ select {
 .font-thin {
   font-weight: 100;
 }
-.italic {
-  font-style: italic;
-}
 .leading-6 {
   line-height: 1.5rem;
 }
@@ -1257,9 +1251,6 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.underline {
-  text-decoration-line: underline;
 }
 .opacity-0 {
   opacity: 0;
@@ -2296,4 +2287,4 @@ svg.react-datepicker__day:hover {
 }
 
 
-/*# sourceMappingURL=main.3ca77516.css.map*/
+/*# sourceMappingURL=main.3223f9c2.css.map*/
