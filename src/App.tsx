@@ -541,16 +541,7 @@ function App() {
     return (
       <Div100vh>
         <div className="flex h-full flex-col">
-          <Navbar
-            betaMode={betaMode}
-            setHint={setHint}
-            setIsHeartModalOpen={setIsHeartModalOpen}
-            setIsInfoModalOpen={setIsInfoModalOpen}
-            setIsSendMessageModalOpen={setIsSendMessageModalOpen}
-            setIsStatsModalOpen={setIsStatsModalOpen}
-            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
-            setIsSettingsModalOpen={setIsSettingsModalOpen}
-          />
+          <Navbar />
           <div className="mx-auto flex h-screen w-3/5 items-center justify-center text-2xl">
             <p className="text-center text-gray-600">
               Please use the link provided to you, or click the link below to
@@ -576,16 +567,7 @@ function App() {
     return (
       <Div100vh>
         <div className="flex h-full flex-col">
-          <Navbar
-            betaMode={betaMode}
-            setHint={setHint}
-            setIsHeartModalOpen={setIsHeartModalOpen}
-            setIsInfoModalOpen={setIsInfoModalOpen}
-            setIsSendMessageModalOpen={setIsSendMessageModalOpen}
-            setIsStatsModalOpen={setIsStatsModalOpen}
-            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
-            setIsSettingsModalOpen={setIsSettingsModalOpen}
-          />
+          <Navbar />
           <div className="flex h-screen items-center justify-center">
             <p className="text-center text-2xl text-gray-600">
               This game is not yet available on Android.

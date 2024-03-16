@@ -13,18 +13,16 @@ import { ENABLE_ARCHIVED_GAMES } from '../../constants/settings'
 import { GAME_TITLE } from '../../constants/strings'
 
 type Props = {
-  betaMode?: boolean
-  setHint: (value: boolean) => void
-  setIsHeartModalOpen: (value: boolean) => void
-  setIsInfoModalOpen: (value: boolean) => void
-  setIsSendMessageModalOpen: (value: boolean) => void
-  setIsStatsModalOpen: (value: boolean) => void
-  setIsDatePickerModalOpen: (value: boolean) => void
-  setIsSettingsModalOpen: (value: boolean) => void
+  setHint?: (value: boolean) => void
+  setIsHeartModalOpen?: (value: boolean) => void
+  setIsInfoModalOpen?: (value: boolean) => void
+  setIsSendMessageModalOpen?: (value: boolean) => void
+  setIsStatsModalOpen?: (value: boolean) => void
+  setIsDatePickerModalOpen?: (value: boolean) => void
+  setIsSettingsModalOpen?: (value: boolean) => void
 }
 
 export const Navbar = ({
-  betaMode = false,
   setHint,
   setIsHeartModalOpen,
   setIsInfoModalOpen,
@@ -40,13 +38,18 @@ export const Navbar = ({
           <InformationCircleIcon
             aria-label="Open Info Modal"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setIsInfoModalOpen
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setIsInfoModalOpen !== 'function') {
+                return
+              }
+              setIsInfoModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_info_modal',
               })
-              setIsInfoModalOpen(true)
             }}
             title="Show how to play"
           />
@@ -54,26 +57,36 @@ export const Navbar = ({
             <CalendarIcon
               aria-label="Open Archived Games"
               className={`ml-3 h-6 w-6 dark:stroke-white ${
-                betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+                setIsDatePickerModalOpen
+                  ? 'cursor-pointer'
+                  : 'cursor-not-allowed opacity-50'
               }`}
               onClick={() => {
+                if (typeof setIsDatePickerModalOpen !== 'function') {
+                  return
+                }
+                setIsDatePickerModalOpen(true)
                 window.gtag('event', 'unlock_achievement', {
                   achievement_id: 'open_archived_games',
                 })
-                setIsDatePickerModalOpen(true)
               }}
             />
           )}
           <HeartIcon
             aria-label="Open Heart Modal"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setIsHeartModalOpen
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setIsHeartModalOpen !== 'function') {
+                return
+              }
+              setIsHeartModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_heart_modal',
               })
-              setIsHeartModalOpen(true)
             }}
             title="Learn more how to give love to this game"
           />
@@ -111,13 +124,18 @@ export const Navbar = ({
           <ChatBubbleOvalLeftIcon
             aria-label="Send an encrypted message"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setIsSendMessageModalOpen
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setIsSendMessageModalOpen !== 'function') {
+                return
+              }
+              setIsSendMessageModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_send_a_message',
               })
-              setIsSendMessageModalOpen(true)
             }}
             title="Click to write an encrypted message"
           />
@@ -125,13 +143,15 @@ export const Navbar = ({
           <PuzzlePieceIcon
             aria-label="Show Hint"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setHint ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_show_hint',
               })
-              setHint(true)
+              if (typeof setHint === 'function') {
+                setHint(true)
+              }
             }}
             title="Click to insert the hint"
           />
@@ -139,26 +159,36 @@ export const Navbar = ({
           <ChartBarIcon
             aria-label="Open Stats"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setIsStatsModalOpen
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setIsStatsModalOpen !== 'function') {
+                return
+              }
+              setIsStatsModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_stats',
               })
-              setIsStatsModalOpen(true)
             }}
             title="Show stats"
           />
           <CogIcon
             aria-label="Open Settings"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
-              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              setIsSettingsModalOpen
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setIsSettingsModalOpen !== 'function') {
+                return
+              }
+              setIsSettingsModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_settings',
               })
-              setIsSettingsModalOpen(true)
             }}
             title="Open Settings"
           />
