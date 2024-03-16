@@ -4,6 +4,7 @@ on:
     paths:
       - '**/*.{json|js|jsx|ts|tsx}'
       - '*.{json|js|jsx|ts|tsx}'
+      - 'package-lock.json'
       - '.prettierrc'
   push:
     branches:
