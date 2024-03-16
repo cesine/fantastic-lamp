@@ -11,13 +11,11 @@ test.describe('cryptogram tests', () => {
       'Please use the link provided to you, or click the link below to get beta access.Get my link!'
     )
 
-    await page.getByRole('link', { name: 'Get my link!' }).click()
+    expect(
+      await page.getByRole('link', { name: 'Get my link!' })
+    ).toHaveAttribute('href', 'https://forms.gle/FRjSYoG2Js6Pv8QD9')
 
     // Mobile devices will use an intent instead of a link, so only test the link on desktop
-    if (!isMobile) {
-      expect(
-        await page.getByRole('heading', { name: 'Sign in to continue' })
-      ).toHaveText('Sign in to continue')
-    }
+    // Google doesnt like it if you open forms in an automated test
   })
 })
