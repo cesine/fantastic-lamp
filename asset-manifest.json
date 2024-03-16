@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/cryptogram/static/css/main.0b60b3ee.css",
-    "main.js": "/cryptogram/static/js/main.bd445c37.js",
+    "main.css": "/cryptogram/static/css/main.b7bdf23c.css",
+    "main.js": "/cryptogram/static/js/main.b0cd3b0d.js",
     "static/js/496.e99ae76d.chunk.js": "/cryptogram/static/js/496.e99ae76d.chunk.js",
     "index.html": "/cryptogram/index.html",
-    "main.0b60b3ee.css.map": "/cryptogram/static/css/main.0b60b3ee.css.map",
-    "main.bd445c37.js.map": "/cryptogram/static/js/main.bd445c37.js.map",
+    "main.b7bdf23c.css.map": "/cryptogram/static/css/main.b7bdf23c.css.map",
+    "main.b0cd3b0d.js.map": "/cryptogram/static/js/main.b0cd3b0d.js.map",
     "496.e99ae76d.chunk.js.map": "/cryptogram/static/js/496.e99ae76d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b60b3ee.css",
-    "static/js/main.bd445c37.js"
+    "static/css/main.b7bdf23c.css",
+    "static/js/main.b0cd3b0d.js"
   ]
 }
