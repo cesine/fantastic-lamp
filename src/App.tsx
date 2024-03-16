@@ -495,7 +495,7 @@ function App() {
         achievement_id: 'use_hint',
       })
     }
-    if (hintCount >= 10) {
+    if (hintCount >= (isHardMode ? MAX_HINTS : 10)) {
       window.gtag('event', 'unlock_achievement', {
         achievement_id: 'exhausted_hints',
       })
