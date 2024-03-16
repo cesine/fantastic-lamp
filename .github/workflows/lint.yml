@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - '**/*.{json|js|jsx|ts|tsx}'
+      - '*.{json|js|jsx|ts|tsx}'
       - '.prettierrc'
   push:
     branches:
