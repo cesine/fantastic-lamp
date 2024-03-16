@@ -46,10 +46,10 @@ export const Navbar = ({
               if (typeof setIsInfoModalOpen !== 'function') {
                 return
               }
-              setIsInfoModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_info_modal',
               })
+              setIsInfoModalOpen(true)
             }}
             title="Show how to play"
           />
@@ -65,10 +65,10 @@ export const Navbar = ({
                 if (typeof setIsDatePickerModalOpen !== 'function') {
                   return
                 }
-                setIsDatePickerModalOpen(true)
                 window.gtag('event', 'unlock_achievement', {
                   achievement_id: 'open_archived_games',
                 })
+                setIsDatePickerModalOpen(true)
               }}
             />
           )}
@@ -83,10 +83,10 @@ export const Navbar = ({
               if (typeof setIsHeartModalOpen !== 'function') {
                 return
               }
-              setIsHeartModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_heart_modal',
               })
+              setIsHeartModalOpen(true)
             }}
             title="Learn more how to give love to this game"
           />
@@ -132,10 +132,10 @@ export const Navbar = ({
               if (typeof setIsSendMessageModalOpen !== 'function') {
                 return
               }
-              setIsSendMessageModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_send_a_message',
               })
+              setIsSendMessageModalOpen(true)
             }}
             title="Click to write an encrypted message"
           />
@@ -146,12 +146,13 @@ export const Navbar = ({
               setHint ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
             }`}
             onClick={() => {
+              if (typeof setHint !== 'function') {
+                return
+              }
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_show_hint',
               })
-              if (typeof setHint === 'function') {
-                setHint(true)
-              }
+              setHint(true)
             }}
             title="Click to insert the hint"
           />
@@ -167,10 +168,10 @@ export const Navbar = ({
               if (typeof setIsStatsModalOpen !== 'function') {
                 return
               }
-              setIsStatsModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_stats',
               })
+              setIsStatsModalOpen(true)
             }}
             title="Show stats"
           />
@@ -185,10 +186,10 @@ export const Navbar = ({
               if (typeof setIsSettingsModalOpen !== 'function') {
                 return
               }
-              setIsSettingsModalOpen(true)
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_settings',
               })
+              setIsSettingsModalOpen(true)
             }}
             title="Open Settings"
           />
