@@ -577,6 +577,7 @@ function App() {
       <Div100vh>
         <div className="flex h-full flex-col">
           <Navbar
+            betaMode={betaMode}
             setHint={setHint}
             setIsHeartModalOpen={setIsHeartModalOpen}
             setIsInfoModalOpen={setIsInfoModalOpen}
