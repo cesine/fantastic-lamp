@@ -15,6 +15,7 @@ import { GAME_TITLE } from '../../constants/strings'
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
 type Props = {
+  betaMode?: boolean
   setHint: (value: boolean) => void
   setIsHeartModalOpen: (value: boolean) => void
   setIsInfoModalOpen: (value: boolean) => void
@@ -25,6 +26,7 @@ type Props = {
 }
 
 export const Navbar = ({
+  betaMode = false,
   setHint,
   setIsHeartModalOpen,
   setIsInfoModalOpen,
@@ -39,7 +41,9 @@ export const Navbar = ({
         <div className="flex">
           <InformationCircleIcon
             aria-label="Open Info Modal"
-            className="h-6 w-6 cursor-pointer dark:stroke-white"
+            className={`ml-3 h-6 w-6 dark:stroke-white ${
+              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_info_modal',
@@ -51,7 +55,9 @@ export const Navbar = ({
           {ENABLE_ARCHIVED_GAMES && (
             <CalendarIcon
               aria-label="Open Archived Games"
-              className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
+              className={`ml-3 h-6 w-6 dark:stroke-white ${
+                betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              }`}
               onClick={() => {
                 window.gtag('event', 'unlock_achievement', {
                   achievement_id: 'open_archived_games',
@@ -63,7 +69,9 @@ export const Navbar = ({
           {!isMobile ? (
             <HeartIcon
               aria-label="Open Heart Modal"
-              className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
+              className={`ml-3 h-6 w-6 dark:stroke-white ${
+                betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+              }`}
               onClick={() => {
                 window.gtag('event', 'unlock_achievement', {
                   achievement_id: 'open_heart_modal',
@@ -106,7 +114,9 @@ export const Navbar = ({
           </a>
           <ChatBubbleOvalLeftIcon
             aria-label="Send an encrypted message"
-            className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            className={`ml-3 h-6 w-6 dark:stroke-white ${
+              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_send_a_message',
@@ -118,7 +128,9 @@ export const Navbar = ({
 
           <PuzzlePieceIcon
             aria-label="Show Hint"
-            className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            className={`ml-3 h-6 w-6 dark:stroke-white ${
+              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'click_show_hint',
@@ -130,7 +142,9 @@ export const Navbar = ({
 
           <ChartBarIcon
             aria-label="Open Stats"
-            className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            className={`ml-3 h-6 w-6 dark:stroke-white ${
+              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_stats',
@@ -141,7 +155,9 @@ export const Navbar = ({
           />
           <CogIcon
             aria-label="Open Settings"
-            className="h-6 w-6 cursor-pointer dark:stroke-white"
+            className={`ml-3 h-6 w-6 dark:stroke-white ${
+              betaMode ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
             onClick={() => {
               window.gtag('event', 'unlock_achievement', {
                 achievement_id: 'open_settings',
