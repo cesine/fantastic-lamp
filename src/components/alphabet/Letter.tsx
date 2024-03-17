@@ -5,15 +5,11 @@ import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
 import { CharStatus } from '../../lib/statuses'
 
-const isPunctuation = (randomKey: string) => {
-  return /\W/.test(randomKey)
-}
-
 let userHasInteractedWithLetter = false
 
 type Props = {
   children?: ReactNode
-  alphabetLine: string | null
+  alphabetLine: string
   randomKey: string
   width?: number
   status?: CharStatus
@@ -25,14 +21,13 @@ export const Letter = ({
   children,
   status,
   width = 40,
-  alphabetLine = '',
+  alphabetLine,
   randomKey,
   onClick,
   isRevealing,
 }: Props) => {
   const keyDelayMs = REVEAL_TIME_MS
   const isHighContrast = getStoredIsHighContrastMode()
-  const displayButton = !isPunctuation(randomKey)
 
   const classes = classnames(
     'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
@@ -53,7 +48,7 @@ export const Letter = ({
   )
 
   const classesLetter = classnames(
-    'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white mb-4 border-b border-gray-300',
     {
       'transition ease-in-out': isRevealing,
     }
@@ -76,29 +71,29 @@ export const Letter = ({
         achievement_id: 'click_alphabet_letter',
       })
     }
-    const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
+    const label = (event?.target as HTMLButtonElement)?.ariaLabel
 
-    onClick(randomKey, label)
+    onClick(alphabetLine, '')
     event.currentTarget.blur()
   }
 
   return (
     <div>
       <button
-        style={displayButton ? styles : stylesLetter}
-        aria-label={alphabetLine || ''}
-        className={displayButton ? classes : classesLetter}
+        style={styles}
+        aria-label={alphabetLine}
+        className={classes}
+        onClick={handleClick}
+      >
+        {alphabetLine}
+      </button>
+      <span
+        aria-label={alphabetLine}
+        style={stylesLetter}
+        className={classesLetter}
         onClick={handleClick}
       >
         {children || randomKey}
-      </button>
-
-      <span
-        aria-label={alphabetLine || ''}
-        style={stylesLetter}
-        className={classesLetter}
-      >
-        {alphabetLine}
       </span>
     </div>
   )

@@ -128,14 +128,15 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
       : prefersDarkMode
-      ? true
-      : false
+        ? true
+        : false
   )
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
-  const [currentLetter, setCurrentLetter] = useState('')
+  const [currentTarget, setCurrentTarget] = useState('')
+  const [currentInput, setCurrentInput] = useState('')
   const [incorrectGuesses, setIncorrectGuesses] = useState<Guess[]>([])
   const [guesses, setGuesses] = useState<Guess[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
@@ -278,65 +279,89 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = useCallback(
-    (input: string, ariaLabel: string) => {
+    (input: string, target: string) => {
       if (isGameWon || isGameLost) {
         return
       }
-      debug('input', input, 'ariaLabel', ariaLabel)
-      const label = ariaLabel || currentLetter
+
+      debug('input', input, 'target', target)
+      const decrypted = input || currentInput
+      const encrypted = target || currentTarget
+      debug('decrypted', decrypted, 'encrypted', encrypted)
+
       if (
-        label &&
-        input &&
-        currentCipher[label] &&
-        input !== currentCipher[label].guesses[0]
+        encrypted &&
+        decrypted &&
+        currentCipher[encrypted] &&
+        decrypted !== currentCipher[encrypted].guesses[0]
       ) {
         const updatedCipher = { ...currentCipher }
 
-        // let alreadyGuessed = false
+        // Warn if the user has already used this letter
         Object.keys(updatedCipher).forEach((key) => {
-          if (label !== key && updatedCipher[key].guesses[0] === input) {
+          if (
+            encrypted !== key &&
+            updatedCipher[key].guesses[0] === decrypted
+          ) {
             // alreadyGuessed = true
-            showErrorAlert(YOU_HAVE_ALREADY_GUESSED_MESSAGE(input, key), {
+            showErrorAlert(YOU_HAVE_ALREADY_GUESSED_MESSAGE(decrypted, key), {
               persist: false,
             })
           }
         })
 
-        updatedCipher[label].guesses = [input, ...updatedCipher[label].guesses]
+        // Calculate the status of the guess
         let status: CharStatus | undefined = undefined
-        if (input === updatedCipher[label].decrypted) {
+        if (decrypted === updatedCipher[encrypted].decrypted) {
           status = 'correct'
-          updatedCipher[label].status = status
+          updatedCipher[encrypted].status = status
           if (!userHasGuessedALetter) {
             userHasGuessedALetter = true
             window.gtag('event', 'unlock_achievement', {
               achievement_id: 'make_correct_guess',
             })
           }
-        } else if (solutionLetters.includes(input)) {
+        } else if (solutionLetters.includes(decrypted)) {
           status = 'present'
-          updatedCipher[label].status = status
+          updatedCipher[encrypted].status = status
         } else {
           status = 'absent'
-          updatedCipher[label].status = status
+          updatedCipher[encrypted].status = status
         }
-        setGuesses([...guesses, { input, status }])
-        if (input !== updatedCipher[label].decrypted) {
+
+        updatedCipher[encrypted].guesses = [
+          decrypted,
+          ...updatedCipher[encrypted].guesses,
+        ]
+        setGuesses([...guesses, { input: decrypted, status }])
+
+        if (decrypted !== updatedCipher[encrypted].decrypted) {
           if (!userHasIncorrectlyGuessedALetter) {
             userHasIncorrectlyGuessedALetter = true
             window.gtag('event', 'unlock_achievement', {
               achievement_id: 'make_incorrect_guess',
             })
           }
-          debug('This was an incorrect guess', input)
-          setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
+          debug('This was an incorrect guess', decrypted)
+          setIncorrectGuesses([
+            ...incorrectGuesses,
+            { input: decrypted, status, label: encrypted },
+          ])
           setIsRevealing(true)
         }
+
+        // Clear the pending input and targets
+        setCurrentInput('')
+        setCurrentTarget('')
         debug('updated updatedCipher', updatedCipher)
         setCurrentCipher(updatedCipher)
       }
-      if (ariaLabel) {
-        setCurrentLetter(ariaLabel)
+
+      if (target && !input) {
+        setCurrentTarget(target)
+      }
+      if (input && !target) {
+        setCurrentInput(input)
       }
       //  setCurrentGuess(`${currentGuess}${value}`)
 
@@ -392,7 +417,7 @@ function App() {
       }
     },
     [
-      currentLetter,
+      currentTarget,
       currentCipher,
       guesses,
       incorrectGuesses,
@@ -405,26 +430,26 @@ function App() {
   )
 
   const onDelete = useCallback(() => {
-    debug('onDelete', currentLetter, currentCipher[currentLetter].guesses)
+    debug('onDelete', currentTarget, currentCipher[currentTarget].guesses)
     if (
-      currentLetter &&
-      currentCipher[currentLetter].guesses &&
-      currentCipher[currentLetter].guesses.length
+      currentTarget &&
+      currentCipher[currentTarget].guesses &&
+      currentCipher[currentTarget].guesses.length
     ) {
       const updatedCipher = { ...currentCipher }
-      const removedGuess = currentCipher[currentLetter].guesses[0]
+      const removedGuess = currentCipher[currentTarget].guesses[0]
       debug('removedGuess', removedGuess)
 
-      updatedCipher[currentLetter].guesses = currentCipher[
-        currentLetter
-      ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
-      updatedCipher[currentLetter].status = undefined
+      updatedCipher[currentTarget].guesses = currentCipher[
+        currentTarget
+      ].guesses.slice(1, currentCipher[currentTarget].guesses.length)
+      updatedCipher[currentTarget].status = undefined
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
       debug('updated updatedCipher after undo', updatedCipher)
       setCurrentCipher(updatedCipher)
     }
-  }, [currentLetter, currentCipher])
+  }, [currentTarget, currentCipher])
 
   const onEnter = useCallback(() => {
     /*
@@ -509,10 +534,6 @@ function App() {
     const listener = (e: KeyboardEvent) => {
       debug('got an event code', e.code)
       debug('got an event key', e.key)
-      debug('got an event charCode', e.charCode)
-      debug('got an event altKey', e.altKey)
-      debug('got an event keyCode', e.keyCode)
-      debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
