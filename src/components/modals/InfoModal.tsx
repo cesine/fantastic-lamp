@@ -28,6 +28,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         Uncover the hidden quote by deciphering the code. Each letter is
         substituted with another. Guess the letter. After each guess, the color
         of the tile will change to show how close your guess was to the message.
+        If you are in hard mode, the tiles will not change color. If you make 10
+        wrong guesses you will automatically lose.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
