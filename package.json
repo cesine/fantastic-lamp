@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",
-    "@storybook/preset-create-react-app": "^7.6.17",
+    "@storybook/preset-create-react-app": "^8.0.2",
     "@storybook/react": "^7.6.17",
     "@storybook/react-webpack5": "^7.6.17",
     "@storybook/test": "^7.6.17",
