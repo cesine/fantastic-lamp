@@ -10,6 +10,11 @@ object-assign
 	http://jedwatson.github.io/classnames
 */
 
+/*!
+* tabbable 6.2.0
+* @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
+*/
+
 /** @license React v0.20.2
  * scheduler.production.min.js
  *
