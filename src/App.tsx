@@ -128,8 +128,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
       : prefersDarkMode
-      ? true
-      : false
+        ? true
+        : false
   )
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
@@ -412,12 +412,7 @@ function App() {
       currentCipher[currentLetter].guesses.length
     ) {
       const updatedCipher = { ...currentCipher }
-      const removedGuess = currentCipher[currentLetter].guesses[0]
-      debug('removedGuess', removedGuess)
-
-      updatedCipher[currentLetter].guesses = currentCipher[
-        currentLetter
-      ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      updatedCipher[currentLetter].guesses = []
       updatedCipher[currentLetter].status = undefined
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
