@@ -31,6 +31,7 @@ import {
   GAME_COPIED_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
   SHARE_FAILURE_TEXT,
+  WARNING_REMAINING_GUESSES,
   WIN_MESSAGES,
   YOU_HAVE_ALREADY_GUESSED_MESSAGE,
 } from './constants/strings'
@@ -128,8 +129,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
       : prefersDarkMode
-      ? true
-      : false
+        ? true
+        : false
   )
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
@@ -363,6 +364,19 @@ function App() {
           )
         }
         setIsGameWon(true)
+      }
+
+      if (incorrectGuesses.length > MAX_CHALLENGES / 2) {
+        showErrorAlert(
+          WARNING_REMAINING_GUESSES(
+            incorrectGuesses.length,
+            MAX_CHALLENGES - incorrectGuesses.length
+          ),
+          {
+            persist: false,
+            delayMs: REVEAL_TIME_MS,
+          }
+        )
       }
 
       if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
