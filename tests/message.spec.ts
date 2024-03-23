@@ -1,9 +1,13 @@
 import { expect, test } from '@playwright/test'
 
 import { ALPHABET } from '../src/lib/cipher'
+import { collectConsole } from './utils'
 
 const { BASE_URL = 'http://127.0.0.1:3000' } = process.env
 test.describe('cryptogram tests', () => {
+  test.beforeEach(({ page }, testInfo) => {
+    collectConsole({ page }, testInfo)
+  })
   test('should open the message modal and be able to type in a new message.', async ({
     page,
   }) => {
