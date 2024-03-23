@@ -9,8 +9,8 @@
   --default-cell-border-color: theme('colors.black');
   --default-cell-text-color: theme('colors.black');
   --absent-cell-bg-color: theme('colors.slate.400');
-  --correct-cell-bg-color: theme('colors.green.400');
-  --present-cell-bg-color: theme('colors.yellow.400');
+  --correct-cell-bg-color: #1e6e26; /* Your chosen shade of green */
+  --present-cell-bg-color: #b58b2a;
 }
 
 .dark {
@@ -21,8 +21,8 @@
 }
 
 .high-contrast {
-  --correct-cell-bg-color: theme('colors.orange.400');
-  --present-cell-bg-color: theme('colors.cyan.400');
+  --correct-cell-bg-color: theme('colors.cyan.400');
+  --present-cell-bg-color: theme('colors.orange.400');
 }
 
 .cell-fill-animation {
