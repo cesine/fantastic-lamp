@@ -8,13 +8,13 @@ test.describe('cryptogram tests', () => {
 
     await page.locator('.absolute').click()
 
-    await page.getByRole('button', { name: 'L' }).nth(1).click()
+    await page.getByRole('button', { name: 'Q' }).nth(1).click()
     await page.keyboard.type('H')
-    expect(await page.getByRole('button', { name: 'L' }).nth(1)).toHaveText('H')
+    expect(await page.getByRole('button', { name: 'Q' }).nth(1)).toHaveText('H')
 
-    await page.getByRole('button', { name: 'K' }).nth(1).click()
+    await page.getByRole('button', { name: 'N' }).nth(1).click()
     await page.keyboard.type('H')
-    expect(await page.getByRole('button', { name: 'K' }).nth(1)).toHaveText('H')
+    expect(await page.getByRole('button', { name: 'N' }).nth(1)).toHaveText('H')
 
     expect(await page.getByLabel('There is an message')).toBeVisible()
     expect(await page.getByLabel('There is an message')).toHaveText(
