@@ -18,7 +18,7 @@ test.describe('cryptogram tests', () => {
 
     expect(await page.getByLabel('There is an message')).toBeVisible()
     expect(await page.getByLabel('There is an message')).toHaveText(
-      'You have already guessed this letter: H for L.'
+      'You have already guessed this letter: H for Q.'
     )
   })
 })

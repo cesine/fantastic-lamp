@@ -2,8 +2,6 @@ import seedrandom from 'seedrandom'
 
 import { CharStatus } from './statuses'
 
-console.log('seedrandom', seedrandom)
-
 export const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export type Cipher = {
