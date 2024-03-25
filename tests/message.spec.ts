@@ -14,6 +14,9 @@ test.describe('cryptogram tests', () => {
     await page.goto(
       '/?beta=true&code=eyJndWVzc2VzIjpbXSwiaW5kZXgiOjc5NSwibWVzc2FnZSI6IkFuIGVuY3J5cHRlZCBtZXNzYWdlIiwic29sdXRpb24iOnsiYXV0aG9yIjoiIiwicXVvdGUiOiJoaSJ9fQ'
     )
+    expect(
+      await page.getByRole('heading', { name: 'How to play' })
+    ).toBeVisible()
     await page.locator('.absolute').click()
     await page.getByLabel('Send an encrypted message').click()
     await page.locator('#share-message').click()
@@ -31,8 +34,10 @@ test.describe('cryptogram tests', () => {
     await page.goto(
       '/?beta=true&code=eyJndWVzc2VzIjpbXSwiaW5kZXgiOjc5NSwibWVzc2FnZSI6IkFuIGVuY3J5cHRlZCBtZXNzYWdlIiwic29sdXRpb24iOnsiYXV0aG9yIjoiIiwicXVvdGUiOiJoaSJ9fQ'
     )
+    expect(
+      await page.getByRole('heading', { name: 'How to play' })
+    ).toBeVisible()
     await page.locator('.absolute').click()
-    await page.getByText('⚠').click()
     const expectedCountOfButtons = ALPHABET.length + 2
     expect(await page.locator('button').count()).toEqual(expectedCountOfButtons)
 
