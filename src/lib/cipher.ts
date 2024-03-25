@@ -60,7 +60,7 @@ function isOriginalPosition(shuffled: string[], original: string[]) {
 export const newCipher = (seed: number) => {
   console.log('todays seed', seed)
   let whileCount = 0
-  let randomGenerator = seedrandom(seed)
+  let randomGenerator = seedrandom(`${seed}`)
 
   let randomKey: string[] = [...ALPHABET].sort(() =>
     randomGenerator() > 0.5 ? 1 : -1
@@ -69,7 +69,7 @@ export const newCipher = (seed: number) => {
   while (whileCount < 10 && isOriginalPosition(randomKey, ALPHABET)) {
     whileCount++
     console.log('regenerating randomKey', randomKey)
-    randomGenerator = seedrandom(seed + whileCount)
+    randomGenerator = seedrandom(`${seed + whileCount}`)
     // eslint-disable-next-line no-loop-func
     randomKey = [...ALPHABET].sort(() => (randomGenerator() > 0.5 ? 1 : -1))
     console.log('trying with next seed whileCount', whileCount, seed)
