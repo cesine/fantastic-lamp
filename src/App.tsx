@@ -404,7 +404,8 @@ function App() {
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
-          delayMs: REVEAL_TIME_MS,
+          // Show the stats modal after about a second or two depending on the length of the quote that the user is trying to read.
+          delayMs: REVEAL_TIME_MS + solution.quote.length * 20,
         })
       }
     },
