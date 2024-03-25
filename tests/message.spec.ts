@@ -32,6 +32,7 @@ test.describe('cryptogram tests', () => {
       '/?beta=true&code=eyJndWVzc2VzIjpbXSwiaW5kZXgiOjc5NSwibWVzc2FnZSI6IkFuIGVuY3J5cHRlZCBtZXNzYWdlIiwic29sdXRpb24iOnsiYXV0aG9yIjoiIiwicXVvdGUiOiJoaSJ9fQ'
     )
     await page.locator('.absolute').click()
+    await page.getByText('⚠').click()
     const expectedCountOfButtons = ALPHABET.length + 2
     expect(await page.locator('button').count()).toEqual(expectedCountOfButtons)
 
