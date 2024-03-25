@@ -11,7 +11,7 @@ on:
       - 'public/**'
       - 'tests/**'
 jobs:
-  test:
+  test-integration:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
