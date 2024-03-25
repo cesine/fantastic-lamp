@@ -330,7 +330,23 @@ function App() {
             })
           }
           debug('This was an incorrect guess', input)
-          setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
+          const newIncorrectGuesses = [
+            ...incorrectGuesses,
+            { input, status, label },
+          ]
+          setIncorrectGuesses(newIncorrectGuesses)
+          if (newIncorrectGuesses.length > MAX_CHALLENGES / 2) {
+            showErrorAlert(
+              WARNING_REMAINING_GUESSES(
+                newIncorrectGuesses.length,
+                MAX_CHALLENGES - newIncorrectGuesses.length
+              ),
+              {
+                persist: false,
+                delayMs: REVEAL_TIME_MS,
+              }
+            )
+          }
           setIsRevealing(true)
         }
         debug('updated updatedCipher', updatedCipher)
@@ -364,19 +380,6 @@ function App() {
           )
         }
         setIsGameWon(true)
-      }
-
-      if (incorrectGuesses.length > MAX_CHALLENGES / 2) {
-        showErrorAlert(
-          WARNING_REMAINING_GUESSES(
-            incorrectGuesses.length,
-            MAX_CHALLENGES - incorrectGuesses.length
-          ),
-          {
-            persist: false,
-            delayMs: REVEAL_TIME_MS,
-          }
-        )
       }
 
       if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
