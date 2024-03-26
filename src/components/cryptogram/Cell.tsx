@@ -55,11 +55,11 @@ export const Cell = ({
       'hover:bg-slate-300 active:bg-slate-400 dark:border-slate-700': !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
         status === 'absent',
-      'correct shadowed bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white border-orange-500':
+      'correct shadowed bg-cyan-500 hover:bg-orange-600 active:bg-orange-700 text-white border-cyan-500':
         status === 'correct' && isHighContrast,
-      'present shadowed bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white border-cyan-500':
+      'present shadowed bg-orange-500 hover:bg-cyan-600 active:bg-cyan-700 text-white border-orange-500':
         status === 'present' && isHighContrast,
-      'correct shadowed bg-green-500 hover:bg-green-600 active:bg-green-700 text-white border-green-500':
+      'correct shadowed bg-green-700 hover:bg-green-600 active:bg-green-700 text-white border-green-700':
         status === 'correct' && !isHighContrast,
       'present shadowed bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-white border-yellow-500':
         status === 'present' && !isHighContrast,
