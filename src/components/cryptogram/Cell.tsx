@@ -61,7 +61,7 @@ export const Cell = ({
         status === 'present' && isHighContrast,
       'correct shadowed bg-green-700 hover:bg-green-600 active:bg-green-700 text-white border-green-700':
         status === 'correct' && !isHighContrast,
-      'present shadowed bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-white border-yellow-500':
+      'present shadowed bg-dark-goldenrod hover:bg-yellow-600 active:bg-yellow-700 text-white border-dark-goldenrod':
         status === 'present' && !isHighContrast,
       'cell-fill-animation': isFilled,
       'cell-reveal': shouldReveal,
