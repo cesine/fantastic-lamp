@@ -20,8 +20,8 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_CHALLENGES,
   MAX_HINTS,
+  MAX_INCORRECT_GUESSES,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -147,7 +147,7 @@ function App() {
     if (gameWasWon) {
       setIsGameWon(true)
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (loaded.guesses.length === MAX_INCORRECT_GUESSES && !gameWasWon) {
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
@@ -335,11 +335,14 @@ function App() {
             { input, status, label },
           ]
           setIncorrectGuesses(newIncorrectGuesses)
-          if (newIncorrectGuesses.length > MAX_CHALLENGES / 2) {
+          if (
+            newIncorrectGuesses.length > MAX_INCORRECT_GUESSES / 2 &&
+            incorrectGuesses.length < MAX_INCORRECT_GUESSES
+          ) {
             showErrorAlert(
               WARNING_REMAINING_GUESSES(
                 newIncorrectGuesses.length,
-                MAX_CHALLENGES - newIncorrectGuesses.length
+                MAX_INCORRECT_GUESSES - newIncorrectGuesses.length
               ),
               {
                 persist: false,
@@ -382,11 +385,11 @@ function App() {
         setIsGameWon(true)
       }
 
-      if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
+      if (incorrectGuesses.length > MAX_INCORRECT_GUESSES - 1) {
         debug(
           'Incorrect guesses are more than the max',
           incorrectGuesses,
-          MAX_CHALLENGES
+          MAX_INCORRECT_GUESSES
         )
         window.gtag('event', 'level_end', {
           level_name: `Cryptogram ${solutionName}`,
@@ -404,7 +407,8 @@ function App() {
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
-          delayMs: REVEAL_TIME_MS,
+          // Show the stats modal after about a second or two depending on the length of the quote that the user is trying to read.
+          delayMs: REVEAL_TIME_MS + solution.quote.length * 20,
         })
       }
     },
