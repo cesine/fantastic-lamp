@@ -335,7 +335,10 @@ function App() {
             { input, status, label },
           ]
           setIncorrectGuesses(newIncorrectGuesses)
-          if (newIncorrectGuesses.length > MAX_INCORRECT_GUESSES / 2) {
+          if (
+            newIncorrectGuesses.length > MAX_INCORRECT_GUESSES / 2 &&
+            incorrectGuesses.length < MAX_INCORRECT_GUESSES
+          ) {
             showErrorAlert(
               WARNING_REMAINING_GUESSES(
                 newIncorrectGuesses.length,
