@@ -45,7 +45,7 @@ export const Cell = ({
   const classesEncrypted = classnames(
     'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
-      'bg-white dark:bg-slate-900': !status,
+      'bg-white dark:bg-federal-blue': !status,
     }
   )
 

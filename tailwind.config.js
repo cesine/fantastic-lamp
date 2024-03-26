@@ -8,7 +8,8 @@ module.exports = {
       
       colors: {
         'Darkgreen': '#1E6E26',
-        "dark-goldenrod": '#B58B2A'
+        "dark-goldenrod": '#B58B2A',
+        'federal-blue': '#080547',
       },
 
 
