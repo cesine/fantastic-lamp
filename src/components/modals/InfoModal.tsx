@@ -25,9 +25,9 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={onCloseClick}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Uncover the hidden quote by deciphering the code. Each letter is
-        substituted with another. Guess the letter. After each guess, the color
-        of the tile will change to show how close your guess was to the word.
+        Decode the hidden quote by guessing the letters, with each tile
+        representing a different substitution. In hard mode, tiles won't change
+        color. Make up to 10 wrong guesses before losing.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
@@ -77,17 +77,6 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter U is not in the message in any spot.
-      </p>
-
-      <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-300">
-        This is based an open source version of the word guessing game we all
-        know and love -{' '}
-        <a
-          href="https://github.com/cwackerfuss/react-wordle"
-          className="font-bold underline"
-        >
-          check out the code here
-        </a>{' '}
       </p>
     </BaseModal>
   )

@@ -20,8 +20,8 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_CHALLENGES,
   MAX_HINTS,
+  MAX_INCORRECT_GUESSES,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -31,6 +31,7 @@ import {
   GAME_COPIED_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
   SHARE_FAILURE_TEXT,
+  WARNING_REMAINING_GUESSES,
   WIN_MESSAGES,
   YOU_HAVE_ALREADY_GUESSED_MESSAGE,
 } from './constants/strings'
@@ -63,6 +64,7 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
+const betaMode = window.location.search.includes('beta')
 
 const debug = (...args: any[]) => {
   console.log(args)
@@ -118,8 +120,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
       : prefersDarkMode
-      ? true
-      : false
+        ? true
+        : false
   )
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
@@ -136,7 +138,7 @@ function App() {
     if (gameWasWon) {
       setIsGameWon(true)
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (loaded.guesses.length === MAX_INCORRECT_GUESSES && !gameWasWon) {
       setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
@@ -319,7 +321,26 @@ function App() {
             })
           }
           debug('This was an incorrect guess', input)
-          setIncorrectGuesses([...incorrectGuesses, { input, status, label }])
+          const newIncorrectGuesses = [
+            ...incorrectGuesses,
+            { input, status, label },
+          ]
+          setIncorrectGuesses(newIncorrectGuesses)
+          if (
+            newIncorrectGuesses.length > MAX_INCORRECT_GUESSES / 2 &&
+            incorrectGuesses.length < MAX_INCORRECT_GUESSES
+          ) {
+            showErrorAlert(
+              WARNING_REMAINING_GUESSES(
+                newIncorrectGuesses.length,
+                MAX_INCORRECT_GUESSES - newIncorrectGuesses.length
+              ),
+              {
+                persist: false,
+                delayMs: REVEAL_TIME_MS,
+              }
+            )
+          }
           setIsRevealing(true)
         }
         debug('updated updatedCipher', updatedCipher)
@@ -355,11 +376,11 @@ function App() {
         setIsGameWon(true)
       }
 
-      if (incorrectGuesses.length > MAX_CHALLENGES - 1) {
+      if (incorrectGuesses.length > MAX_INCORRECT_GUESSES - 1) {
         debug(
           'Incorrect guesses are more than the max',
           incorrectGuesses,
-          MAX_CHALLENGES
+          MAX_INCORRECT_GUESSES
         )
         window.gtag('event', 'level_end', {
           level_name: `Cryptogram ${solutionName}`,
@@ -377,7 +398,8 @@ function App() {
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
-          delayMs: REVEAL_TIME_MS,
+          // Show the stats modal after about a second or two depending on the length of the quote that the user is trying to read.
+          delayMs: REVEAL_TIME_MS + solution.quote.length * 20,
         })
       }
     },
@@ -402,12 +424,7 @@ function App() {
       currentCipher[currentLetter].guesses.length
     ) {
       const updatedCipher = { ...currentCipher }
-      const removedGuess = currentCipher[currentLetter].guesses[0]
-      debug('removedGuess', removedGuess)
-
-      updatedCipher[currentLetter].guesses = currentCipher[
-        currentLetter
-      ].guesses.slice(1, currentCipher[currentLetter].guesses.length)
+      updatedCipher[currentLetter].guesses = []
       updatedCipher[currentLetter].status = undefined
       // could also remove from game guesses
       // setGuesses(guesses.slice(1, guesses.length))
@@ -485,7 +502,7 @@ function App() {
         achievement_id: 'use_hint',
       })
     }
-    if (hintCount >= 10) {
+    if (hintCount >= (isHardMode ? MAX_HINTS : 10)) {
       window.gtag('event', 'unlock_achievement', {
         achievement_id: 'exhausted_hints',
       })
@@ -518,6 +535,33 @@ function App() {
       window.removeEventListener('keyup', listener)
     }
   }, [onEnter, onDelete, onChar])
+
+  // If there is no beta in the URL, prevent potential users from opening the game
+  if (!betaMode) {
+    window.gtag('event', 'unlock_achievement', {
+      achievement_id: 'view_closed_beta',
+    })
+    return (
+      <Div100vh>
+        <div className="flex h-full flex-col">
+          <Navbar />
+          <div className="mx-auto flex h-screen w-3/5 items-center justify-center text-2xl">
+            <p className="text-center text-gray-600">
+              Please use the link provided to you, or click the link below to
+              get beta access.
+              <br />
+              <a
+                className="mt-12 inline-block rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                href="https://forms.gle/FRjSYoG2Js6Pv8QD9"
+              >
+                Get my link!
+              </a>
+            </p>
+          </div>
+        </div>
+      </Div100vh>
+    )
+  }
 
   return (
     <Div100vh>
