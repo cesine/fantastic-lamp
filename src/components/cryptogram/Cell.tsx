@@ -59,7 +59,7 @@ export const Cell = ({
         status === 'correct' && isHighContrast,
       'present shadowed bg-orange-500 hover:bg-cyan-600 active:bg-cyan-700 text-white border-orange-500':
         status === 'present' && isHighContrast,
-      'correct shadowed bg-green-700 hover:bg-green-600 active:bg-green-700 text-white border-green-700':
+      'correct shadowed bg-dark-spring-green hover:bg-green-600 active:bg-green-700 text-white border-green-700':
         status === 'correct' && !isHighContrast,
       'present shadowed bg-dark-goldenrod hover:bg-yellow-600 active:bg-yellow-700 text-white border-dark-goldenrod':
         status === 'present' && !isHighContrast,
