@@ -110,6 +110,7 @@ export const Navbar = ({
             href="https://forms.gle/zRP8pAE1JrTEA5bWA"
             target="blank"
             rel="noopener noreferrer"
+            className="flex flex-col items-center"
           >
             <BugAntIcon
               className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
@@ -120,42 +121,56 @@ export const Navbar = ({
               }}
               title="Click to send me a bug report"
             />
+            <span className="ml-3 mt-1 text-xs">Report</span>
           </a>
-          <ChatBubbleOvalLeftIcon
+          <a
             aria-label="Send an encrypted message"
-            className={`ml-3 h-6 w-6 dark:stroke-white ${
-              setIsSendMessageModalOpen
-                ? 'cursor-pointer'
-                : 'cursor-not-allowed opacity-50'
-            }`}
-            onClick={() => {
-              if (typeof setIsSendMessageModalOpen !== 'function') {
-                return
-              }
-              window.gtag('event', 'unlock_achievement', {
-                achievement_id: 'click_send_a_message',
-              })
-              setIsSendMessageModalOpen(true)
-            }}
-            title="Click to write an encrypted message"
-          />
-
-          <PuzzlePieceIcon
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center"
+          >
+            <ChatBubbleOvalLeftIcon
+              className={`ml-3 h-6 w-6 dark:stroke-white ${setIsSendMessageModalOpen ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+              onClick={() => {
+                if (typeof setIsSendMessageModalOpen !== 'function') {
+                  return
+                }
+                window.gtag('event', 'unlock_achievement', {
+                  achievement_id: 'click_send_a_message',
+                })
+                setIsSendMessageModalOpen(true)
+              }}
+              title="Click to write an encrypted message"
+            />
+            <span className="ml-3 mt-1 block whitespace-normal text-center text-xs">
+              Encrypt
+            </span>
+          </a>
+          <a
             aria-label="Show Hint"
-            className={`ml-3 h-6 w-6 dark:stroke-white ${
-              setHint ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
-            }`}
-            onClick={() => {
-              if (typeof setHint !== 'function') {
-                return
-              }
-              window.gtag('event', 'unlock_achievement', {
-                achievement_id: 'click_show_hint',
-              })
-              setHint(true)
-            }}
-            title="Click to insert the hint"
-          />
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center"
+          >
+            <PuzzlePieceIcon
+              className={`h-6 w-6 dark:stroke-white ${setHint ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+              onClick={() => {
+                if (typeof setHint !== 'function') {
+                  return
+                }
+                window.gtag('event', 'unlock_achievement', {
+                  achievement_id: 'click_show_hint',
+                })
+                setHint(true)
+              }}
+              title="Click to insert the hint"
+            />
+            <span className="ml-3 mt-1 block whitespace-normal text-center text-xs">
+              Hint
+            </span>
+          </a>
 
           <ChartBarIcon
             aria-label="Open Stats"
@@ -175,6 +190,7 @@ export const Navbar = ({
             }}
             title="Show stats"
           />
+
           <CogIcon
             aria-label="Open Settings"
             className={`ml-3 h-6 w-6 dark:stroke-white ${
