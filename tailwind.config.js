@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         'dark-spring-green': '#1E6E26',
         "dark-goldenrod": '#B58B2A',
-        'federal-blue': '#080547',
+        'federal-blue': '#1e293b',
         'claret': '#832232',
       },
 
