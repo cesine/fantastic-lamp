@@ -49,10 +49,7 @@ export const Cell = ({
     }
   )
   const classesPunctuation = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
-    {
-      'bg-white dark:bg-slate-900': !status,
-    }
+    'flex items-center justify-center mx-0.5 text-4xl font-thin dark:text-white'
   )
 
   const classesDecrypted = classnames(
@@ -79,6 +76,13 @@ export const Cell = ({
     animationDelay,
     minHeight: '1em',
     minWidth: '1em',
+  }
+
+  const stylesPunctuation = {
+    fontFamily: 'Courier New',
+    animationDelay,
+    minHeight: '1em',
+    minWidth: '0.3em',
   }
 
   const stylesEncrypted = {
@@ -130,7 +134,7 @@ export const Cell = ({
         onClick={cellOnClick}
         onDragOver={allowDrop}
         onDrop={onDrop}
-        style={stylesDecrypted}
+        style={shouldDisplayDecrypted ? stylesDecrypted : stylesPunctuation}
         {...notTabbable}
       >
         {shouldDisplayDecrypted ? decryptedValue : null}
@@ -144,8 +148,10 @@ export const Cell = ({
 
       <div
         aria-label={encryptedValue}
-        style={stylesEncrypted}
-        className={classesEncrypted}
+        style={shouldDisplayDecrypted ? stylesEncrypted : stylesPunctuation}
+        className={
+          shouldDisplayDecrypted ? classesEncrypted : classesPunctuation
+        }
       >
         {encryptedValue}
       </div>
