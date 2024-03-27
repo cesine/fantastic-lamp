@@ -43,17 +43,15 @@ export const DragAndDropLetter = ({
   }
 
   return (
-    <div>
-      <span
-        aria-label={alphabetLine || ''}
-        draggable={true}
-        onDragStart={handleDragStart}
-        style={stylesLetter}
-        className={classesLetter}
-        title="Drag and drop me to where you want me to go!"
-      >
-        {alphabetLine}
-      </span>
-    </div>
+    <span
+      aria-label={alphabetLine || ''}
+      draggable={true}
+      onDragStart={handleDragStart}
+      style={stylesLetter}
+      className={classesLetter}
+      title="Drag and drop me to where you want me to go!"
+    >
+      {alphabetLine}
+    </span>
   )
 }

@@ -83,6 +83,7 @@ export const Cell = ({
 
   const stylesEncrypted = {
     ...stylesDecrypted,
+    marginBottom: '0.5em',
   }
 
   const allowDrop: React.DragEventHandler<HTMLButtonElement> = (event) => {
