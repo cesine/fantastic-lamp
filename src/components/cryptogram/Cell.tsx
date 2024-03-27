@@ -1,4 +1,5 @@
 import classnames from 'classnames'
+import { RefObject, createRef } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
@@ -17,7 +18,7 @@ type Props = {
   position?: number
   onClick: (input: string, ariaLabel: string) => void
 }
-
+const isIphone = /iPhone/i.test(navigator.userAgent)
 let userHasInteractedWithCell = false
 let userHasDroppedALetter = false
 
@@ -42,20 +43,20 @@ export const Cell = ({
   const shouldDisplayDecrypted = isaLetter(encryptedValue)
 
   const classesEncrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 mb-4 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900': !status,
     }
   )
   const classesPunctuation = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-slate-900': !status,
     }
   )
 
   const classesDecrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'hover:bg-slate-300 active:bg-slate-400 dark:border-slate-700': !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
@@ -110,24 +111,34 @@ export const Cell = ({
     const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
 
     onClick('', label)
+    if (isIphone) {
+      event.currentTarget.blur()
+      hiddenInputRef?.current?.focus()
+    }
   }
 
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
-
+  const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
   return (
     <div className="inline-flex flex-col">
       <button
         aria-label={encryptedValue}
-        onClick={cellOnClick}
-        onDragOver={allowDrop}
-        onDrop={onDrop}
         className={
           shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
         }
+        onClick={cellOnClick}
+        onDragOver={allowDrop}
+        onDrop={onDrop}
         style={stylesDecrypted}
         {...notTabbable}
       >
         {shouldDisplayDecrypted ? decryptedValue : null}
+        <input
+          ref={hiddenInputRef}
+          style={{ position: 'absolute', top: '-9999px' }}
+          tabIndex={-1}
+          type="text"
+        />
       </button>
 
       <div

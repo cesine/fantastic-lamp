@@ -1,13 +1,11 @@
 import './App.css'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
-import classnames from 'classnames'
 import { format } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
-import { Alphabet } from './components/alphabet/Alphabet'
 import { Keyboard } from './components/alphabet/Keyboard'
 import { Cryptogram } from './components/cryptogram/Cryptogram'
 import { DatePickerModal } from './components/modals/DatePickerModal'
@@ -66,7 +64,6 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
 const betaMode = window.location.search.includes('beta')
 
 const debug = (...args: any[]) => {
@@ -539,12 +536,6 @@ function App() {
     }
   }, [onEnter, onDelete, onChar])
 
-  const cryptogramClassnames = classnames(
-    'flex grow flex-col justify-center pb-6 short:pb-2',
-    {
-      'pl-2 pr-14': isAndroid,
-    }
-  )
   // If there is no beta in the URL, prevent potential users from opening the game
   if (!betaMode) {
     window.gtag('event', 'unlock_achievement', {
@@ -595,27 +586,16 @@ function App() {
         )}
 
         <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div>
-            {isAndroid ? (
-              <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
-            ) : null}
-            <div className={cryptogramClassnames}>
-              <Cryptogram
-                onChar={onChar}
-                cipher={currentCipher}
-                encryptedQuote={encryptedQuote}
-                isRevealing={isRevealing}
-                isHardMode={isHardMode}
-              />
-            </div>
+          <div className="flex grow flex-col justify-center pb-6 short:pb-2">
+            <Cryptogram
+              onChar={onChar}
+              cipher={currentCipher}
+              encryptedQuote={encryptedQuote}
+              isRevealing={isRevealing}
+              isHardMode={isHardMode}
+            />
           </div>
-          <Alphabet
-            cipher={currentCipher}
-            onChar={onChar}
-            onDelete={onDelete}
-            onEnter={onEnter}
-            isRevealing={isRevealing}
-          />
+          <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
           <InfoModal
             isOpen={isInfoModalOpen}
             handleClose={() => setIsInfoModalOpen(false)}
