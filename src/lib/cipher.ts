@@ -19,6 +19,12 @@ export function getRemainingLetters(cipher: Cipher): string[] {
     .sort((a, b) => a.localeCompare(b))
 }
 
+export function getLetters(cipher: Cipher): string[] {
+  return Object.keys(cipher)
+    .map((key) => cipher[key].decrypted)
+    .sort((a, b) => a.localeCompare(b))
+}
+
 export function generateCryptogramHint(
   key: Cipher,
   encryptedLetters: string[],

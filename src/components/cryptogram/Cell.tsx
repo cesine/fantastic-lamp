@@ -82,7 +82,7 @@ export const Cell = ({
     fontFamily: 'Courier New',
     animationDelay,
     minHeight: '1em',
-    minWidth: '0.3em',
+    minWidth: '0.2em',
   }
 
   const stylesEncrypted = {

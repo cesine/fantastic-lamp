@@ -595,7 +595,11 @@ function App() {
               isHardMode={isHardMode}
             />
           </div>
-          <Keyboard cipher={currentCipher} isRevealing={isRevealing} />
+          <Keyboard
+            cipher={currentCipher}
+            isHardMode={isHardMode}
+            isRevealing={isRevealing}
+          />
           <InfoModal
             isOpen={isInfoModalOpen}
             handleClose={() => setIsInfoModalOpen(false)}
