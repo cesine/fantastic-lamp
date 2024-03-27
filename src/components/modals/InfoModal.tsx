@@ -74,7 +74,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
         The letter 'L' is represented by a yellow tile to indicate it's in the
-        message but placed incorrectly.{' '}
+        message but placed incorrectly.
       </p>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
