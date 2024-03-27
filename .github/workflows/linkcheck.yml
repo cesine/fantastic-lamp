@@ -16,6 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - uses: docker://dkhamsing/awesome_bot:latest
         with:
           args: /github/workspace/README.md --allow-redirect --white-list http://localhost,http://localhost:3000,https://github.com/cwackerfuss/react-wordle/blob/main/.env
