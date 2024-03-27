@@ -10,8 +10,8 @@ import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { QUOTES } from '../constants/quotelist'
 import { getToday } from './dateutils'
 
-// 1 January 2022 Game Epoch
-export const firstGameDate = new Date(2022, 0)
+// 1 January 2024 Game Epoch
+export const firstGameDate = new Date(2024, 0)
 export const periodInDays = 1
 
 export const unicodeSplit = (quote: string) => {
@@ -119,18 +119,22 @@ export const getGameDate = () => {
 }
 
 export const setGameDate = (d: Date) => {
-  const path = window.location.pathname
   try {
+    const path = window.location.pathname
+    const queryParams = new URLSearchParams(window.location.search)
     if (d < getToday()) {
-      window.location.href = `${path}?d=${formatISO(d, {
-        representation: 'date',
-      })}`
-      return
+      queryParams.set('d', formatISO(d, { representation: 'date' }))
+      // move to using the date as which puzzle to load rather than the code
+      queryParams.delete('code')
+    } else {
+      queryParams.delete('d')
+      // move to using the date as which puzzle to load rather than the code
+      queryParams.delete('code')
     }
+    window.location.href = `${path}?${queryParams.toString()}`
   } catch (e) {
     console.log(e)
   }
-  window.location.href = path
 }
 
 export const getIsLatestGame = () => {
@@ -173,6 +177,36 @@ export const loadGameStateFromQueryParam = (
     console.warn('Error laoding game from query params, ignoring it', err)
   }
   return emptyGame
+}
+
+export const shareGameToQueryParams = ({
+  seed,
+  message,
+}: {
+  seed: number
+  message: string
+}) => {
+  const state = {
+    guesses: [],
+    index: seed,
+    message: 'An encrypted message',
+    solution: {
+      author: '',
+      quote: message,
+    },
+  }
+
+  const code = btoa(JSON.stringify(state))
+  console.log('code', code, state)
+  const queryParams = new URLSearchParams(
+    '?utm_source=beta_app&utm_medium=share_button&utm_campaign=encrypted_message'
+  )
+  queryParams.set('code', encodeURIComponent(code))
+  const link = `${window.location.origin}${
+    window.location.pathname
+  }?${queryParams.toString()}`
+
+  return link
 }
 
 export const {
