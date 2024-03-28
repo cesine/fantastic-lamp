@@ -68,15 +68,18 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter P is in correct spot.
+        The letter 'P' is indicated by a green tile when it's in the correct
+        spot.
       </p>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter L is in the message but in the wrong spot.
+        The letter 'L' is represented by a yellow tile to indicate it's in the
+        message but placed incorrectly.
       </p>
 
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter U is not in the message in any spot.
+        The letter 'U' remains uncolored, indicating it's not present in the
+        message.
       </p>
     </BaseModal>
   )
