@@ -1,13 +1,19 @@
 import classnames from 'classnames'
-import { RefObject, createRef } from 'react'
+import { FocusEventHandler, RefObject, createRef, useState } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
+import { newCipher } from '../../lib/cipher'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
 import { CharStatus } from '../../lib/statuses'
+import { Keyboard } from '../alphabet/Keyboard'
 
 const isaLetter = (decryptedValue: string) => {
   return /[a-zA-Z]+/.test(decryptedValue)
 }
+const cipher = newCipher(4)
+const isAndroid = /Android/i.test(navigator.userAgent)
+const isIphone = /iPhone/i.test(navigator.userAgent)
+let userHasInteractedWithCell = false
 
 type Props = {
   encryptedValue: string
@@ -18,9 +24,6 @@ type Props = {
   position?: number
   onClick: (input: string, ariaLabel: string) => void
 }
-
-let userHasInteractedWithCell = false
-const isIphone = /iPhone/i.test(navigator.userAgent)
 
 export const Cell = ({
   encryptedValue,
@@ -35,6 +38,7 @@ export const Cell = ({
   // const toggleRevealLetter = () => {
   //   setRevealLetter(!revealLetter)
   // }
+  const [isKeyboardShowing, setIsKeyboardShowing] = useState(false)
 
   const isFilled = decryptedValue && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -43,14 +47,20 @@ export const Cell = ({
   const shouldDisplayDecrypted = isaLetter(encryptedValue)
 
   const classesEncrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 mb-4 text-4xl font-thin rounded dark:text-white',
+    {
+      'bg-white dark:bg-slate-900': !status,
+    }
+  )
+  const classesPunctuation = classnames(
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'bg-white dark:bg-federal-blue': !status,
     }
   )
 
   const classesDecrypted = classnames(
-    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
+    'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-6 h-6 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
       'hover:bg-slate-500 active:bg-slate-400 dark:border-federal-blue-700':
         !status,
@@ -73,11 +83,11 @@ export const Cell = ({
     fontFamily: 'Courier New',
     animationDelay,
     minHeight: '1em',
+    minWidth: '1em',
   }
 
   const stylesEncrypted = {
     ...stylesDecrypted,
-    marginBottom: '40px',
   }
   const hiddenInputRef: RefObject<HTMLInputElement> = createRef()
 
@@ -89,22 +99,44 @@ export const Cell = ({
       })
     }
     const label = (event?.target as HTMLButtonElement)?.ariaLabel || ''
-
     onClick('', label)
+
+    if (isAndroid) {
+      setIsKeyboardShowing(true)
+    }
     if (isIphone) {
       event.currentTarget.blur()
       hiddenInputRef?.current?.focus()
     }
   }
 
+  const onChar = (input: string) => {
+    onClick(input, encryptedValue)
+    if (isAndroid) {
+      setIsKeyboardShowing(false)
+    }
+  }
+
+  const onBlur: FocusEventHandler<HTMLButtonElement> = () => {
+    if (!isAndroid) {
+      return
+    }
+    setTimeout(() => {
+      setIsKeyboardShowing(false)
+    }, REVEAL_TIME_MS / 2)
+  }
+
   const notTabbable = shouldDisplayDecrypted ? {} : { tabIndex: -1 }
 
   return (
-    <div className="inline-flex flex-col">
+    <div className="relative inline-flex flex-col">
       <button
         aria-label={encryptedValue}
+        onBlur={onBlur}
         onClick={cellOnClick}
-        className={shouldDisplayDecrypted ? classesDecrypted : classesEncrypted}
+        className={
+          shouldDisplayDecrypted ? classesDecrypted : classesPunctuation
+        }
         style={stylesDecrypted}
         {...notTabbable}
       >
@@ -116,6 +148,23 @@ export const Cell = ({
           type="text"
         />
       </button>
+      {isKeyboardShowing ? (
+        <span
+          style={{
+            position: 'fixed',
+            left: '10px',
+            maxWidth: '800px',
+            width: '80%',
+          }}
+          className="z-10 mt-20 dark:bg-slate-900"
+        >
+          <Keyboard
+            cipher={cipher}
+            isRevealing={isRevealing}
+            onClick={onChar}
+          />
+        </span>
+      ) : null}
 
       <div
         aria-label={encryptedValue}

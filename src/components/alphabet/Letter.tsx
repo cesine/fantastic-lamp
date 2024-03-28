@@ -13,7 +13,7 @@ let userHasInteractedWithLetter = false
 
 type Props = {
   children?: ReactNode
-  alphabetLine: string | null
+  alphabetLine: string
   randomKey: string
   width?: number
   status?: CharStatus
@@ -25,7 +25,7 @@ export const Letter = ({
   children,
   status,
   width = 40,
-  alphabetLine = '',
+  alphabetLine,
   randomKey,
   onClick,
   isRevealing,
@@ -35,7 +35,7 @@ export const Letter = ({
   const displayButton = !isPunctuation(randomKey)
 
   const classes = classnames(
-    'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    'xxshort:h-4 xxshort:w-48 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-6 w-8 h-8 items-center justify-center rounded mx-0.5 text-xs font-thin cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
       'bg-slate-200 dark:bg-federal-blue-600 hover:bg-slate-300 active:bg-slate-400':
@@ -53,7 +53,7 @@ export const Letter = ({
   )
 
   const classesLetter = classnames(
-    'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    'xxshort:h-4 xxshort:w-4 xxshort:text-xxs xshort:w-6 xshort:h-6 flex short:h-6 w-8 h-8 items-center justify-center rounded mx-0.5 text-xs font-thin cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
     }
@@ -61,12 +61,14 @@ export const Letter = ({
 
   const styles = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-    width: `${width}px`,
+    minHeight: '1em',
+    minWidth: '1em',
   }
 
   const stylesLetter = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-    width: `${width}px`,
+    minHeight: '1em',
+    minWidth: '1em',
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -86,7 +88,7 @@ export const Letter = ({
     <div>
       <button
         style={displayButton ? styles : stylesLetter}
-        aria-label={alphabetLine || ''}
+        aria-label={alphabetLine}
         className={displayButton ? classes : classesLetter}
         onClick={handleClick}
       >
@@ -94,7 +96,7 @@ export const Letter = ({
       </button>
 
       <span
-        aria-label={alphabetLine || ''}
+        aria-label={alphabetLine}
         style={stylesLetter}
         className={classesLetter}
       >

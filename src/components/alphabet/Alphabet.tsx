@@ -1,3 +1,5 @@
+import classnames from 'classnames'
+
 import { Cipher } from '../../lib/cipher'
 import { Letter } from './Letter'
 
@@ -7,6 +9,7 @@ type Props = {
   onDelete: () => void
   onEnter: () => void
   isRevealing?: boolean
+  isShowing?: boolean
 }
 
 export const Alphabet = ({
@@ -15,6 +18,7 @@ export const Alphabet = ({
   onDelete,
   onEnter,
   isRevealing,
+  isShowing = true,
 }: Props) => {
   const onClick = (input: string, ariaLabel: string) => {
     if (input === 'ENTER') {
@@ -26,9 +30,11 @@ export const Alphabet = ({
     }
   }
 
+  const cryptogramClassnames = classnames('flex flex-wrap justify-center', {})
+
   return (
     <div>
-      <div className="mb-1 flex flex-wrap justify-center">
+      <div className={cryptogramClassnames}>
         {[
           'A',
           'B',

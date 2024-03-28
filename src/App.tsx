@@ -64,19 +64,10 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
 const betaMode = window.location.search.includes('beta')
-const debugMode =
-  window.location.hostname === 'localhost' ||
-  window.location.hostname.includes('127.0.0.1') ||
-  window.location.hostname.includes('vercel.app')
 
 const debug = (...args: any[]) => {
-  if (isAndroid && false) {
-    alert(args.join(' '))
-  } else {
-    console.log(args)
-  }
+  console.log(args)
 }
 
 const encryptedQuote = {
@@ -525,10 +516,6 @@ function App() {
     const listener = (e: KeyboardEvent) => {
       debug('got an event code', e.code)
       debug('got an event key', e.key)
-      debug('got an event charCode', e.charCode)
-      debug('got an event altKey', e.altKey)
-      debug('got an event keyCode', e.keyCode)
-      debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
@@ -569,24 +556,6 @@ function App() {
               >
                 Get my link!
               </a>
-            </p>
-          </div>
-        </div>
-      </Div100vh>
-    )
-  }
-  // If there is no beta in the URL, prevent Android users from opening the game
-  if (isAndroid && !debugMode) {
-    window.gtag('event', 'unlock_achievement', {
-      achievement_id: 'view_unavailable_on_android',
-    })
-    return (
-      <Div100vh>
-        <div className="flex h-full flex-col">
-          <Navbar />
-          <div className="flex h-screen items-center justify-center">
-            <p className="text-center text-2xl text-gray-600">
-              This game is not yet available on Android.
             </p>
           </div>
         </div>
