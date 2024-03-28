@@ -52,9 +52,9 @@ export const Cell = ({
   const classesDecrypted = classnames(
     'xxshort:w-4 xxshort:h-4 short:text-2xl short:w-6 short:h-6 w-8 h-8 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-thin rounded dark:text-white',
     {
-      'hover:bg-federal-blue-300 active:bg-federal-blue-400 dark:border-federal-blue-700':
+      'hover:bg-slate-500 active:bg-slate-400 dark:border-federal-blue-700':
         !status,
-      'absent shadowed text-white border-federal-blue-400 dark:border-federal-blue-700':
+      'absent border-federal-blue-400 hover:bg-slate-500 active:bg-slate-400 dark:border-federal-blue-700':
         status === 'absent',
       'correct shadowed bg-cyan-500 hover:bg-orange-600 active:bg-orange-700 text-white border-cyan-500':
         status === 'correct' && isHighContrast,

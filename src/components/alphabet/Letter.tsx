@@ -38,10 +38,9 @@ export const Letter = ({
     'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
-      'bg-federal-blue-200 dark:bg-federal-blue-600 hover:bg-federal-blue-300 active:bg-federal-blue-400':
+      'bg-slate-200 dark:bg-federal-blue-600 hover:bg-slate-300 active:bg-slate-400':
         !status,
-      'bg-federal-blue-400 dark:bg-federal-blue-800 text-white':
-        status === 'absent',
+      'bg-federal-blue-400 dark:bg-federal-blue-800': status === 'absent',
       'bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white':
         status === 'correct' && isHighContrast,
       'bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white':
