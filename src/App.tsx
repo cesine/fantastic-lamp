@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
-import { Alphabet } from './components/alphabet/Alphabet'
+import { Keyboard } from './components/alphabet/Keyboard'
 import { Cryptogram } from './components/cryptogram/Cryptogram'
 import { DatePickerModal } from './components/modals/DatePickerModal'
 import { HeartModal } from './components/modals/HeartModal'
@@ -64,19 +64,10 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import { CharStatus } from './lib/statuses'
 
 const cipher = newCipher(solutionIndex)
-const isAndroid = /Android/i.test(navigator.userAgent)
 const betaMode = window.location.search.includes('beta')
-const debugMode =
-  window.location.hostname === 'localhost' ||
-  window.location.hostname.includes('127.0.0.1') ||
-  window.location.hostname.includes('vercel.app')
 
 const debug = (...args: any[]) => {
-  if (isAndroid && false) {
-    alert(args.join(' '))
-  } else {
-    console.log(args)
-  }
+  console.log(args)
 }
 
 const encryptedQuote = {
@@ -525,10 +516,6 @@ function App() {
     const listener = (e: KeyboardEvent) => {
       debug('got an event code', e.code)
       debug('got an event key', e.key)
-      debug('got an event charCode', e.charCode)
-      debug('got an event altKey', e.altKey)
-      debug('got an event keyCode', e.keyCode)
-      debug('got an event which', e.which)
       if (e.code === 'Enter') {
         onEnter()
       } else if (e.code === 'Backspace') {
@@ -575,24 +562,6 @@ function App() {
       </Div100vh>
     )
   }
-  // If there is no beta in the URL, prevent Android users from opening the game
-  if (isAndroid && !debugMode) {
-    window.gtag('event', 'unlock_achievement', {
-      achievement_id: 'view_unavailable_on_android',
-    })
-    return (
-      <Div100vh>
-        <div className="flex h-full flex-col">
-          <Navbar />
-          <div className="flex h-screen items-center justify-center">
-            <p className="text-center text-2xl text-gray-600">
-              This game is not yet available on Android.
-            </p>
-          </div>
-        </div>
-      </Div100vh>
-    )
-  }
 
   return (
     <Div100vh>
@@ -616,8 +585,8 @@ function App() {
           </div>
         )}
 
-        <div className="mx-auto flex w-full grow flex-col px-1 pb-8 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div className="flex grow flex-col justify-center pb-6 short:pb-2">
+        <div className="mx-auto flex w-full grow flex-col px-1 pb-4 pt-2 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
+          <div className="mb-12 flex grow flex-col justify-center pb-24 short:pb-2">
             <Cryptogram
               onChar={onChar}
               cipher={currentCipher}
@@ -626,11 +595,10 @@ function App() {
               isHardMode={isHardMode}
             />
           </div>
-          <Alphabet
+          <Keyboard
             cipher={currentCipher}
-            onChar={onChar}
-            onDelete={onDelete}
-            onEnter={onEnter}
+            isHardMode={isHardMode}
+            isHighContrast={isHighContrastMode}
             isRevealing={isRevealing}
           />
           <InfoModal
