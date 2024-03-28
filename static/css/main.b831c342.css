@@ -754,9 +754,6 @@ select {
 .mr-2 {
   margin-right: 0.5rem;
 }
-.mr-3 {
-  margin-right: 0.75rem;
-}
 .mr-8 {
   margin-right: 2rem;
 }
@@ -801,6 +798,9 @@ select {
 }
 .hidden {
   display: none;
+}
+.h-12 {
+  height: 3rem;
 }
 .h-14 {
   height: 3.5rem;
@@ -990,6 +990,18 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(6 182 212 / var(--tw-border-opacity));
 }
+.border-dark-goldenrod {
+  --tw-border-opacity: 1;
+  border-color: rgb(181 139 42 / var(--tw-border-opacity));
+}
+.border-federal-blue-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(69 84 122 / var(--tw-border-opacity));
+}
+.border-federal-blue-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(127 144 164 / var(--tw-border-opacity));
+}
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -998,28 +1010,16 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
-.border-green-500 {
+.border-green-700 {
   --tw-border-opacity: 1;
-  border-color: rgb(34 197 94 / var(--tw-border-opacity));
+  border-color: rgb(21 128 61 / var(--tw-border-opacity));
 }
 .border-orange-500 {
   --tw-border-opacity: 1;
   border-color: rgb(249 115 22 / var(--tw-border-opacity));
 }
-.border-slate-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(148 163 184 / var(--tw-border-opacity));
-}
-.border-slate-700 {
-  --tw-border-opacity: 1;
-  border-color: rgb(51 65 85 / var(--tw-border-opacity));
-}
 .border-transparent {
   border-color: transparent;
-}
-.border-yellow-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(234 179 8 / var(--tw-border-opacity));
 }
 .bg-blue-500 {
   --tw-bg-opacity: 1;
@@ -1029,9 +1029,45 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
+.bg-claret {
+  --tw-bg-opacity: 1;
+  background-color: rgb(131 34 50 / var(--tw-bg-opacity));
+}
+.bg-claret-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(104 28 28 / var(--tw-bg-opacity));
+}
+.bg-claret-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(95 26 26 / var(--tw-bg-opacity));
+}
+.bg-claret-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(86 24 24 / var(--tw-bg-opacity));
+}
 .bg-cyan-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(6 182 212 / var(--tw-bg-opacity));
+}
+.bg-dark-goldenrod {
+  --tw-bg-opacity: 1;
+  background-color: rgb(181 139 42 / var(--tw-bg-opacity));
+}
+.bg-federal-blue {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+.bg-federal-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 84 122 / var(--tw-bg-opacity));
+}
+.bg-federal-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(98 114 143 / var(--tw-bg-opacity));
+}
+.bg-federal-blue-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 174 185 / var(--tw-bg-opacity));
 }
 .bg-gray-100 {
   --tw-bg-opacity: 1;
@@ -1053,17 +1089,13 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
-.bg-green-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
-}
 .bg-green-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
-.bg-indigo-600 {
+.bg-green-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 .bg-orange-500 {
   --tw-bg-opacity: 1;
@@ -1073,10 +1105,6 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
 }
-.bg-rose-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(244 63 94 / var(--tw-bg-opacity));
-}
 .bg-slate-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
@@ -1085,17 +1113,9 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
-.bg-slate-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-}
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.bg-yellow-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
@@ -1133,10 +1153,6 @@ select {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -1167,6 +1183,9 @@ select {
 }
 .pt-5 {
   padding-top: 1.25rem;
+}
+.pt-8 {
+  padding-top: 2rem;
 }
 .text-left {
   text-align: left;
@@ -1346,21 +1365,21 @@ select {
   --default-cell-bg-color: #fff;
   --default-cell-border-color: #000;
   --default-cell-text-color: #000;
-  --absent-cell-bg-color: #94a3b8;
-  --correct-cell-bg-color: #4ade80;
-  --present-cell-bg-color: #facc15;
+  --absent-cell-bg-color: #45547a;
+  --correct-cell-bg-color: #15803d;
+  --present-cell-bg-color: #B58B2A;
 }
 
 .dark {
-  --default-cell-bg-color: #0f172a;
+  --default-cell-bg-color: #9caeb9;
   --default-cell-border-color: #fff;
   --default-cell-text-color: #fff;
-  --absent-cell-bg-color: #334155;
+  --absent-cell-bg-color: #7f90a4;
 }
 
 .high-contrast {
-  --correct-cell-bg-color: #fb923c;
-  --present-cell-bg-color: #22d3ee;
+  --correct-cell-bg-color: #22d3ee;
+  --present-cell-bg-color: #fb923c;
 }
 
 .cell-fill-animation {
@@ -1833,13 +1852,13 @@ svg.react-datepicker__day:hover {
 
 .react-datepicker__day--in-selecting-range {
   --tw-bg-opacity: 1;
-  background-color: rgb(199 210 254 / var(--tw-bg-opacity));
+  background-color: rgb(122 32 32 / var(--tw-bg-opacity));
 }
 
 .react-datepicker__day--selecting-range-start {
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(79 70 229 / var(--tw-border-opacity));
+  border-color: rgb(86 24 24 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
@@ -1847,14 +1866,14 @@ svg.react-datepicker__day:hover {
 .react-datepicker__day--selecting-range-end {
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(79 70 229 / var(--tw-border-opacity));
+  border-color: rgb(86 24 24 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .react-datepicker__day--selected {
   --tw-bg-opacity: 1;
-  background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+  background-color: rgb(86 24 24 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -1866,7 +1885,7 @@ svg.react-datepicker__day:hover {
 
 .react-datepicker__day--range-start {
   --tw-bg-opacity: 1;
-  background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+  background-color: rgb(86 24 24 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -1880,7 +1899,7 @@ svg.react-datepicker__day:hover {
 
 .react-datepicker__day--range-end {
   --tw-bg-opacity: 1;
-  background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+  background-color: rgb(86 24 24 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -1895,6 +1914,11 @@ svg.react-datepicker__day:hover {
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-claret-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(77 22 22 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-cyan-600:hover {
@@ -1912,11 +1936,6 @@ svg.react-datepicker__day:hover {
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-indigo-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(67 56 202 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-orange-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(234 88 12 / var(--tw-bg-opacity));
@@ -1927,9 +1946,14 @@ svg.react-datepicker__day:hover {
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-yellow-600:hover {
+.hover\:bg-slate-500:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-yellow-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
 .focus\:border-blue-500:focus {
@@ -1953,9 +1977,9 @@ svg.react-datepicker__day:hover {
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-indigo-500:focus {
+.focus\:ring-claret-500:focus {
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity));
+  --tw-ring-color: rgb(95 26 26 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-offset-0:focus {
@@ -2016,14 +2040,34 @@ svg.react-datepicker__day:hover {
   outline-offset: 2px;
 }
 
+:is(.dark .dark\:border-federal-blue-700) {
+  --tw-border-opacity: 1;
+  border-color: rgb(127 144 164 / var(--tw-border-opacity));
+}
+
 :is(.dark .dark\:border-gray-600) {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 
-:is(.dark .dark\:border-slate-700) {
-  --tw-border-opacity: 1;
-  border-color: rgb(51 65 85 / var(--tw-border-opacity));
+:is(.dark .dark\:bg-federal-blue) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:bg-federal-blue-600) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(98 114 143 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:bg-federal-blue-700) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(127 144 164 / var(--tw-bg-opacity));
+}
+
+:is(.dark .dark\:bg-federal-blue-800) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 174 185 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:bg-gray-700) {
@@ -2039,26 +2083,6 @@ svg.react-datepicker__day:hover {
 :is(.dark .dark\:bg-red-900) {
   --tw-bg-opacity: 1;
   background-color: rgb(127 29 29 / var(--tw-bg-opacity));
-}
-
-:is(.dark .dark\:bg-slate-600) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-}
-
-:is(.dark .dark\:bg-slate-700) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-
-:is(.dark .dark\:bg-slate-800) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-}
-
-:is(.dark .dark\:bg-slate-900) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:stroke-gray-300) {
@@ -2287,4 +2311,4 @@ svg.react-datepicker__day:hover {
 }
 
 
-/*# sourceMappingURL=main.3223f9c2.css.map*/
+/*# sourceMappingURL=main.b831c342.css.map*/
