@@ -33,7 +33,7 @@ export const Navbar = ({
 }: Props) => {
   return (
     <div className="navbar">
-      <div className="navbar-content px-5 text-white short:h-auto">
+      <div className="navbar-content bg-claret px-5 text-white short:h-auto">
         <div className="flex">
           <InformationCircleIcon
             aria-label="Open Info Modal"
@@ -211,7 +211,6 @@ export const Navbar = ({
           />
         </div>
       </div>
-      <hr></hr>
     </div>
   )
 }

@@ -70,18 +70,11 @@ svg.cursor-pointer:hover {
   margin-bottom: 2%;
 }
 
-.navbar hr {
-  border-color: #832232;
-}
-
 .navbar-content {
   display: flex;
   height: 3rem;
   align-items: center;
   justify-content: space-between;
-  background-color: #832232;
-  border-bottom-color: black;
-  /* border: 1px solid var(--default-cell-border-color); */
 }
 
 .right-icons {
