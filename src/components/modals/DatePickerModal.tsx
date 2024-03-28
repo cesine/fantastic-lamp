@@ -124,7 +124,7 @@ export const DatePickerModal = ({
         <button
           type="button"
           disabled={!isValidGameDate(getToday())}
-          className="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:border-gray-200 disabled:bg-gray-500 disabled:bg-white disabled:text-gray-900
+          className="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-claret-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-claret-700 focus:outline-none focus:ring-2 focus:ring-claret-500 focus:ring-offset-2 disabled:border-gray-200 disabled:bg-gray-500 disabled:bg-white disabled:text-gray-900
           disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-gray-800 disabled:dark:text-gray-400 sm:text-base sm:text-base"
           onClick={() => {
             window.gtag('event', 'unlock_achievement', {
@@ -137,7 +137,7 @@ export const DatePickerModal = ({
         </button>
         <button
           type="button"
-          className="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
+          className="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-claret-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-claret-700 focus:outline-none focus:ring-2 focus:ring-claret-500 focus:ring-offset-2 "
           disabled={selectedDate >= getToday()}
           onClick={() => {
             window.gtag('event', 'unlock_achievement', {

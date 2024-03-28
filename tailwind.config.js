@@ -16,6 +16,14 @@ module.exports = {
         'federal-blue-800': '#9caeb9',
         'federal-blue-900': '#9caeb9',
         claret: '#832232',
+        'claret-200': '#7a2020',
+        'claret-300': '#711e1e',
+        'claret-400': '#681c1c',
+        'claret-500': '#5f1a1a',
+        'claret-600': '#561818',
+        'claret-700': '#4d1616',
+        'claret-800': '#441414',
+        'claret-900': '#3b1212',
       },
 
       screens: {
