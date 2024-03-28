@@ -123,54 +123,48 @@ export const Navbar = ({
             />
             <span className="ml-3 mt-1 text-xs">Report</span>
           </a>
-          <a
+          <span
             aria-label="Send an encrypted message"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
             className="flex flex-col items-center"
+            onClick={() => {
+              if (typeof setIsSendMessageModalOpen !== 'function') {
+                return
+              }
+              window.gtag('event', 'unlock_achievement', {
+                achievement_id: 'click_send_a_message',
+              })
+              setIsSendMessageModalOpen(true)
+            }}
+            title="Click to write an encrypted message"
           >
             <ChatBubbleOvalLeftIcon
               className={`ml-3 h-6 w-6 dark:stroke-white ${setIsSendMessageModalOpen ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-              onClick={() => {
-                if (typeof setIsSendMessageModalOpen !== 'function') {
-                  return
-                }
-                window.gtag('event', 'unlock_achievement', {
-                  achievement_id: 'click_send_a_message',
-                })
-                setIsSendMessageModalOpen(true)
-              }}
-              title="Click to write an encrypted message"
             />
             <span className="ml-3 mt-1 block whitespace-normal text-center text-xs">
               Encrypt
             </span>
-          </a>
-          <a
+          </span>
+          <span
             aria-label="Show Hint"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
             className="flex flex-col items-center"
+            onClick={() => {
+              if (typeof setHint !== 'function') {
+                return
+              }
+              window.gtag('event', 'unlock_achievement', {
+                achievement_id: 'click_show_hint',
+              })
+              setHint(true)
+            }}
+            title="Click to insert the hint"
           >
             <PuzzlePieceIcon
               className={`h-6 w-6 dark:stroke-white ${setHint ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-              onClick={() => {
-                if (typeof setHint !== 'function') {
-                  return
-                }
-                window.gtag('event', 'unlock_achievement', {
-                  achievement_id: 'click_show_hint',
-                })
-                setHint(true)
-              }}
-              title="Click to insert the hint"
             />
             <span className="ml-3 mt-1 block whitespace-normal text-center text-xs">
               Hint
             </span>
-          </a>
+          </span>
 
           <ChartBarIcon
             aria-label="Open Stats"
