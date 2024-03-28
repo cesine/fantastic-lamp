@@ -598,6 +598,7 @@ function App() {
           <Keyboard
             cipher={currentCipher}
             isHardMode={isHardMode}
+            isHighContrast={isHighContrastMode}
             isRevealing={isRevealing}
           />
           <InfoModal

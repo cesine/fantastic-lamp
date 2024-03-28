@@ -4,10 +4,16 @@ import { DragAndDropLetter } from './DragAndDropLetter'
 type Props = {
   cipher: Cipher
   isHardMode?: boolean
+  isHighContrast?: boolean
   isRevealing?: boolean
 }
 
-export const Keyboard = ({ cipher, isHardMode = true, isRevealing }: Props) => {
+export const Keyboard = ({
+  cipher,
+  isHardMode = true,
+  isHighContrast = false,
+  isRevealing,
+}: Props) => {
   const remainingLetters = getLetters(cipher)
   let mapping: { [key: string]: string } = {}
   Object.keys(cipher).forEach((key) => {
@@ -16,7 +22,7 @@ export const Keyboard = ({ cipher, isHardMode = true, isRevealing }: Props) => {
   console.log('made the mapping', mapping)
 
   return (
-    <div className="fixed bottom-0 right-0 flex w-full flex-wrap justify-center bg-white pb-4 pt-2 dark:bg-slate-900">
+    <div className="fixed bottom-0 right-0 flex w-full flex-wrap justify-center bg-white pb-4 pt-2 dark:bg-federal-blue">
       {remainingLetters.map((key) => {
         const encryptedLetter = mapping[key]
         return (
@@ -27,6 +33,7 @@ export const Keyboard = ({ cipher, isHardMode = true, isRevealing }: Props) => {
             }
             key={key}
             isRevealing={isRevealing}
+            isHighContrast={isHighContrast}
             status={isHardMode ? undefined : cipher[encryptedLetter]?.status}
           />
         )
