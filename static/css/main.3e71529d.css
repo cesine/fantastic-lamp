@@ -684,8 +684,14 @@ select {
 .inset-0 {
   inset: 0px;
 }
+.bottom-0 {
+  bottom: 0px;
+}
 .left-1\/2 {
   left: 50%;
+}
+.right-0 {
+  right: 0px;
 }
 .right-4 {
   right: 1rem;
@@ -701,6 +707,12 @@ select {
 }
 .z-20 {
   z-index: 20;
+}
+.m-0 {
+  margin: 0px;
+}
+.m-0\.5 {
+  margin: 0.125rem;
 }
 .m-1 {
   margin: 0.25rem;
@@ -732,6 +744,9 @@ select {
 }
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
 }
 .mb-2 {
   margin-bottom: 0.5rem;
@@ -799,6 +814,9 @@ select {
 .hidden {
   display: none;
 }
+.h-10 {
+  height: 2.5rem;
+}
 .h-12 {
   height: 3rem;
 }
@@ -834,6 +852,9 @@ select {
 }
 .w-1\/4 {
   width: 25%;
+}
+.w-10 {
+  width: 2.5rem;
 }
 .w-14 {
   width: 3.5rem;
@@ -1018,6 +1039,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(249 115 22 / var(--tw-border-opacity));
 }
+.border-slate-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity));
+}
 .border-transparent {
   border-color: transparent;
 }
@@ -1169,11 +1194,11 @@ select {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
+.pb-24 {
+  padding-bottom: 6rem;
+}
 .pb-4 {
   padding-bottom: 1rem;
-}
-.pb-6 {
-  padding-bottom: 1.5rem;
 }
 .pb-8 {
   padding-bottom: 2rem;
@@ -2050,6 +2075,11 @@ svg.react-datepicker__day:hover {
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 
+:is(.dark .dark\:border-white) {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
 :is(.dark .dark\:bg-federal-blue) {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
@@ -2258,12 +2288,20 @@ svg.react-datepicker__day:hover {
     height: 1.5rem;
   }
 
+  .short\:h-8 {
+    height: 2rem;
+  }
+
   .short\:h-auto {
     height: auto;
   }
 
   .short\:w-6 {
     width: 1.5rem;
+  }
+
+  .short\:w-8 {
+    width: 2rem;
   }
 
   .short\:pb-2 {
@@ -2286,8 +2324,16 @@ svg.react-datepicker__day:hover {
     height: 2.5rem;
   }
 
+  .xshort\:h-6 {
+    height: 1.5rem;
+  }
+
   .xshort\:w-10 {
     width: 2.5rem;
+  }
+
+  .xshort\:w-6 {
+    width: 1.5rem;
   }
 }
 
@@ -2295,6 +2341,10 @@ svg.react-datepicker__day:hover {
 
   .xxshort\:h-4 {
     height: 1rem;
+  }
+
+  .xxshort\:h-6 {
+    height: 1.5rem;
   }
 
   .xxshort\:h-8 {
@@ -2305,10 +2355,14 @@ svg.react-datepicker__day:hover {
     width: 1rem;
   }
 
+  .xxshort\:w-6 {
+    width: 1.5rem;
+  }
+
   .xxshort\:w-8 {
     width: 2rem;
   }
 }
 
 
-/*# sourceMappingURL=main.b831c342.css.map*/
+/*# sourceMappingURL=main.3e71529d.css.map*/
